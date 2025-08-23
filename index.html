@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Retro Site</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- Start button -->
+<div id="startButton" onclick="toggleStartMenu()">Start</div>
+
+<!-- Start Menu -->
+<div id="startMenu">
+  <ul>
+    <li onclick="openWindow('bioWindow')">Biography</li>
+    <li onclick="openWindow('resumeWindow')">Résumé</li>
+    <li onclick="window.open('https://twitter.com/', '_blank')">Twitter</li>
+    <li onclick="window.open('https://youtube.com/', '_blank')">YouTube</li>
+    <li onclick="window.open('https://github.com/', '_blank')">GitHub</li>
+  </ul>
+</div>
+
+<!-- Biography Window -->
+<div id="bioWindow" class="window" style="top:50px; left:50px;">
+  <div class="window-header">
+    <span>Biography</span>
+    <button onclick="closeWindow('bioWindow')">X</button>
+  </div>
+  <div class="window-content">
+    <img src="assets/images/ed8c838c-4b2d-4097-8a42-0cbe43d3a970.png" alt="Bio Photo" class="bio-photo">
+    <p><b>h00dy</b></p>
+    <p>Social engineer / hacker / red team</p>
+    <p>★ hack the planet ★</p>
+    <p>Hey, I'm h00dy. With each keystroke, I strive further into the Dark Arts of Computing...</p>
+  </div>
+</div>
+
+<!-- Résumé Window -->
+<div id="resumeWindow" class="window" style="top:100px; left:600px;">
+  <div class="window-header">
+    <span>Résumé</span>
+    <button onclick="closeWindow('resumeWindow')">X</button>
+  </div>
+  <div class="window-content">
+    <button onclick="downloadResume()">Download</button>
+    <button onclick="window.open('assets/docs/resume.pdf','_blank')">Open In New Tab</button>
+    <p>Experience and details go here...</p>
+  </div>
+</div>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

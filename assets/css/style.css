@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: 'VT323', monospace;
+    background: linear-gradient(135deg, #999, #666);
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Window styling */
+.window {
+    width: 500px;
+    height: 300px;
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    box-shadow: 4px 4px 0px #000;
+    position: absolute;
+    display: none;
+    z-index: 1;
+}
+.window-header {
+    background: #000080;
+    color: #fff;
+    padding: 5px;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+.window-content {
+    padding: 10px;
+    overflow-y: auto;
+    height: calc(100% - 30px);
+}
+
+/* Buttons */
+button {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    margin-left: 2px;
+    cursor: pointer;
+}
+
+/* Start menu */
+#startMenu {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 200px;
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    box-shadow: 4px 4px 0px #000;
+    display: none;
+    z-index: 2;
+}
+#startMenu ul {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+}
+#startMenu ul li {
+    padding: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#startMenu ul li:hover {
+    background: #000080;
+    color: #fff;
+}
+
+/* Start button */
+#startButton {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Image inside window */
+img.bio-photo {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 10px auto;
+}
