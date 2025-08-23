@@ -3,11 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Retro Site</title>
+  <title>My Retro Desktop</title>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+
+<!-- Desktop Icons -->
+<div id="desktop">
+  <div class="desktop-icon" onclick="openWindow('bioWindow')">
+    <img src="assets/images/about.png" alt="About Me">
+    <span>About Me</span>
+  </div>
+
+  <div class="desktop-icon" onclick="openWindow('resumeWindow')">
+    <img src="assets/images/resume.png" alt="Résumé">
+    <span>Résumé</span>
+  </div>
+
+  <div class="desktop-icon" onclick="openWindow('notesWindow')">
+    <img src="assets/images/notes.png" alt="Notes">
+    <span>Notes</span>
+  </div>
+
+  <div class="desktop-icon" onclick="openWindow('writeupsWindow')">
+    <img src="assets/images/writeups.png" alt="Writeups">
+    <span>Writeups</span>
+  </div>
+</div>
 
 <!-- Start button -->
 <div id="startButton" onclick="toggleStartMenu()">Start</div>
@@ -23,11 +46,15 @@
   </ul>
 </div>
 
-<!-- Biography Window -->
+<!-- Windows -->
 <div id="bioWindow" class="window" style="top:50px; left:50px;">
   <div class="window-header">
+    <div class="window-controls">
+      <button class="minimize" onclick="minimizeWindow('bioWindow')">—</button>
+      <button class="maximize" onclick="maximizeWindow('bioWindow')">▢</button>
+      <button class="close" onclick="closeWindow('bioWindow')">✕</button>
+    </div>
     <span>Biography</span>
-    <button onclick="closeWindow('bioWindow')">X</button>
   </div>
   <div class="window-content">
     <img src="assets/images/retro.jpg" alt="Bio Photo" class="bio-photo">
@@ -38,16 +65,47 @@
   </div>
 </div>
 
-<!-- Résumé Window -->
 <div id="resumeWindow" class="window" style="top:100px; left:600px;">
   <div class="window-header">
+    <div class="window-controls">
+      <button class="minimize" onclick="minimizeWindow('resumeWindow')">—</button>
+      <button class="maximize" onclick="maximizeWindow('resumeWindow')">▢</button>
+      <button class="close" onclick="closeWindow('resumeWindow')">✕</button>
+    </div>
     <span>Résumé</span>
-    <button onclick="closeWindow('resumeWindow')">X</button>
   </div>
   <div class="window-content">
     <button onclick="downloadResume()">Download</button>
     <button onclick="window.open('resume.pdf','_blank')">Open In New Tab</button>
     <p>Experience and details go here...</p>
+  </div>
+</div>
+
+<div id="notesWindow" class="window" style="top:150px; left:150px;">
+  <div class="window-header">
+    <div class="window-controls">
+      <button class="minimize" onclick="minimizeWindow('notesWindow')">—</button>
+      <button class="maximize" onclick="maximizeWindow('notesWindow')">▢</button>
+      <button class="close" onclick="closeWindow('notesWindow')">✕</button>
+    </div>
+    <span>Notes</span>
+  </div>
+  <div class="window-content">
+    <p>All your notes go here...</p>
+  </div>
+</div>
+
+<div id="writeupsWindow" class="window" style="top:200px; left:200px;">
+  <div class="window-header">
+    <div class="window-controls">
+      <button class="minimize" onclick="minimizeWindow('writeupsWindow')">—</button>
+      <button class="maximize" onclick="maximizeWindow('writeupsWindow')">▢</button>
+      <button class="close" onclick="closeWindow('writeupsWindow')">✕</button>
+    </div>
+    <span>Writeups</span>
+  </div>
+  <div class="window-content">
+    <p>CTF writeups, guides, etc.</p>
   </div>
 </div>
 

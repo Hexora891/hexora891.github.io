@@ -8,11 +8,37 @@ body {
     user-select: none;
 }
 
+/* Desktop Icons */
+#desktop {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 0;
+}
+
+.desktop-icon {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    font-size: 12px;
+}
+
+.desktop-icon img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+
 /* Window styling */
 .window {
     width: 500px;
     height: 300px;
-    background: #c0c0c0e6; /* semi-transparent so background peeks through */
+    background: #c0c0c0e6;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
     position: absolute;
@@ -20,14 +46,32 @@ body {
     z-index: 1;
 }
 .window-header {
-    background: #000080;
-    color: #fff;
-    padding: 5px;
-    cursor: move;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: bold;
+    background: #000080;
+    color: white;
+    padding: 5px;
+    cursor: move;
+}
+.window-controls {
+    display: flex;
+    gap: 3px;
+}
+.window-controls button {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    padding: 0;
+    line-height: 14px;
+    text-align: center;
+    cursor: pointer;
+    background: #c0c0c0;
+    border: 1px solid #fff;
+    box-shadow: 1px 1px 0 #000;
+}
+.window-controls button:hover {
+    background: #808080;
 }
 .window-content {
     padding: 10px;
