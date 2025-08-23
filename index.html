@@ -3,120 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <title>XP Desktop</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Desktop -->
+  <!-- Desktop icons -->
   <div id="desktop">
-    <div class="desktop-icon" onclick="openWindow('aboutWindow')">
-      <img src="assets/images/user.png" alt="About Me">
+    <div class="icon" onclick="openWindow('aboutWindow')">
+      <img src="assets/icons/computer.png" alt="About Me">
       <span>About Me</span>
     </div>
-    <div class="desktop-icon" onclick="openWindow('resumeWindow')">
-      <img src="assets/images/resume.png" alt="Resume">
+    <div class="icon" onclick="openWindow('resumeWindow')">
+      <img src="assets/icons/computer.png" alt="Resume">
       <span>Resume</span>
     </div>
-    <div class="desktop-icon" onclick="openWindow('notesWindow')">
-      <img src="assets/images/notes.png" alt="Notes">
+    <div class="icon" onclick="openWindow('notesWindow')">
+      <img src="assets/icons/computer.png" alt="Notes">
       <span>Notes</span>
     </div>
-    <div class="desktop-icon" onclick="openWindow('writeupsWindow')">
-      <img src="assets/images/writeups.png" alt="Writeups">
+    <div class="icon" onclick="openWindow('writeupsWindow')">
+      <img src="assets/icons/computer.png" alt="Writeups">
       <span>Writeups</span>
     </div>
   </div>
 
   <!-- Windows -->
-  <div id="aboutWindow" class="window">
+  <div id="aboutWindow" class="window" style="display:none; top:100px; left:100px;">
     <div class="window-header">
       <span>About Me</span>
       <div class="window-controls">
-        <button onclick="minimizeWindow('aboutWindow')">_</button>
-        <button onclick="maximizeWindow('aboutWindow')">▢</button>
         <button onclick="closeWindow('aboutWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <img src="assets/images/bio.png" alt="Bio Photo" class="bio-photo">
-      <p>Hello! 👋 I'm Ayush, a security enthusiast and beginner penetration tester.  
-      I enjoy solving CTFs, learning about hacking, and building cool projects.</p>
+      <p><strong>Bio Photo</strong></p>
+      <p>Hello! 👋 I'm Ayush, a security enthusiast and beginner penetration tester. I enjoy solving CTFs, learning about hacking, and building cool projects.</p>
     </div>
   </div>
 
-  <div id="resumeWindow" class="window">
+  <div id="resumeWindow" class="window" style="display:none; top:150px; left:150px;">
     <div class="window-header">
       <span>Resume</span>
       <div class="window-controls">
-        <button onclick="minimizeWindow('resumeWindow')">_</button>
-        <button onclick="maximizeWindow('resumeWindow')">▢</button>
         <button onclick="closeWindow('resumeWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <p>Click below to download my résumé:</p>
-      <button onclick="downloadResume()">Download Résumé</button>
+      <p>Here is my résumé.</p>
+      <button onclick="downloadResume()">Download Resume</button>
     </div>
   </div>
 
-  <div id="notesWindow" class="window">
+  <div id="notesWindow" class="window" style="display:none; top:200px; left:200px;">
     <div class="window-header">
       <span>Notes</span>
       <div class="window-controls">
-        <button onclick="minimizeWindow('notesWindow')">_</button>
-        <button onclick="maximizeWindow('notesWindow')">▢</button>
         <button onclick="closeWindow('notesWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <textarea style="width:100%;height:200px;">Write your notes here...</textarea>
+      <textarea style="width:100%; height:200px;">Write your notes here.</textarea>
     </div>
   </div>
 
-  <div id="writeupsWindow" class="window">
+  <div id="writeupsWindow" class="window" style="display:none; top:250px; left:250px;">
     <div class="window-header">
       <span>Writeups</span>
       <div class="window-controls">
-        <button onclick="minimizeWindow('writeupsWindow')">_</button>
-        <button onclick="maximizeWindow('writeupsWindow')">▢</button>
         <button onclick="closeWindow('writeupsWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
       <ul>
-        <li>🕵️ TryHackMe - SeaSurfer</li>
-        <li>🔐 TryHackMe - Moebius</li>
-        <li>💻 HackTheBox - Example Writeup</li>
+        <li>🐚 TryHackMe - SeaSurfer</li>
+        <li>🐚 TryHackMe - Moebius</li>
+        <li>🖥 HackTheBox - Example Writeup</li>
       </ul>
     </div>
   </div>
 
   <!-- Taskbar -->
-  <div id="taskbar"></div>
-  <div id="startButton" onclick="toggleStartMenu()">
-    <img src="assets/images/xp-logo.png" alt="Start" style="height:20px;margin-right:5px;"> Start
+  <div id="taskbar">
+    <button id="startButton" onclick="toggleStartMenu()">
+      <img src="assets/icons/xp-logo.png" alt="XP">
+      Start
+    </button>
   </div>
 
-  <!-- Start Menu -->
-  <div id="startMenu">
+  <!-- Start menu -->
+  <div id="startMenu" style="display:none;">
     <ul>
-      <li onclick="window.open('https://github.com/Sasta-Hacker','_blank')">
-        <img src="assets/images/github.png" alt="GitHub"> GitHub
-      </li>
-      <li onclick="window.open('https://youtube.com','_blank')">
-        <img src="assets/images/youtube.png" alt="YouTube"> YouTube
-      </li>
-      <li onclick="window.open('https://x.com','_blank')">
-        <img src="assets/images/x.png" alt="X"> X
-      </li>
-      <li onclick="window.open('https://hackthebox.com','_blank')">
-        <img src="assets/images/hackthebox.png" alt="HackTheBox"> HackTheBox
-      </li>
-      <li onclick="window.open('https://linkedin.com','_blank')">
-        <img src="assets/images/linkedin.png" alt="LinkedIn"> LinkedIn
-      </li>
+      <li><img src="assets/icons/github.png" alt=""> <a href="https://github.com/Sasta-Hacker" target="_blank">GitHub</a></li>
+      <li><img src="assets/icons/youtube.png" alt=""> <a href="https://youtube.com" target="_blank">YouTube</a></li>
+      <li><img src="assets/icons/x.png" alt=""> <a href="https://x.com" target="_blank">X</a></li>
+      <li><img src="assets/icons/hackthebox.png" alt=""> <a href="https://app.hackthebox.com" target="_blank">HackTheBox</a></li>
+      <li><img src="assets/icons/linkedin.png" alt=""> <a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
     </ul>
   </div>
 
-  <script src="assets/js/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,181 +1,25 @@
-/* Base */
-body {
-    margin: 0;
-    font-family: 'Tahoma', sans-serif;
-    background: url('../images/bliss.jpg') no-repeat center center fixed;
-    background-size: cover;
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
+function openWindow(id) {
+  document.getElementById(id).style.display = "block";
 }
 
-/* Desktop Icons */
-#desktop {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 0;
+function closeWindow(id) {
+  document.getElementById(id).style.display = "none";
 }
 
-.desktop-icon {
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-    color: white;
-    font-size: 12px;
-    text-shadow: 1px 1px #000;
+function toggleStartMenu() {
+  const menu = document.getElementById("startMenu");
+  menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
 }
 
-.desktop-icon img {
-    width: 64px;
-    height: 64px;
-    display: block;
-    margin: 0 auto;
+function downloadResume() {
+  alert("Resume download coming soon!");
 }
 
-.desktop-icon:hover {
-    background: rgba(255,255,255,0.2);
-    border-radius: 5px;
-}
-
-/* Windows */
-.window {
-    width: 500px;
-    height: 300px;
-    background: #c0c0c0;
-    border: 2px solid #fff;
-    box-shadow: 4px 4px 0px #000;
-    position: absolute;
-    display: none;
-    z-index: 10;
-}
-
-.window-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, #0a64ad, #0a4a8c);
-    color: white;
-    padding: 3px 5px;
-    cursor: move;
-    font-weight: bold;
-}
-
-.window-controls button {
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
-    padding: 0;
-    line-height: 14px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #fff;
-    background: #e0e0e0;
-    box-shadow: 1px 1px 0 #000 inset;
-}
-
-.window-controls button:hover {
-    background: #c0c0c0;
-}
-
-.window-content {
-    padding: 10px;
-    overflow-y: auto;
-    height: calc(100% - 28px);
-}
-
-/* Start Button */
-#startButton {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 30px;
-    background: linear-gradient(to bottom, #00a000, #007f00);
-    color: white;
-    font-weight: bold;
-    border: 2px solid #fff;
-    box-shadow: 2px 2px 0 #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    padding: 0 10px;
-}
-
-/* Start Menu */
-#startMenu {
-    position: fixed;
-    bottom: 30px;
-    left: 0;
-    width: 200px;
-    background: #c0c0c0;
-    border: 2px solid #fff;
-    box-shadow: 4px 4px 0px #000;
-    display: none;
-    z-index: 1000;
-}
-
-#startMenu ul {
-    list-style: none;
-    padding: 5px;
-    margin: 0;
-}
-
-#startMenu ul li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-#startMenu ul li img {
-    width: 16px;
-    height: 16px;
-}
-
-#startMenu ul li:hover {
-    background: #000080;
-    color: #fff;
-}
-
-/* Taskbar */
-#taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 70px;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(to top, #0a64ad, #0a4a8c);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 0 5px;
-    box-shadow: inset 0 1px 0 #fff;
-    z-index: 999;
-}
-
-#taskbar button {
-    height: 24px;
-    padding: 0 5px;
-    background: #e0e0e0;
-    border: 1px solid #fff;
-    box-shadow: 1px 1px 0 #000 inset;
-    cursor: pointer;
-}
-
-#taskbar button.active {
-    background: #c0c0c0;
-}
-
-/* Bio Photo */
-img.bio-photo {
-    max-width: 100%;
-    display: block;
-    margin: 0 auto 10px auto;
-}
+// Close start menu if clicked outside
+document.addEventListener("click", (e) => {
+  const startButton = document.getElementById("startButton");
+  const startMenu = document.getElementById("startMenu");
+  if (!startMenu.contains(e.target) && !startButton.contains(e.target)) {
+    startMenu.style.display = "none";
+  }
+});
