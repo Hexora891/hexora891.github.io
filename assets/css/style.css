@@ -1,7 +1,8 @@
+/* Base */
 body {
     margin: 0;
-    font-family: 'VT323', monospace;
-    background: url('../images/retro.jpg') no-repeat center center fixed;
+    font-family: 'Tahoma', sans-serif;
+    background: url('../images/bliss.jpg') no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
     overflow: hidden;
@@ -25,6 +26,7 @@ body {
     cursor: pointer;
     color: white;
     font-size: 12px;
+    text-shadow: 1px 1px #000;
 }
 
 .desktop-icon img {
@@ -34,54 +36,74 @@ body {
     margin: 0 auto;
 }
 
+.desktop-icon:hover {
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+}
+
 /* Windows */
 .window {
     width: 500px;
     height: 300px;
-    background: #c0c0c0e6;
+    background: #c0c0c0;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
     position: absolute;
     display: none;
-    z-index: 10; /* above desktop but below taskbar/start */
+    z-index: 10;
 }
 
 .window-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #000080;
+    background: linear-gradient(to bottom, #0a64ad, #0a4a8c);
     color: white;
-    padding: 5px;
+    padding: 3px 5px;
     cursor: move;
-}
-
-.window-controls {
-    display: flex;
-    gap: 3px;
+    font-weight: bold;
 }
 
 .window-controls button {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     font-size: 12px;
     padding: 0;
     line-height: 14px;
     text-align: center;
     cursor: pointer;
-    background: #c0c0c0;
     border: 1px solid #fff;
-    box-shadow: 1px 1px 0 #000;
+    background: #e0e0e0;
+    box-shadow: 1px 1px 0 #000 inset;
 }
 
 .window-controls button:hover {
-    background: #808080;
+    background: #c0c0c0;
 }
 
 .window-content {
     padding: 10px;
     overflow-y: auto;
-    height: calc(100% - 30px);
+    height: calc(100% - 28px);
+}
+
+/* Start Button */
+#startButton {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 30px;
+    background: linear-gradient(to bottom, #00a000, #007f00);
+    color: white;
+    font-weight: bold;
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 0 #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
 }
 
 /* Start Menu */
@@ -90,7 +112,7 @@ body {
     bottom: 30px;
     left: 0;
     width: 200px;
-    background: #c0c0c0e6;
+    background: #c0c0c0;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
     display: none;
@@ -114,24 +136,6 @@ body {
     color: #fff;
 }
 
-/* Start Button */
-#startButton {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background: #c0c0c0;
-    border: 2px solid #fff;
-    width: 60px;
-    height: 30px;
-    cursor: pointer;
-    box-shadow: 2px 2px 0 #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    z-index: 1000;
-}
-
 /* Taskbar */
 #taskbar {
     position: fixed;
@@ -139,8 +143,7 @@ body {
     left: 0;
     right: 0;
     height: 30px;
-    background: #c0c0c0;
-    border-top: 2px solid #fff;
+    background: linear-gradient(to top, #0a64ad, #0a4a8c);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -149,6 +152,20 @@ body {
     z-index: 999;
 }
 
+#taskbar button {
+    height: 24px;
+    padding: 0 5px;
+    background: #e0e0e0;
+    border: 1px solid #fff;
+    box-shadow: 1px 1px 0 #000 inset;
+    cursor: pointer;
+}
+
+#taskbar button.active {
+    background: #c0c0c0;
+}
+
+/* Bio Photo */
 img.bio-photo {
     max-width: 100%;
     display: block;
