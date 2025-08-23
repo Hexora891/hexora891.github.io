@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Retro Desktop</title>
+  <title>Retro Desktop OS</title>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -11,28 +11,28 @@
 
 <!-- Desktop Icons -->
 <div id="desktop">
-  <div class="desktop-icon" onclick="openWindow('bioWindow')">
+  <div class="desktop-icon" ondblclick="openWindow('bioWindow')">
     <img src="assets/images/about.png" alt="About Me">
     <span>About Me</span>
   </div>
 
-  <div class="desktop-icon" onclick="openWindow('resumeWindow')">
+  <div class="desktop-icon" ondblclick="openWindow('resumeWindow')">
     <img src="assets/images/resume.png" alt="Résumé">
     <span>Résumé</span>
   </div>
 
-  <div class="desktop-icon" onclick="openWindow('notesWindow')">
+  <div class="desktop-icon" ondblclick="openWindow('notesWindow')">
     <img src="assets/images/notes.png" alt="Notes">
     <span>Notes</span>
   </div>
 
-  <div class="desktop-icon" onclick="openWindow('writeupsWindow')">
+  <div class="desktop-icon" ondblclick="openWindow('writeupsWindow')">
     <img src="assets/images/writeups.png" alt="Writeups">
     <span>Writeups</span>
   </div>
 </div>
 
-<!-- Start button -->
+<!-- Start Button -->
 <div id="startButton" onclick="toggleStartMenu()">Start</div>
 
 <!-- Start Menu -->
@@ -46,13 +46,16 @@
   </ul>
 </div>
 
+<!-- Taskbar -->
+<div id="taskbar"></div>
+
 <!-- Windows -->
 <div id="bioWindow" class="window" style="top:50px; left:50px;">
   <div class="window-header">
     <div class="window-controls">
-      <button class="minimize" onclick="minimizeWindow('bioWindow')">—</button>
-      <button class="maximize" onclick="maximizeWindow('bioWindow')">▢</button>
-      <button class="close" onclick="closeWindow('bioWindow')">✕</button>
+      <button onclick="minimizeWindow('bioWindow')">—</button>
+      <button onclick="maximizeWindow('bioWindow')">▢</button>
+      <button onclick="closeWindow('bioWindow')">✕</button>
     </div>
     <span>Biography</span>
   </div>
@@ -68,9 +71,9 @@
 <div id="resumeWindow" class="window" style="top:100px; left:600px;">
   <div class="window-header">
     <div class="window-controls">
-      <button class="minimize" onclick="minimizeWindow('resumeWindow')">—</button>
-      <button class="maximize" onclick="maximizeWindow('resumeWindow')">▢</button>
-      <button class="close" onclick="closeWindow('resumeWindow')">✕</button>
+      <button onclick="minimizeWindow('resumeWindow')">—</button>
+      <button onclick="maximizeWindow('resumeWindow')">▢</button>
+      <button onclick="closeWindow('resumeWindow')">✕</button>
     </div>
     <span>Résumé</span>
   </div>
@@ -84,9 +87,9 @@
 <div id="notesWindow" class="window" style="top:150px; left:150px;">
   <div class="window-header">
     <div class="window-controls">
-      <button class="minimize" onclick="minimizeWindow('notesWindow')">—</button>
-      <button class="maximize" onclick="maximizeWindow('notesWindow')">▢</button>
-      <button class="close" onclick="closeWindow('notesWindow')">✕</button>
+      <button onclick="minimizeWindow('notesWindow')">—</button>
+      <button onclick="maximizeWindow('notesWindow')">▢</button>
+      <button onclick="closeWindow('notesWindow')">✕</button>
     </div>
     <span>Notes</span>
   </div>
@@ -98,9 +101,9 @@
 <div id="writeupsWindow" class="window" style="top:200px; left:200px;">
   <div class="window-header">
     <div class="window-controls">
-      <button class="minimize" onclick="minimizeWindow('writeupsWindow')">—</button>
-      <button class="maximize" onclick="maximizeWindow('writeupsWindow')">▢</button>
-      <button class="close" onclick="closeWindow('writeupsWindow')">✕</button>
+      <button onclick="minimizeWindow('writeupsWindow')">—</button>
+      <button onclick="maximizeWindow('writeupsWindow')">▢</button>
+      <button onclick="closeWindow('writeupsWindow')">✕</button>
     </div>
     <span>Writeups</span>
   </div>

@@ -34,7 +34,7 @@ body {
     margin: 0 auto;
 }
 
-/* Window styling */
+/* Windows */
 .window {
     width: 500px;
     height: 300px;
@@ -79,15 +79,7 @@ body {
     height: calc(100% - 30px);
 }
 
-/* Buttons */
-button {
-    font-family: 'VT323', monospace;
-    font-size: 14px;
-    margin-left: 2px;
-    cursor: pointer;
-}
-
-/* Start menu */
+/* Start Menu */
 #startMenu {
     position: absolute;
     bottom: 30px;
@@ -114,7 +106,7 @@ button {
     color: #fff;
 }
 
-/* Start button */
+/* Start Button */
 #startButton {
     position: absolute;
     bottom: 0;
@@ -132,7 +124,24 @@ button {
     z-index: 2;
 }
 
-/* Image inside window */
+/* Taskbar */
+#taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #c0c0c0;
+    border-top: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 5px;
+    box-shadow: inset 0 1px 0 #fff;
+    z-index: 2;
+}
+
+/* Images in window */
 img.bio-photo {
     max-width: 100%;
     display: block;
