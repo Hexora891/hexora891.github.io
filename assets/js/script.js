@@ -1,6 +1,6 @@
-let zIndexCounter = 1;
+let zIndexCounter = 10;
 
-// Toggle start menu
+// Start menu toggle
 function toggleStartMenu() {
   const menu = document.getElementById("startMenu");
   menu.style.display = (menu.style.display === "block") ? "none" : "block";
@@ -18,7 +18,6 @@ function openWindow(id) {
 function closeWindow(id) {
   const win = document.getElementById(id);
   win.style.display = "none";
-  removeTaskbarButton(id);
 }
 
 // Bring window to front
@@ -53,7 +52,7 @@ function maximizeWindow(id) {
 
 // Dummy resume download
 function downloadResume() {
-  alert("Downloading résumé... (add real file later!)");
+  alert("Downloading résumé...");
 }
 
 // Draggable windows
