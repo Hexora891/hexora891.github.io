@@ -10,7 +10,7 @@ function toggleStartMenu() {
 document.addEventListener('click', (e) => {
     const menu = document.getElementById("startMenu");
     const button = document.getElementById("startButton");
-    if (!menu.contains(e.target) && e.target !== button && !button.contains(e.target)) {
+    if (!menu.contains(e.target) && e.target !== button) {
         menu.style.display = 'none';
     }
 });
@@ -58,6 +58,11 @@ function maximizeWindow(id) {
         win.style.left = "5%";
         win.dataset.maximized = "true";
     }
+}
+
+// Dummy resume download
+function downloadResume() {
+    alert("Downloading résumé...");
 }
 
 // Draggable windows

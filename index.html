@@ -2,32 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retro XP Desktop</title>
+  <title>XP Desktop</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
   <!-- Desktop -->
   <div id="desktop">
     <div class="desktop-icon" onclick="openWindow('aboutWindow')">
-      <img src="assets/images/mycomputer.png" alt="About">
-      <div>About Me</div>
+      <img src="assets/images/user.png" alt="About Me">
+      <span>About Me</span>
     </div>
-    <div class="desktop-icon" onclick="openWindow('projectsWindow')">
-      <img src="assets/images/folder.png" alt="Projects">
-      <div>Projects</div>
+    <div class="desktop-icon" onclick="openWindow('resumeWindow')">
+      <img src="assets/images/resume.png" alt="Resume">
+      <span>Resume</span>
     </div>
-    <div class="desktop-icon" onclick="openWindow('contactWindow')">
-      <img src="assets/images/email.png" alt="Contact">
-      <div>Contact</div>
+    <div class="desktop-icon" onclick="openWindow('notesWindow')">
+      <img src="assets/images/notes.png" alt="Notes">
+      <span>Notes</span>
+    </div>
+    <div class="desktop-icon" onclick="openWindow('writeupsWindow')">
+      <img src="assets/images/writeups.png" alt="Writeups">
+      <span>Writeups</span>
     </div>
   </div>
 
   <!-- Windows -->
-  <div id="aboutWindow" class="window" style="top:100px;left:100px;">
+  <div id="aboutWindow" class="window">
     <div class="window-header">
-      About Me
+      <span>About Me</span>
       <div class="window-controls">
         <button onclick="minimizeWindow('aboutWindow')">_</button>
         <button onclick="maximizeWindow('aboutWindow')">▢</button>
@@ -35,70 +37,85 @@
       </div>
     </div>
     <div class="window-content">
-      <img src="assets/images/profile.png" alt="Profile" class="bio-photo">
-      <p>Hello! I'm a retro-styled web developer bringing XP vibes back to the web.</p>
+      <img src="assets/images/bio.png" alt="Bio Photo" class="bio-photo">
+      <p>Hello! 👋 I'm Ayush, a security enthusiast and beginner penetration tester.  
+      I enjoy solving CTFs, learning about hacking, and building cool projects.</p>
     </div>
   </div>
 
-  <div id="projectsWindow" class="window" style="top:130px;left:130px;">
+  <div id="resumeWindow" class="window">
     <div class="window-header">
-      Projects
+      <span>Resume</span>
       <div class="window-controls">
-        <button onclick="minimizeWindow('projectsWindow')">_</button>
-        <button onclick="maximizeWindow('projectsWindow')">▢</button>
-        <button onclick="closeWindow('projectsWindow')">X</button>
+        <button onclick="minimizeWindow('resumeWindow')">_</button>
+        <button onclick="maximizeWindow('resumeWindow')">▢</button>
+        <button onclick="closeWindow('resumeWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <p>Project 1: Cool retro portfolio</p>
-      <p>Project 2: XP-style UI experiments</p>
+      <p>Click below to download my résumé:</p>
+      <button onclick="downloadResume()">Download Résumé</button>
     </div>
   </div>
 
-  <div id="contactWindow" class="window" style="top:160px;left:160px;">
+  <div id="notesWindow" class="window">
     <div class="window-header">
-      Contact
+      <span>Notes</span>
       <div class="window-controls">
-        <button onclick="minimizeWindow('contactWindow')">_</button>
-        <button onclick="maximizeWindow('contactWindow')">▢</button>
-        <button onclick="closeWindow('contactWindow')">X</button>
+        <button onclick="minimizeWindow('notesWindow')">_</button>
+        <button onclick="maximizeWindow('notesWindow')">▢</button>
+        <button onclick="closeWindow('notesWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <p>Email: retro@example.com</p>
-      <p>LinkedIn: <a href="https://linkedin.com" target="_blank">My LinkedIn</a></p>
+      <textarea style="width:100%;height:200px;">Write your notes here...</textarea>
     </div>
   </div>
 
-  <!-- Start Button -->
+  <div id="writeupsWindow" class="window">
+    <div class="window-header">
+      <span>Writeups</span>
+      <div class="window-controls">
+        <button onclick="minimizeWindow('writeupsWindow')">_</button>
+        <button onclick="maximizeWindow('writeupsWindow')">▢</button>
+        <button onclick="closeWindow('writeupsWindow')">X</button>
+      </div>
+    </div>
+    <div class="window-content">
+      <ul>
+        <li>🕵️ TryHackMe - SeaSurfer</li>
+        <li>🔐 TryHackMe - Moebius</li>
+        <li>💻 HackTheBox - Example Writeup</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Taskbar -->
+  <div id="taskbar"></div>
   <div id="startButton" onclick="toggleStartMenu()">
-    <img src="assets/images/xp-logo.png" alt="XP Logo">
-    <span>Start</span>
+    <img src="assets/images/xp-logo.png" alt="Start" style="height:20px;margin-right:5px;"> Start
   </div>
 
   <!-- Start Menu -->
   <div id="startMenu">
     <ul>
-      <li onclick="window.open('https://github.com/', '_blank')">
+      <li onclick="window.open('https://github.com/Sasta-Hacker','_blank')">
         <img src="assets/images/github.png" alt="GitHub"> GitHub
       </li>
-      <li onclick="window.open('https://youtube.com/', '_blank')">
+      <li onclick="window.open('https://youtube.com','_blank')">
         <img src="assets/images/youtube.png" alt="YouTube"> YouTube
       </li>
-      <li onclick="window.open('https://twitter.com/', '_blank')">
+      <li onclick="window.open('https://x.com','_blank')">
         <img src="assets/images/x.png" alt="X"> X
       </li>
-      <li onclick="window.open('https://app.hackthebox.com/', '_blank')">
+      <li onclick="window.open('https://hackthebox.com','_blank')">
         <img src="assets/images/hackthebox.png" alt="HackTheBox"> HackTheBox
       </li>
-      <li onclick="window.open('https://linkedin.com/', '_blank')">
+      <li onclick="window.open('https://linkedin.com','_blank')">
         <img src="assets/images/linkedin.png" alt="LinkedIn"> LinkedIn
       </li>
     </ul>
   </div>
-
-  <!-- Taskbar -->
-  <div id="taskbar"></div>
 
   <script src="assets/js/script.js"></script>
 </body>

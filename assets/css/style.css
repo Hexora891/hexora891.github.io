@@ -45,7 +45,7 @@ body {
 .window {
     width: 500px;
     height: 300px;
-    background: #ece9d8;
+    background: #c0c0c0;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
     position: absolute;
@@ -92,7 +92,6 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 90px;
     height: 30px;
     background: linear-gradient(to bottom, #00a000, #007f00);
     color: white;
@@ -101,17 +100,10 @@ body {
     box-shadow: 2px 2px 0 #000;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     cursor: pointer;
     z-index: 1000;
-    padding-left: 5px;
-    gap: 5px;
-    font-size: 14px;
-}
-
-#startButton img {
-    width: 20px;
-    height: 20px;
+    padding: 0 10px;
 }
 
 /* Start Menu */
@@ -119,18 +111,17 @@ body {
     position: fixed;
     bottom: 30px;
     left: 0;
-    width: 220px;
-    background: #ece9d8;
+    width: 200px;
+    background: #c0c0c0;
     border: 2px solid #fff;
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+    box-shadow: 4px 4px 0px #000;
     display: none;
     z-index: 1000;
-    font-size: 14px;
 }
 
 #startMenu ul {
     list-style: none;
-    padding: 3px;
+    padding: 5px;
     margin: 0;
 }
 
@@ -138,18 +129,18 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px;
+    padding: 5px;
     cursor: pointer;
-    border-radius: 3px;
+    transition: background 0.2s;
 }
 
 #startMenu ul li img {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
 }
 
 #startMenu ul li:hover {
-    background: #0a64ad;
+    background: #000080;
     color: #fff;
 }
 
@@ -157,7 +148,7 @@ body {
 #taskbar {
     position: fixed;
     bottom: 0;
-    left: 90px;
+    left: 70px;
     right: 0;
     height: 30px;
     background: linear-gradient(to top, #0a64ad, #0a4a8c);
