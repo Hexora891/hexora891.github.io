@@ -1,181 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Windows XP Desktop</title>
-  <!-- Use system fonts similar to XP -->
-  <link rel="stylesheet" href="assets/css/style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro XP Desktop</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-  <!-- Desktop Icons -->
-  <div id="desktop" aria-label="Desktop">
-    <div class="desktop-icon" ondblclick="openWindow('bioWindow')" tabindex="0">
-      <img src="assets/images/xp/icons/user.png" alt="About Me"/>
-      <span>About Me</span>
+  <!-- Desktop -->
+  <div id="desktop">
+    <div class="desktop-icon" onclick="openWindow('aboutWindow')">
+      <img src="assets/images/mycomputer.png" alt="About">
+      <div>About Me</div>
     </div>
-
-    <div class="desktop-icon" ondblclick="openWindow('resumeWindow')" tabindex="0">
-      <img src="assets/images/xp/icons/my-documents.png" alt="Résumé"/>
-      <span>Résumé</span>
+    <div class="desktop-icon" onclick="openWindow('projectsWindow')">
+      <img src="assets/images/folder.png" alt="Projects">
+      <div>Projects</div>
     </div>
-
-    <div class="desktop-icon" ondblclick="openWindow('notesWindow')" tabindex="0">
-      <img src="assets/images/xp/icons/notepad.png" alt="Notes"/>
-      <span>Notes</span>
-    </div>
-
-    <div class="desktop-icon" ondblclick="openWindow('writeupsWindow')" tabindex="0">
-      <img src="assets/images/xp/icons/folder.png" alt="Writeups"/>
-      <span>Writeups</span>
-    </div>
-  </div>
-
-  <!-- Start Menu -->
-  <div id="startMenu" role="menu" aria-hidden="true">
-    <div class="sm-top">
-      <img class="sm-userpic" src="assets/images/xp/userpic.png" alt="User"/>
-      <div class="sm-username">h00dy</div>
-    </div>
-
-    <div class="sm-body">
-      <div class="sm-left">
-        <ul class="sm-programs">
-          <li onclick="openWindow('bioWindow')">
-            <img src="assets/images/xp/icons/user.png" alt=""/> Biography
-          </li>
-          <li onclick="openWindow('resumeWindow')">
-            <img src="assets/images/xp/icons/my-documents.png" alt=""/> Résumé
-          </li>
-          <li onclick="openWindow('writeupsWindow')">
-            <img src="assets/images/xp/icons/folder.png" alt=""/> Writeups
-          </li>
-          <li onclick="openWindow('notesWindow')">
-            <img src="assets/images/xp/icons/notepad.png" alt=""/> Notes
-          </li>
-        </ul>
-        <div class="sm-all-programs">
-          <span>All Programs</span>
-          <span class="chev">»</span>
-        </div>
-      </div>
-
-      <div class="sm-right">
-        <ul class="sm-places">
-          <li onclick="window.open('https://github.com/', '_blank')">
-            <img src="assets/images/xp/icons/internet.png" alt=""/> GitHub
-          </li>
-          <li onclick="window.open('https://youtube.com/', '_blank')">
-            <img src="assets/images/xp/icons/internet.png" alt=""/> YouTube
-          </li>
-          <li onclick="window.open('https://twitter.com/', '_blank')">
-            <img src="assets/images/xp/icons/internet.png" alt=""/> Twitter
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="sm-bottom">
-      <button class="sm-logoff" type="button">
-        <img src="assets/images/xp/icons/logoff.png" alt=""/> Log Off
-      </button>
-      <button class="sm-turnoff" type="button">
-        <img src="assets/images/xp/icons/shutdown.png" alt=""/> Turn Off Computer
-      </button>
-    </div>
-  </div>
-
-  <!-- Taskbar -->
-  <div id="taskbar" aria-label="Taskbar">
-    <button id="startButton" type="button" aria-expanded="false" aria-controls="startMenu" onclick="toggleStartMenu()">
-      <span class="start-logo" aria-hidden="true"></span>
-      <span class="start-text">Start</span>
-    </button>
-
-    <div id="taskButtons" aria-label="Taskbar buttons"></div>
-
-    <div id="systemTray" aria-label="System tray">
-      <img class="tray-icon" src="assets/images/xp/icons/volume.png" alt="Volume"/>
-      <img class="tray-icon" src="assets/images/xp/icons/network.png" alt="Network"/>
-      <div id="clock" aria-label="Clock">--:--</div>
+    <div class="desktop-icon" onclick="openWindow('contactWindow')">
+      <img src="assets/images/email.png" alt="Contact">
+      <div>Contact</div>
     </div>
   </div>
 
   <!-- Windows -->
-  <div id="bioWindow" class="window" style="top:50px; left:50px;">
+  <div id="aboutWindow" class="window" style="top:100px;left:100px;">
     <div class="window-header">
-      <div class="window-title">
-        <img src="assets/images/xp/icons/user.png" alt="" />
-        Biography
-      </div>
+      About Me
       <div class="window-controls">
-        <button type="button" title="Minimize" onclick="minimizeWindow('bioWindow')">—</button>
-        <button type="button" title="Maximize" onclick="maximizeWindow('bioWindow')">▢</button>
-        <button type="button" title="Close" onclick="closeWindow('bioWindow')">✕</button>
+        <button onclick="minimizeWindow('aboutWindow')">_</button>
+        <button onclick="maximizeWindow('aboutWindow')">▢</button>
+        <button onclick="closeWindow('aboutWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <img src="assets/images/retro.jpg" alt="Bio" class="bio-photo"/>
-      <p><b>h00dy</b></p>
-      <p>Social engineer / hacker / red team</p>
-      <p>★ hack the planet ★</p>
-      <p>Hey, I'm h00dy. With each keystroke, I strive further into the Dark Arts of Computing...</p>
+      <img src="assets/images/profile.png" alt="Profile" class="bio-photo">
+      <p>Hello! I'm a retro-styled web developer bringing XP vibes back to the web.</p>
     </div>
   </div>
 
-  <div id="resumeWindow" class="window" style="top:100px; left:600px;">
+  <div id="projectsWindow" class="window" style="top:130px;left:130px;">
     <div class="window-header">
-      <div class="window-title">
-        <img src="assets/images/xp/icons/my-documents.png" alt="" />
-        Résumé
-      </div>
+      Projects
       <div class="window-controls">
-        <button type="button" title="Minimize" onclick="minimizeWindow('resumeWindow')">—</button>
-        <button type="button" title="Maximize" onclick="maximizeWindow('resumeWindow')">▢</button>
-        <button type="button" title="Close" onclick="closeWindow('resumeWindow')">✕</button>
+        <button onclick="minimizeWindow('projectsWindow')">_</button>
+        <button onclick="maximizeWindow('projectsWindow')">▢</button>
+        <button onclick="closeWindow('projectsWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <button type="button" onclick="downloadResume()">Download</button>
-      <button type="button" onclick="window.open('resume.pdf','_blank')">Open In New Tab</button>
-      <p>Experience and details go here...</p>
+      <p>Project 1: Cool retro portfolio</p>
+      <p>Project 2: XP-style UI experiments</p>
     </div>
   </div>
 
-  <div id="notesWindow" class="window" style="top:150px; left:150px;">
+  <div id="contactWindow" class="window" style="top:160px;left:160px;">
     <div class="window-header">
-      <div class="window-title">
-        <img src="assets/images/xp/icons/notepad.png" alt="" />
-        Notes
-      </div>
+      Contact
       <div class="window-controls">
-        <button type="button" title="Minimize" onclick="minimizeWindow('notesWindow')">—</button>
-        <button type="button" title="Maximize" onclick="maximizeWindow('notesWindow')">▢</button>
-        <button type="button" title="Close" onclick="closeWindow('notesWindow')">✕</button>
+        <button onclick="minimizeWindow('contactWindow')">_</button>
+        <button onclick="maximizeWindow('contactWindow')">▢</button>
+        <button onclick="closeWindow('contactWindow')">X</button>
       </div>
     </div>
     <div class="window-content">
-      <p>All your notes go here...</p>
+      <p>Email: retro@example.com</p>
+      <p>LinkedIn: <a href="https://linkedin.com" target="_blank">My LinkedIn</a></p>
     </div>
   </div>
 
-  <div id="writeupsWindow" class="window" style="top:200px; left:200px;">
-    <div class="window-header">
-      <div class="window-title">
-        <img src="assets/images/xp/icons/folder.png" alt="" />
-        Writeups
-      </div>
-      <div class="window-controls">
-        <button type="button" title="Minimize" onclick="minimizeWindow('writeupsWindow')">—</button>
-        <button type="button" title="Maximize" onclick="maximizeWindow('writeupsWindow')">▢</button>
-        <button type="button" title="Close" onclick="closeWindow('writeupsWindow')">✕</button>
-      </div>
-    </div>
-    <div class="window-content">
-      <p>CTF writeups, guides, etc.</p>
-    </div>
+  <!-- Start Button -->
+  <div id="startButton" onclick="toggleStartMenu()">
+    <img src="assets/images/xp-logo.png" alt="XP Logo">
+    <span>Start</span>
   </div>
+
+  <!-- Start Menu -->
+  <div id="startMenu">
+    <ul>
+      <li onclick="window.open('https://github.com/', '_blank')">
+        <img src="assets/images/github.png" alt="GitHub"> GitHub
+      </li>
+      <li onclick="window.open('https://youtube.com/', '_blank')">
+        <img src="assets/images/youtube.png" alt="YouTube"> YouTube
+      </li>
+      <li onclick="window.open('https://twitter.com/', '_blank')">
+        <img src="assets/images/x.png" alt="X"> X
+      </li>
+      <li onclick="window.open('https://app.hackthebox.com/', '_blank')">
+        <img src="assets/images/hackthebox.png" alt="HackTheBox"> HackTheBox
+      </li>
+      <li onclick="window.open('https://linkedin.com/', '_blank')">
+        <img src="assets/images/linkedin.png" alt="LinkedIn"> LinkedIn
+      </li>
+    </ul>
+  </div>
+
+  <!-- Taskbar -->
+  <div id="taskbar"></div>
 
   <script src="assets/js/script.js"></script>
 </body>
