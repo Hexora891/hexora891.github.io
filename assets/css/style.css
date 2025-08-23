@@ -1,7 +1,8 @@
 body {
     margin: 0;
     font-family: 'VT323', monospace;
-    background: linear-gradient(135deg, #999, #666);
+    background: url('../images/retro.jpg') no-repeat center center fixed;
+    background-size: cover;
     height: 100vh;
     overflow: hidden;
     user-select: none;
@@ -11,7 +12,7 @@ body {
 .window {
     width: 500px;
     height: 300px;
-    background: #c0c0c0;
+    background: #c0c0c0e6; /* semi-transparent so background peeks through */
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
     position: absolute;
@@ -48,7 +49,7 @@ button {
     bottom: 30px;
     left: 0;
     width: 200px;
-    background: #c0c0c0;
+    background: #c0c0c0e6;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
     display: none;
