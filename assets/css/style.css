@@ -87,6 +87,31 @@ body {
     height: calc(100% - 28px);
 }
 
+/* Resume buttons */
+.resume-buttons {
+  margin-bottom: 10px;
+}
+
+.resume-buttons button {
+  background: #e0e0e0;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.resume-buttons button:hover {
+  background: #cfcfcf;
+}
+
+.resume-buttons .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
 /* Start Button */
 #startButton {
     position: fixed;

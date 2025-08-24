@@ -114,3 +114,14 @@ function removeTaskbarButton(id) {
     if(btn) btn.remove();
 }
 
+// Resume function
+function downloadResume() {
+  const link = document.createElement('a');
+  link.href = "assets/files/Ayush-Resume.pdf";
+  link.download = "Ayush-Resume.pdf";
+  link.click();
+}
+
+function openResumeNewTab() {
+  window.open("assets/files/Ayush-Resume.pdf", "_blank");
+}
