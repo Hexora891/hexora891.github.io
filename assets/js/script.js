@@ -46,8 +46,8 @@ function minimizeWindow(id) {
 function maximizeWindow(id) {
     const win = document.getElementById(id);
     if (win.dataset.maximized === "true") {
-        win.style.width = "500px";
-        win.style.height = "300px";
+        win.style.width = "100%";
+        win.style.height = "calc(100% - 30px)";
         win.style.top = "100px";
         win.style.left = "100px";
         win.dataset.maximized = "false";
