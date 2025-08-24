@@ -42,20 +42,29 @@ function minimizeWindow(id) {
     win.style.display = "none";
 }
 
-// Maximize window
+// Maximize / Restore window
 function maximizeWindow(id) {
     const win = document.getElementById(id);
+
     if (win.dataset.maximized === "true") {
-        win.style.width = "100%";
-        win.style.height = "calc(100% - 30px)";
-        win.style.top = "100px";
-        win.style.left = "100px";
+        // Restore previous position & size
+        win.style.width = win.dataset.prevWidth;
+        win.style.height = win.dataset.prevHeight;
+        win.style.top = win.dataset.prevTop;
+        win.style.left = win.dataset.prevLeft;
         win.dataset.maximized = "false";
     } else {
-        win.style.width = "90%";
-        win.style.height = "80%";
-        win.style.top = "10%";
-        win.style.left = "5%";
+        // Save current position & size
+        win.dataset.prevWidth = win.style.width;
+        win.dataset.prevHeight = win.style.height;
+        win.dataset.prevTop = win.style.top;
+        win.dataset.prevLeft = win.style.left;
+
+        // Maximize (fill screen except taskbar)
+        win.style.top = "0";
+        win.style.left = "0";
+        win.style.width = "100%";
+        win.style.height = "calc(100% - 30px)";
         win.dataset.maximized = "true";
     }
 }
