@@ -71,7 +71,7 @@ function maximizeWindow(id) {
 
 // Dummy resume download
 function downloadResume() {
-    alert("Downloading résumé...");
+    alert("Downloading resume...");
 }
 
 // Draggable windows

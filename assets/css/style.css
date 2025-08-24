@@ -84,7 +84,7 @@ body {
 .window-content {
     padding: 10px;
     overflow-y: auto;
-    height: calc(100% - 28px);
+    height: calc(100% - 30px);
 }
 
 /* Resume buttons */
