@@ -36,6 +36,15 @@ body {
     margin: 0 auto;
 }
 
+.desktop-icon-large img {
+    width: 60px; /* Slightly larger width */
+    height: 60px; /* Slightly larger height */
+}
+
+.desktop-icon-large {
+    font-size: 14px; /* Slightly larger font size */
+}
+
 .desktop-icon:hover {
     background: rgba(255,255,255,0.2);
     border-radius: 5px;
@@ -201,8 +210,7 @@ body {
 /* Bio Photo */
 img.bio-photo {
     max-width: 100%;
-    display: flex;
-  justify-content: space-between; /* aligns children horizontally */
-  align-items: center; /* aligns children vertically */
+    display: block;
+    height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
 }
 

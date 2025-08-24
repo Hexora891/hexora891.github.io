@@ -16,7 +16,17 @@ document.addEventListener('click', (e) => {
 });
 
 // Open window
-function openWindow(id) {
+function openWindow(event, id) {
+    // Remove 'desktop-icon-large' from all icons
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+        icon.classList.remove('desktop-icon-large');
+    });
+
+    // Add 'desktop-icon-large' to the clicked icon
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('desktop-icon-large');
+    }
+
     const win = document.getElementById(id);
     win.style.display = "block";
     bringToFront(win);
@@ -112,6 +122,12 @@ function addTaskbarButton(id) {
 function removeTaskbarButton(id) {
     const btn = document.getElementById("task-" + id);
     if(btn) btn.remove();
+    
+    // Remove desktop-icon-large class when window is closed
+    const desktopIcon = document.querySelector(`.desktop-icon[onclick*='${id}']`);
+    if (desktopIcon) {
+        desktopIcon.classList.remove('desktop-icon-large');
+    }
 }
 
 // Resume function
