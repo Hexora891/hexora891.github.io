@@ -104,7 +104,7 @@ body {
 }
 
 .about-window-content img.bio-photo {
-    max-width: 80%; /* Adjust as needed */
+    max-width: 100%; /* Changed from 80% to allow for larger size on maximize */
     margin-bottom: 10px; /* Space between image and text */
 }
 
