@@ -201,7 +201,8 @@ body {
 /* Bio Photo */
 img.bio-photo {
     max-width: 100%;
-    display: block;
-    margin: 0 auto 10px auto;
+    display: flex;
+  justify-content: space-between; /* aligns children horizontally */
+  align-items: center; /* aligns children vertically */
 }
 
