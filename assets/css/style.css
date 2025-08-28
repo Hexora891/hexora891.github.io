@@ -165,9 +165,7 @@ body {
 
 /* Start Button */
 #startButton {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: relative;
     height: 28px;
     background: linear-gradient(to bottom, #00a000, #007f00);
     color: white;
@@ -180,6 +178,7 @@ body {
     cursor: pointer;
     z-index: 1000;
     padding: 0 10px;
+    flex-shrink: 0;
 }
 
 /* Start Menu */
