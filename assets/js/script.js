@@ -213,31 +213,21 @@ function loadResumePDF() {
     iframe.style.border = 'none';
     iframe.style.background = '#c0c0c0';
     
-    // Add error handling for iframe
-    iframe.onerror = function() {
-        showFallbackMessage();
-    };
-    
     // Add load event to check if PDF loaded successfully
     iframe.onload = function() {
         console.log('PDF iframe loaded successfully');
     };
+    
+    // Only show fallback if there's a real error
+    // Let the iframe handle its own loading
     
     // Try to load the iframe
     try {
         pdfViewer.innerHTML = '';
         pdfViewer.appendChild(iframe);
         
-        // Set a timeout to check if the iframe loaded properly
-        setTimeout(function() {
-            if (iframe.contentDocument && iframe.contentDocument.body) {
-                // PDF loaded successfully
-                console.log('PDF displayed successfully');
-            } else {
-                // PDF failed to load, show fallback
-                showFallbackMessage();
-            }
-        }, 3000);
+        // Don't use aggressive timeout - let the iframe load naturally
+        // The iframe will either load successfully or fail gracefully
         
     } catch (error) {
         console.error('Error creating iframe:', error);
