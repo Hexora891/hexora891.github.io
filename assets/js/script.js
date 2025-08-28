@@ -180,5 +180,49 @@ function downloadResume() {
 }
 
 function openResumeNewTab() {
-  window.open("https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/embed", "_blank");
+  window.open("https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/view", "_blank");
+}
+
+// PDF.js setup
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// Load PDF when Resume window opens
+function loadResumePDF() {
+    const canvas = document.getElementById('pdfCanvas');
+    const pdfViewer = document.getElementById('pdfViewer');
+    
+    if (!canvas || !pdfViewer) return;
+    
+    // Google Drive direct download link
+    const pdfUrl = 'https://drive.google.com/uc?id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_&export=download';
+    
+    // Load the PDF
+    pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+        // Get the first page
+        return pdf.getPage(1);
+    }).then(function(page) {
+        const viewport = page.getViewport({scale: 1.0});
+        
+        // Calculate scale to fit the canvas
+        const canvasWidth = pdfViewer.offsetWidth - 20; // Account for padding
+        const scale = canvasWidth / viewport.width;
+        const scaledViewport = page.getViewport({scale: scale});
+        
+        // Set canvas dimensions
+        canvas.width = scaledViewport.width;
+        canvas.height = scaledViewport.height;
+        
+        // Render the page
+        const context = canvas.getContext('2d');
+        const renderContext = {
+            canvasContext: context,
+            viewport: scaledViewport
+        };
+        
+        page.render(renderContext);
+    }).catch(function(error) {
+        console.error('Error loading PDF:', error);
+        canvas.style.display = 'none';
+        pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">PDF could not be loaded. Please use the Download or Open in New Tab buttons.</p>';
+    });
 }
