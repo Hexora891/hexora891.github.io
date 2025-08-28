@@ -202,18 +202,61 @@ function loadResumePDF() {
         return;
     }
     
-    // Show a clean message about the PDF
-    pdfViewer.innerHTML = `
-        <div style="text-align: center; padding: 40px 20px; color: #333;">
-            <h3 style="margin-bottom: 20px; color: #0a64ad;">📄 Resume PDF</h3>
-            <p style="margin-bottom: 25px; line-height: 1.5;">
-                Due to browser security restrictions, the PDF cannot be displayed directly in this window.<br>
-                Please use the buttons above to download or view your resume.
-            </p>
-            <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                <strong>💡 Tip:</strong> The "Download" button will save the PDF to your device,<br>
-                while "Open in New Tab" will display it in your browser's PDF viewer.
+    // Try to load PDF using Google Drive embed
+    const pdfUrl = 'https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/preview';
+    
+    // Create iframe for PDF embedding
+    const iframe = document.createElement('iframe');
+    iframe.src = pdfUrl;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    iframe.style.border = 'none';
+    iframe.style.background = '#c0c0c0';
+    
+    // Add error handling for iframe
+    iframe.onerror = function() {
+        showFallbackMessage();
+    };
+    
+    // Add load event to check if PDF loaded successfully
+    iframe.onload = function() {
+        console.log('PDF iframe loaded successfully');
+    };
+    
+    // Try to load the iframe
+    try {
+        pdfViewer.innerHTML = '';
+        pdfViewer.appendChild(iframe);
+        
+        // Set a timeout to check if the iframe loaded properly
+        setTimeout(function() {
+            if (iframe.contentDocument && iframe.contentDocument.body) {
+                // PDF loaded successfully
+                console.log('PDF displayed successfully');
+            } else {
+                // PDF failed to load, show fallback
+                showFallbackMessage();
+            }
+        }, 3000);
+        
+    } catch (error) {
+        console.error('Error creating iframe:', error);
+        showFallbackMessage();
+    }
+    
+    function showFallbackMessage() {
+        pdfViewer.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: #333;">
+                <h3 style="margin-bottom: 20px; color: #0a64ad;">📄 Resume PDF</h3>
+                <p style="margin-bottom: 25px; line-height: 1.5;">
+                    Due to browser security restrictions, the PDF cannot be displayed directly in this window.<br>
+                    Please use the buttons above to download or view your resume.
+                </p>
+                <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                    <strong>💡 Tip:</strong> The "Download" button will save the PDF to your device,<br>
+                    while "Open in New Tab" will display it in your browser's PDF viewer.
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    }
 }
