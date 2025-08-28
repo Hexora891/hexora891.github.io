@@ -249,8 +249,34 @@ body {
 
 /* Bio Photo */
 img.bio-photo {
-    max-width: 100%;
+    max-width: 90%;
     display: block;
     height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
+}
+
+/* PDF Viewer Styling */
+#resumeWindow iframe {
+  background: #c0c0c0;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
+}
+
+#resumeWindow iframe::-webkit-scrollbar {
+  width: 16px;
+}
+
+#resumeWindow iframe::-webkit-scrollbar-track {
+  background: #c0c0c0;
+  border: 1px solid #808080;
+}
+
+#resumeWindow iframe::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 1px solid #fff;
+  box-shadow: inset 1px 1px 0 #000;
+}
+
+#resumeWindow iframe::-webkit-scrollbar-thumb:hover {
+  background: #606060;
 }
 
