@@ -116,22 +116,7 @@ function maximizeWindow(id) {
     }
 }
 
-// Resume controls
-let resumeZoomPercent = 100;
-function changeResumeZoom(delta) {
-    resumeZoomPercent = Math.max(25, Math.min(400, resumeZoomPercent + delta));
-    const frame = document.getElementById('resumeFrame');
-    if (!frame) return;
-    const base = 'assets/files/Ayush-Resume.pdf#toolbar=0&navpanes=0&scrollbar=0&zoom=';
-    frame.src = base + resumeZoomPercent;
-}
-
-function setResumeView(mode) {
-    const frame = document.getElementById('resumeFrame');
-    if (!frame) return;
-    const base = 'assets/files/Ayush-Resume.pdf#toolbar=0&navpanes=0&scrollbar=0&zoom=';
-    frame.src = base + mode;
-}
+// (Removed custom resume controls)
 
 // Draggable windows
 let dragged;
