@@ -90,10 +90,30 @@ body {
     background: #c0c0c0;
 }
 
+/* Scroll behavior for all window contents */
 .window-content {
-    padding: 10px;
-    overflow-y: auto;
-    height: calc(100% - 30px);
+    overflow: auto;
+}
+
+/* Themed scrollbars for window contents */
+.window-content::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+.window-content::-webkit-scrollbar-track {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 1px solid #fff;
+    box-shadow: inset 1px 1px 0 #000;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+    background: #606060;
 }
 
 .about-window-content {
