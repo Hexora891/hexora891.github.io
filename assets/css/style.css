@@ -52,8 +52,8 @@ body {
 
 /* Windows */
 .window {
-    width: 700px; /* Increased from 500px */
-    height: 500px; /* Increased from 300px */
+    width: 900px; /* Increased from 500px */
+    height: 700px; /* Increased from 300px */
     background: #c0c0c0;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
@@ -135,7 +135,7 @@ body {
 .about-window-content p {
     width: 70%;
     margin: 0;
-    text-align: left;
+    text-align: center;
 }
 
 /* Resume buttons */
@@ -278,7 +278,7 @@ body {
 
 /* Bio Photo */
 img.bio-photo {
-    max-width: 60%;
+    max-width: 70%;
     display: block;
     height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
 }
