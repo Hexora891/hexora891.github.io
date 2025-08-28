@@ -132,6 +132,12 @@ body {
     margin-bottom: 10px;
 }
 
+.about-window-content p {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+}
+
 /* Resume buttons */
 .resume-buttons {
   margin-bottom: 10px;
