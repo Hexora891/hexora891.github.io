@@ -1,4 +1,39 @@
 let zIndexCounter = 10;
+let nextCascadeLeft = null;
+let nextCascadeTop = null;
+const CASCADE_STEP_PX = 24;
+
+function positionWindowWithCascade(win) {
+    const taskbarHeight = 30;
+    const wasHidden = win.style.display === "none" || getComputedStyle(win).display === "none";
+    // Ensure it's measurable
+    if (wasHidden) {
+        win.style.display = "block";
+    }
+    const width = win.offsetWidth || 700;
+    const height = win.offsetHeight || 500;
+
+    if (nextCascadeLeft === null || nextCascadeTop === null) {
+        const centeredLeft = Math.max(0, Math.floor((window.innerWidth - width) / 2) - 60);
+        const centeredTop = Math.max(0, Math.floor((window.innerHeight - height - taskbarHeight) / 2));
+        nextCascadeLeft = centeredLeft;
+        nextCascadeTop = centeredTop;
+    } else {
+        nextCascadeLeft += CASCADE_STEP_PX;
+        nextCascadeTop += CASCADE_STEP_PX;
+    }
+
+    // Wrap to visible area if overflowing
+    if (nextCascadeLeft + width > window.innerWidth - 10) {
+        nextCascadeLeft = Math.max(0, Math.floor((window.innerWidth - width) / 2) - 60);
+    }
+    if (nextCascadeTop + height > window.innerHeight - taskbarHeight) {
+        nextCascadeTop = Math.max(0, Math.floor((window.innerHeight - height - taskbarHeight) / 2));
+    }
+
+    win.style.left = nextCascadeLeft + 'px';
+    win.style.top = nextCascadeTop + 'px';
+}
 
 // Start menu toggle
 function toggleStartMenu() {
@@ -10,7 +45,7 @@ function toggleStartMenu() {
 document.addEventListener('click', (e) => {
     const menu = document.getElementById("startMenu");
     const button = document.getElementById("startButton");
-    if (!menu.contains(e.target) && e.target !== button) {
+    if (!menu.contains(e.target) && !button.contains(e.target)) {
         menu.style.display = 'none';
     }
 });
@@ -29,6 +64,7 @@ function openWindow(event, id) {
 
     const win = document.getElementById(id);
     win.style.display = "block";
+    positionWindowWithCascade(win);
     bringToFront(win);
     removeTaskbarButton(id);
 }
@@ -80,9 +116,21 @@ function maximizeWindow(id) {
     }
 }
 
-// Dummy resume download
-function downloadResume() {
-    alert("Downloading resume...");
+// Resume controls
+let resumeZoomPercent = 100;
+function changeResumeZoom(delta) {
+    resumeZoomPercent = Math.max(25, Math.min(400, resumeZoomPercent + delta));
+    const frame = document.getElementById('resumeFrame');
+    if (!frame) return;
+    const base = 'assets/files/Ayush-Resume.pdf#toolbar=0&navpanes=0&scrollbar=0&zoom=';
+    frame.src = base + resumeZoomPercent;
+}
+
+function setResumeView(mode) {
+    const frame = document.getElementById('resumeFrame');
+    if (!frame) return;
+    const base = 'assets/files/Ayush-Resume.pdf#toolbar=0&navpanes=0&scrollbar=0&zoom=';
+    frame.src = base + mode;
 }
 
 // Draggable windows

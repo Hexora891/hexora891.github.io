@@ -60,8 +60,12 @@
       <button onclick="openResumeNewTab()">
         <img src="assets/images/open.png" alt="Open" class="icon"> Open in New Tab
       </button>
+      <button onclick="changeResumeZoom(-10)">− Zoom</button>
+      <button onclick="changeResumeZoom(10)">+ Zoom</button>
+      <button onclick="setResumeView('page-width')">Fit Width</button>
+      <button onclick="setResumeView('page-fit')">Fit Page</button>
     </div>
-    <iframe src="assets/files/Ayush-Resume.pdf" width="100%" height="calc(100% - 64px)" style="border:none;"></iframe>
+    <iframe id="resumeFrame" src="assets/files/Ayush-Resume.pdf#toolbar=0&navpanes=0&scrollbar=0&zoom=page-width" width="100%" height="calc(100% - 64px)" style="border:none;background:#c0c0c0;"></iframe>
   </div>
 </div>
 
