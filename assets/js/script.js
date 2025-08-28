@@ -67,6 +67,11 @@ function openWindow(event, id) {
     positionWindowWithCascade(win);
     bringToFront(win);
     removeTaskbarButton(id);
+    
+    // Load PDF if it's the Resume window
+    if (id === 'resumeWindow') {
+        setTimeout(loadResumePDF, 500); // Increased delay to ensure DOM is ready
+    }
 }
 
 // Close window
@@ -188,19 +193,42 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs
 
 // Load PDF when Resume window opens
 function loadResumePDF() {
+    console.log('Loading PDF...');
+    
+    // Check if PDF.js is loaded
+    if (typeof pdfjsLib === 'undefined') {
+        console.error('PDF.js library not loaded');
+        const pdfViewer = document.getElementById('pdfViewer');
+        if (pdfViewer) {
+            pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">PDF.js library not loaded. Please refresh the page and try again.</p>';
+        }
+        return;
+    }
+    
     const canvas = document.getElementById('pdfCanvas');
     const pdfViewer = document.getElementById('pdfViewer');
     
-    if (!canvas || !pdfViewer) return;
+    if (!canvas || !pdfViewer) {
+        console.error('Canvas or PDF viewer not found');
+        return;
+    }
     
-    // Google Drive direct download link
-    const pdfUrl = 'https://drive.google.com/uc?id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_&export=download';
+    // Show loading message
+    pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Loading PDF...</p>';
+    
+    // Use direct download URL
+    const pdfUrl = 'https://drive.google.com/uc?export=download&id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_';
+    
+    console.log('PDF URL:', pdfUrl);
     
     // Load the PDF
     pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+        console.log('PDF loaded successfully, pages:', pdf.numPages);
+        
         // Get the first page
         return pdf.getPage(1);
     }).then(function(page) {
+        console.log('Page 1 loaded');
         const viewport = page.getViewport({scale: 1.0});
         
         // Calculate scale to fit the canvas
@@ -208,9 +236,12 @@ function loadResumePDF() {
         const scale = canvasWidth / viewport.width;
         const scaledViewport = page.getViewport({scale: scale});
         
+        console.log('Canvas dimensions:', canvasWidth, 'x', scaledViewport.height);
+        
         // Set canvas dimensions
         canvas.width = scaledViewport.width;
         canvas.height = scaledViewport.height;
+        canvas.style.display = 'block';
         
         // Render the page
         const context = canvas.getContext('2d');
@@ -219,10 +250,14 @@ function loadResumePDF() {
             viewport: scaledViewport
         };
         
-        page.render(renderContext);
+        return page.render(renderContext);
+    }).then(function() {
+        console.log('PDF rendered successfully');
+        // Clear the loading message and add canvas
+        pdfViewer.innerHTML = '';
+        pdfViewer.appendChild(canvas);
     }).catch(function(error) {
         console.error('Error loading PDF:', error);
-        canvas.style.display = 'none';
-        pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">PDF could not be loaded. Please use the Download or Open in New Tab buttons.</p>';
+        pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">PDF could not be loaded. Error: ' + error.message + '<br><br>Please use the Download or Open in New Tab buttons.</p>';
     });
 }
