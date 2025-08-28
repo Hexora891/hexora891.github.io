@@ -98,6 +98,12 @@ body {
     box-sizing: border-box;
 }
 
+#resumeWindow .window-content {
+    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+}
+
 /* Themed scrollbars for window contents */
 .window-content::-webkit-scrollbar {
     width: 14px;
@@ -147,6 +153,14 @@ body {
   height: 40px;
   display: flex;
   align-items: center;
+}
+
+#resumeWindow .resume-buttons {
+    flex-shrink: 0;
+    margin-bottom: 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .resume-buttons button {
@@ -292,9 +306,11 @@ img.bio-photo {
 
 /* PDF Viewer Styling */
 #resumeWindow iframe {
-  background: #c0c0c0;
-  border: 1px solid #808080;
-  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
+    flex: 1;
+    min-height: 0;
+    background: #c0c0c0;
+    border: 1px solid #808080;
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
 }
 
 #resumeWindow iframe::-webkit-scrollbar {
