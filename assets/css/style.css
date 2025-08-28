@@ -134,8 +134,11 @@ body {
 
 .about-window-content p {
     width: 70%;
-    margin: 0;
+    margin: 0 auto;
     text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 70%;
 }
 
 /* Resume buttons */
