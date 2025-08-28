@@ -30,7 +30,7 @@ function openWindow(event, id) {
     const win = document.getElementById(id);
     win.style.display = "block";
     bringToFront(win);
-    addTaskbarButton(id);
+    removeTaskbarButton(id);
 }
 
 // Close window
@@ -50,6 +50,7 @@ function bringToFront(win) {
 function minimizeWindow(id) {
     const win = document.getElementById(id);
     win.style.display = "none";
+    addTaskbarButton(id);
 }
 
 // Maximize / Restore window
@@ -106,17 +107,24 @@ document.querySelectorAll('.window-header').forEach(header => {
 
 // Taskbar buttons
 function addTaskbarButton(id) {
-    const taskbar = document.getElementById("taskbar");
+    const taskbarWindows = document.getElementById("taskbar-windows");
     if (document.getElementById("task-" + id)) return;
     const btn = document.createElement("button");
     btn.id = "task-" + id;
-    btn.innerText = id.replace("Window","");
+    const headerTitle = document.querySelector(`#${id} .window-header span`);
+    btn.innerText = headerTitle ? headerTitle.innerText : id.replace("Window","");
     btn.onclick = () => {
         const win = document.getElementById(id);
-        if (win.style.display === "none") win.style.display = "block";
-        bringToFront(win);
+        if (win.style.display === "none") {
+            win.style.display = "block";
+            bringToFront(win);
+            // Remove the taskbar button on restore
+            removeTaskbarButton(id);
+        } else {
+            minimizeWindow(id);
+        }
     };
-    taskbar.appendChild(btn);
+    taskbarWindows.appendChild(btn);
 }
 
 function removeTaskbarButton(id) {

@@ -218,6 +218,21 @@ body {
     z-index: 999;
 }
 
+#taskbar-windows {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    flex: 1;
+}
+
+#taskbar-windows button {
+    white-space: nowrap;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 #taskbar button {
     height: 24px;
     padding: 0 5px;
