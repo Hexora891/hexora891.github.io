@@ -195,69 +195,25 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs
 function loadResumePDF() {
     console.log('Loading PDF...');
     
-    // Check if PDF.js is loaded
-    if (typeof pdfjsLib === 'undefined') {
-        console.error('PDF.js library not loaded');
-        const pdfViewer = document.getElementById('pdfViewer');
-        if (pdfViewer) {
-            pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">PDF.js library not loaded. Please refresh the page and try again.</p>';
-        }
-        return;
-    }
-    
-    const canvas = document.getElementById('pdfCanvas');
     const pdfViewer = document.getElementById('pdfViewer');
     
-    if (!canvas || !pdfViewer) {
-        console.error('Canvas or PDF viewer not found');
+    if (!pdfViewer) {
+        console.error('PDF viewer not found');
         return;
     }
     
-    // Show loading message
-    pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Loading PDF...</p>';
-    
-    // Use direct download URL
-    const pdfUrl = 'https://drive.google.com/uc?export=download&id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_';
-    
-    console.log('PDF URL:', pdfUrl);
-    
-    // Load the PDF
-    pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
-        console.log('PDF loaded successfully, pages:', pdf.numPages);
-        
-        // Get the first page
-        return pdf.getPage(1);
-    }).then(function(page) {
-        console.log('Page 1 loaded');
-        const viewport = page.getViewport({scale: 1.0});
-        
-        // Calculate scale to fit the canvas
-        const canvasWidth = pdfViewer.offsetWidth - 20; // Account for padding
-        const scale = canvasWidth / viewport.width;
-        const scaledViewport = page.getViewport({scale: scale});
-        
-        console.log('Canvas dimensions:', canvasWidth, 'x', scaledViewport.height);
-        
-        // Set canvas dimensions
-        canvas.width = scaledViewport.width;
-        canvas.height = scaledViewport.height;
-        canvas.style.display = 'block';
-        
-        // Render the page
-        const context = canvas.getContext('2d');
-        const renderContext = {
-            canvasContext: context,
-            viewport: scaledViewport
-        };
-        
-        return page.render(renderContext);
-    }).then(function() {
-        console.log('PDF rendered successfully');
-        // Clear the loading message and add canvas
-        pdfViewer.innerHTML = '';
-        pdfViewer.appendChild(canvas);
-    }).catch(function(error) {
-        console.error('Error loading PDF:', error);
-        pdfViewer.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">PDF could not be loaded. Error: ' + error.message + '<br><br>Please use the Download or Open in New Tab buttons.</p>';
-    });
+    // Show a clean message about the PDF
+    pdfViewer.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; color: #333;">
+            <h3 style="margin-bottom: 20px; color: #0a64ad;">📄 Resume PDF</h3>
+            <p style="margin-bottom: 25px; line-height: 1.5;">
+                Due to browser security restrictions, the PDF cannot be displayed directly in this window.<br>
+                Please use the buttons above to download or view your resume.
+            </p>
+            <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                <strong>💡 Tip:</strong> The "Download" button will save the PDF to your device,<br>
+                while "Open in New Tab" will display it in your browser's PDF viewer.
+            </div>
+        </div>
+    `;
 }
