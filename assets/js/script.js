@@ -174,11 +174,11 @@ function removeTaskbarButton(id) {
 // Resume function
 function downloadResume() {
   const link = document.createElement('a');
-  link.href = "https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/preview";
+  link.href = "https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/embed";
   link.download = "Ayush-Resume.pdf";
   link.click();
 }
 
 function openResumeNewTab() {
-  window.open("https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/preview", "_blank");
+  window.open("https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/embed", "_blank");
 }
