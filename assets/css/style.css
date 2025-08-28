@@ -144,6 +144,9 @@ body {
 /* Resume buttons */
 .resume-buttons {
   margin-bottom: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .resume-buttons button {
