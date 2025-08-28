@@ -92,7 +92,10 @@ body {
 
 /* Scroll behavior for all window contents */
 .window-content {
+    padding: 10px;
     overflow: auto;
+    height: calc(100% - 30px);
+    box-sizing: border-box;
 }
 
 /* Themed scrollbars for window contents */
