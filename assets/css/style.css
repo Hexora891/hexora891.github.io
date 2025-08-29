@@ -132,19 +132,42 @@ body {
     padding: 10px;
 }
 
-.about-window-content img.bio-photo {
+.about-text {
     width: 70%;
-    height: auto;
-    margin-bottom: 10px;
+    max-width: 760px;
 }
 
-.about-window-content p {
-    width: 70%;
-    margin: 0 auto;
-    text-align: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 70%;
+.about-title {
+    font-size: 28px;
+    margin: 10px 0 4px 0;
+    color: #111;
+}
+
+.about-subtitle {
+    font-size: 12px;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.about-tagline {
+    font-size: 12px;
+    color: #0a4a8c;
+    margin-bottom: 16px;
+}
+
+.about-section {
+    font-size: 16px;
+    margin: 18px 0 8px 0;
+    color: #0a4a8c;
+}
+
+.about-window-content a {
+    color: #c0392b;
+    text-decoration: none;
+}
+
+.about-window-content a:hover {
+    text-decoration: underline;
 }
 
 /* Resume buttons */
