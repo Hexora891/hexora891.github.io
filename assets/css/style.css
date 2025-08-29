@@ -322,7 +322,7 @@ body {
 
 /* Bio Photo */
 img.bio-photo {
-    max-width: 70%;
+    width: 70%;
     display: block;
     height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
 }
