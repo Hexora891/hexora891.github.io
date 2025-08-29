@@ -207,7 +207,7 @@ body {
     position: fixed;
     bottom: 30px;
     left: 0;
-    width: 250px; /* Increased width */
+    width: 200px; /* decreased width */
     background: #c0c0c0;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
@@ -243,8 +243,8 @@ body {
 }
 
 #startMenu ul li img {
-    width: 16px;
-    height: 16px;
+    width: 32px;
+    height: 32px;
 }
 
 #startMenu ul li:hover {
