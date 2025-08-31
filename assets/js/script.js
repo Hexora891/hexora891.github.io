@@ -165,10 +165,11 @@ document.querySelectorAll('.window-header').forEach(header => {
         };
     };
     
-    // Touch events for mobile
+    // Touch events for mobile - only for dragging, not for buttons
     header.addEventListener('touchstart', function(e) {
         if (window.innerWidth > 768) return; // Only enable touch on mobile
-        e.preventDefault();
+        
+        // Don't prevent default here to allow button clicks
         dragged = this.parentElement;
         bringToFront(dragged);
         
@@ -181,18 +182,23 @@ document.querySelectorAll('.window-header').forEach(header => {
     
     header.addEventListener('touchmove', function(e) {
         if (window.innerWidth > 768) return;
-        e.preventDefault();
         if (!dragged) return;
         
+        // Only prevent default if we're actually dragging
         const touch = e.touches[0];
-        const deltaX = touch.clientX - touchStartX;
-        const deltaY = touch.clientY - touchStartY;
+        const deltaX = Math.abs(touch.clientX - touchStartX);
+        const deltaY = Math.abs(touch.clientY - touchStartY);
         
-        const newLeft = Math.min(window.innerWidth - dragged.offsetWidth, Math.max(0, touchStartLeft + deltaX));
-        const newTop = Math.min(window.innerHeight - dragged.offsetHeight - 30, Math.max(0, touchStartTop + deltaY));
-        
-        dragged.style.left = newLeft + 'px';
-        dragged.style.top = newTop + 'px';
+        // Only start dragging if movement is significant (not a tap)
+        if (deltaX > 5 || deltaY > 5) {
+            e.preventDefault();
+            
+            const newLeft = Math.min(window.innerWidth - dragged.offsetWidth, Math.max(0, touchStartLeft + (touch.clientX - touchStartX)));
+            const newTop = Math.min(window.innerHeight - dragged.offsetHeight - 30, Math.max(0, touchStartTop + (touch.clientY - touchStartY)));
+            
+            dragged.style.left = newLeft + 'px';
+            dragged.style.top = newTop + 'px';
+        }
     });
     
     header.addEventListener('touchend', function(e) {
@@ -200,6 +206,116 @@ document.querySelectorAll('.window-header').forEach(header => {
         dragged = null;
     });
 });
+
+// Add touch support for all buttons
+function addTouchSupportToButtons() {
+    // Desktop icons
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+        icon.addEventListener('touchstart', function(e) {
+            // Prevent default to avoid double-tap zoom
+            e.preventDefault();
+        });
+        
+        icon.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the function call from onclick
+                const match = onclick.match(/openWindow\(event,\s*'([^']+)'\)/);
+                if (match) {
+                    openWindow(e, match[1]);
+                }
+            }
+        });
+    });
+    
+    // Window control buttons
+    document.querySelectorAll('.window-controls button').forEach(button => {
+        button.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        button.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the function call from onclick
+                const match = onclick.match(/(\w+)Window\('([^']+)'\)/);
+                if (match) {
+                    const funcName = match[1];
+                    const windowId = match[2];
+                    if (funcName === 'minimize') {
+                        minimizeWindow(windowId);
+                    } else if (funcName === 'maximize') {
+                        maximizeWindow(windowId);
+                    } else if (funcName === 'close') {
+                        closeWindow(windowId);
+                    }
+                }
+            }
+        });
+    });
+    
+    // Resume buttons
+    document.querySelectorAll('.resume-buttons button').forEach(button => {
+        button.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        button.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the function call from onclick
+                const match = onclick.match(/(\w+)\(\)/);
+                if (match) {
+                    const funcName = match[1];
+                    if (funcName === 'downloadResume') {
+                        downloadResume();
+                    } else if (funcName === 'openResumeNewTab') {
+                        openResumeNewTab();
+                    }
+                }
+            }
+        });
+    });
+    
+    // Start button
+    const startButton = document.getElementById('startButton');
+    if (startButton) {
+        startButton.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        startButton.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            toggleStartMenu();
+        });
+    }
+    
+    // Start menu items
+    document.querySelectorAll('#startMenu ul li').forEach(item => {
+        item.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        item.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the URL from onclick
+                const match = onclick.match(/window\.open\('([^']+)'/);
+                if (match) {
+                    window.open(match[1], '_blank');
+                }
+            }
+        });
+    });
+}
 
 // Taskbar buttons
 function addTaskbarButton(id) {
@@ -209,6 +325,8 @@ function addTaskbarButton(id) {
     btn.id = "task-" + id;
     const headerTitle = document.querySelector(`#${id} .window-header span`);
     btn.innerText = headerTitle ? headerTitle.innerText : id.replace("Window","");
+    
+    // Add both click and touch support
     btn.onclick = () => {
         const win = document.getElementById(id);
         if (win.style.display === "none") {
@@ -220,6 +338,17 @@ function addTaskbarButton(id) {
             minimizeWindow(id);
         }
     };
+    
+    // Add touch support for taskbar buttons
+    btn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+    });
+    
+    btn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        btn.onclick();
+    });
+    
     taskbarWindows.appendChild(btn);
 }
 
@@ -360,3 +489,152 @@ document.addEventListener('touchend', (e) => {
         menu.style.display = 'none';
     }
 });
+
+// Initialize touch support when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    addTouchSupportToButtons();
+});
+
+// Also add touch support after any dynamic content is added
+function addTouchSupportToButtons() {
+    // Desktop icons
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+        // Remove existing listeners to avoid duplicates
+        icon.removeEventListener('touchstart', icon._touchStartHandler);
+        icon.removeEventListener('touchend', icon._touchEndHandler);
+        
+        icon._touchStartHandler = function(e) {
+            e.preventDefault();
+        };
+        
+        icon._touchEndHandler = function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the function call from onclick
+                const match = onclick.match(/openWindow\(event,\s*'([^']+)'\)/);
+                if (match) {
+                    openWindow(e, match[1]);
+                }
+            }
+        };
+        
+        icon.addEventListener('touchstart', icon._touchStartHandler);
+        icon.addEventListener('touchend', icon._touchEndHandler);
+    });
+    
+    // Window control buttons
+    document.querySelectorAll('.window-controls button').forEach(button => {
+        // Remove existing listeners to avoid duplicates
+        button.removeEventListener('touchstart', button._touchStartHandler);
+        button.removeEventListener('touchend', button._touchEndHandler);
+        
+        button._touchStartHandler = function(e) {
+            e.preventDefault();
+        };
+        
+        button._touchEndHandler = function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the function call from onclick
+                const match = onclick.match(/(\w+)Window\('([^']+)'\)/);
+                if (match) {
+                    const funcName = match[1];
+                    const windowId = match[2];
+                    if (funcName === 'minimize') {
+                        minimizeWindow(windowId);
+                    } else if (funcName === 'maximize') {
+                        maximizeWindow(windowId);
+                    } else if (funcName === 'close') {
+                        closeWindow(windowId);
+                    }
+                }
+            }
+        };
+        
+        button.addEventListener('touchstart', button._touchStartHandler);
+        button.addEventListener('touchend', button._touchEndHandler);
+    });
+    
+    // Resume buttons
+    document.querySelectorAll('.resume-buttons button').forEach(button => {
+        // Remove existing listeners to avoid duplicates
+        button.removeEventListener('touchstart', button._touchStartHandler);
+        button.removeEventListener('touchend', button._touchEndHandler);
+        
+        button._touchStartHandler = function(e) {
+            e.preventDefault();
+        };
+        
+        button._touchEndHandler = function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the function call from onclick
+                const match = onclick.match(/(\w+)\(\)/);
+                if (match) {
+                    const funcName = match[1];
+                    if (funcName === 'downloadResume') {
+                        downloadResume();
+                    } else if (funcName === 'openResumeNewTab') {
+                        openResumeNewTab();
+                    }
+                }
+            }
+        };
+        
+        button.addEventListener('touchstart', button._touchStartHandler);
+        button.addEventListener('touchend', button._touchEndHandler);
+    });
+    
+    // Start button
+    const startButton = document.getElementById('startButton');
+    if (startButton) {
+        // Remove existing listeners to avoid duplicates
+        startButton.removeEventListener('touchstart', startButton._touchStartHandler);
+        startButton.removeEventListener('touchend', startButton._touchEndHandler);
+        
+        startButton._touchStartHandler = function(e) {
+            e.preventDefault();
+        };
+        
+        startButton._touchEndHandler = function(e) {
+            e.preventDefault();
+            toggleStartMenu();
+        };
+        
+        startButton.addEventListener('touchstart', startButton._touchStartHandler);
+        startButton.addEventListener('touchend', startButton._touchEndHandler);
+    }
+    
+    // Start menu items
+    document.querySelectorAll('#startMenu ul li').forEach(item => {
+        // Remove existing listeners to avoid duplicates
+        item.removeEventListener('touchstart', item._touchStartHandler);
+        item.removeEventListener('touchend', item._touchEndHandler);
+        
+        item._touchStartHandler = function(e) {
+            e.preventDefault();
+        };
+        
+        item._touchEndHandler = function(e) {
+            e.preventDefault();
+            // Trigger the onclick event
+            const onclick = this.getAttribute('onclick');
+            if (onclick) {
+                // Extract the URL from onclick
+                const match = onclick.match(/window\.open\('([^']+)'/);
+                if (match) {
+                    window.open(match[1], '_blank');
+                }
+            }
+        };
+        
+        item.addEventListener('touchstart', item._touchStartHandler);
+        item.addEventListener('touchend', item._touchEndHandler);
+    });
+}

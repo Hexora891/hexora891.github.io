@@ -480,6 +480,63 @@ img.bio-photo {
     #pdfViewer {
         height: calc(80vh - 120px) !important;
     }
+    
+    /* Window control buttons - ensure they're touchable */
+    .window-controls button {
+        min-width: 24px;
+        min-height: 24px;
+        font-size: 12px;
+        padding: 2px;
+        margin: 0 1px;
+    }
+    
+    /* Ensure all clickable elements have proper touch targets */
+    button, .desktop-icon, #startMenu ul li {
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        touch-action: manipulation;
+    }
+    
+    /* Prevent text selection on touch */
+    .desktop-icon, button, #startMenu ul li {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Resume buttons - ensure they're touchable */
+    .resume-buttons button {
+        min-height: 44px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* Desktop icons - ensure touch targets are large enough */
+    .desktop-icon {
+        min-height: 70px;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    
+    /* Start button - ensure touch targets are large enough */
+    #startButton {
+        min-width: 60px;
+        min-height: 32px;
+    }
+    
+    /* Taskbar buttons - ensure touch targets are large enough */
+    #taskbar button {
+        min-height: 28px;
+        min-width: 40px;
+    }
+    
+    /* Start menu items - ensure touch targets are large enough */
+    #startMenu ul li {
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+    }
 }
 
 /* Extra small devices (phones, 480px and down) */
@@ -493,6 +550,10 @@ img.bio-photo {
     .desktop-icon {
         width: 50px;
         font-size: 9px;
+        /* Ensure touch targets are large enough */
+        min-height: 60px;
+        padding: 4px;
+        box-sizing: border-box;
     }
     
     .desktop-icon img {
@@ -531,6 +592,9 @@ img.bio-photo {
     #startButton {
         height: 35px;
         font-size: 11px;
+        /* Ensure touch targets are large enough */
+        min-width: 70px;
+        min-height: 35px;
     }
     
     #startMenu {
@@ -541,11 +605,31 @@ img.bio-photo {
     #startMenu ul li {
         padding: 4px 6px;
         font-size: 11px;
+        /* Ensure touch targets are large enough */
+        min-height: 32px;
+        display: flex;
+        align-items: center;
     }
     
     #startMenu ul li img {
         width: 18px;
         height: 18px;
+    }
+    
+    /* Resume buttons - even larger touch targets on small phones */
+    .resume-buttons button {
+        min-height: 48px;
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+    
+    /* Window control buttons - ensure they're touchable */
+    .window-controls button {
+        min-width: 28px;
+        min-height: 28px;
+        font-size: 13px;
+        padding: 3px;
+        margin: 0 2px;
     }
 }
 
