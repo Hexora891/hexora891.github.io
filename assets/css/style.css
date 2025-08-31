@@ -263,16 +263,22 @@ body {
     padding: 3px 8px; /* Adjusted padding */
     cursor: pointer;
     transition: background 0.1s;
+    border-bottom: 1px solid #b0b0b0;
 }
 
-#startMenu ul li img {
-    width: 26px;
-    height: 26px;
+#startMenu ul li:last-child {
+    border-bottom: none;
 }
 
 #startMenu ul li:hover {
     color: #fff;
     background: #0a4a8c; /* Windows-like hover color */
+}
+
+#startMenu ul li img {
+    width: 26px;
+    height: 26px;
+    filter: brightness(1.1);
 }
 
 /* Taskbar */
