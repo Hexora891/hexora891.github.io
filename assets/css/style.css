@@ -260,10 +260,11 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 3px 8px; /* Adjusted padding */
+    padding: 5px 8px; /* Increased padding to match mobile */
     cursor: pointer;
     transition: background 0.1s;
     border-bottom: 1px solid #b0b0b0;
+    min-height: 36px; /* Added minimum height to match mobile */
 }
 
 #startMenu ul li:last-child {
