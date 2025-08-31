@@ -357,7 +357,7 @@ img.bio-photo {
 
 /* Mobile Responsive Styles */
 @media screen and (max-width: 768px) {
-    /* Desktop icons - make them smaller and more compact with retro styling */
+    /* Desktop icons - make them smaller and more compact */
     #desktop {
         top: 10px;
         left: 10px;
@@ -371,24 +371,11 @@ img.bio-photo {
         min-height: 70px;
         padding: 5px;
         box-sizing: border-box;
-        /* Retro styling */
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
-        transition: all 0.2s ease;
-        backdrop-filter: blur(2px);
-    }
-    
-    .desktop-icon:hover {
-        background: rgba(255, 255, 255, 0.3);
-        border-color: rgba(255, 255, 255, 0.4);
-        transform: scale(1.05);
     }
     
     .desktop-icon img {
         width: 40px;
         height: 40px;
-        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
     }
     
     .desktop-icon-large img {
@@ -398,12 +385,9 @@ img.bio-photo {
     
     .desktop-icon-large {
         font-size: 11px;
-        background: rgba(255, 255, 255, 0.25);
-        border-color: rgba(255, 255, 255, 0.5);
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
     
-    /* Windows - make them responsive with enhanced retro styling */
+    /* Windows - make them responsive */
     .window {
         width: 95vw !important;
         height: 80vh !important;
@@ -411,85 +395,40 @@ img.bio-photo {
         max-height: 80vh;
         left: 2.5vw !important;
         top: 10vh !important;
-        /* Enhanced retro styling */
-        border: 3px solid #fff;
-        box-shadow: 
-            4px 4px 0px #000,
-            inset 1px 1px 0 #fff,
-            inset -1px -1px 0 #808080;
-        background: linear-gradient(135deg, #c0c0c0 0%, #d4d4d4 50%, #c0c0c0 100%);
-    }
-    
-    .window-header {
-        /* Enhanced retro header */
-        background: linear-gradient(to bottom, #0a64ad 0%, #0a4a8c 50%, #0a64ad 100%);
-        border-bottom: 2px solid #fff;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     }
     
     /* Window content adjustments */
     .window-content {
         padding: 8px;
-        background: #c0c0c0;
-        border: 1px solid #808080;
-        box-shadow: inset 1px 1px 0 #fff;
     }
     
     /* About window specific mobile styles */
     .about-window-content {
         padding: 8px;
-        background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-        border-radius: 3px;
-        border: 1px solid #ccc;
     }
     
     .about-text {
         width: 95%;
         max-width: none;
-        background: rgba(255, 255, 255, 0.7);
-        padding: 15px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        box-shadow: inset 1px 1px 0 #fff;
     }
     
     .about-title {
         font-size: 24px;
-        color: #0a64ad;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-        border-bottom: 2px solid #0a64ad;
-        padding-bottom: 5px;
     }
     
     .about-section {
         font-size: 14px;
-        color: #333;
-        font-weight: bold;
-        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
     }
     
     img.bio-photo {
         width: 90%;
-        border: 3px solid #fff;
-        box-shadow: 
-            2px 2px 0px #000,
-            inset 1px 1px 0 #fff;
-        border-radius: 5px;
     }
     
-    /* Resume buttons - stack vertically on mobile with retro styling */
+    /* Resume buttons - stack vertically on mobile */
     .resume-buttons {
         flex-direction: column;
         height: auto;
-        gap: 8px;
-        background: #e0e0e0;
-        padding: 10px;
-        border-radius: 5px;
-        border: 2px solid #fff;
-        box-shadow: 
-            2px 2px 0px #000,
-            inset 1px 1px 0 #fff;
+        gap: 5px;
     }
     
     .resume-buttons button {
@@ -500,31 +439,6 @@ img.bio-photo {
         min-height: 44px;
         padding: 8px 12px;
         font-size: 14px;
-        /* Retro button styling */
-        background: linear-gradient(to bottom, #e0e0e0 0%, #d0d0d0 50%, #e0e0e0 100%);
-        border: 2px solid #fff;
-        box-shadow: 
-            2px 2px 0px #000,
-            inset 1px 1px 0 #fff;
-        color: #000;
-        font-weight: bold;
-        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
-        transition: all 0.2s ease;
-    }
-    
-    .resume-buttons button:hover {
-        background: linear-gradient(to bottom, #d0d0d0 0%, #c0c0c0 50%, #d0d0d0 100%);
-        transform: translateY(1px);
-        box-shadow: 
-            1px 1px 0px #000,
-            inset 1px 1px 0 #fff;
-    }
-    
-    .resume-buttons button:active {
-        transform: translateY(2px);
-        box-shadow: 
-            0px 0px 0px #000,
-            inset 2px 2px 0 #000;
     }
     
     /* Taskbar adjustments */
@@ -537,6 +451,9 @@ img.bio-photo {
         height: 32px;
         padding: 0 8px;
         font-size: 12px;
+        /* Ensure touch targets are large enough */
+        min-width: 60px;
+        min-height: 32px;
     }
     
     #startButton img {
@@ -548,6 +465,9 @@ img.bio-photo {
         height: 28px;
         font-size: 11px;
         padding: 0 3px;
+        /* Ensure touch targets are large enough */
+        min-height: 28px;
+        min-width: 40px;
     }
     
     /* Start menu adjustments */
@@ -559,6 +479,10 @@ img.bio-photo {
     #startMenu ul li {
         padding: 5px 8px;
         font-size: 12px;
+        /* Ensure touch targets are large enough */
+        min-height: 36px;
+        display: flex;
+        align-items: center;
     }
     
     #startMenu ul li img {
@@ -597,39 +521,6 @@ img.bio-photo {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-    }
-    
-    /* Resume buttons - ensure they're touchable */
-    .resume-buttons button {
-        min-height: 44px;
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    
-    /* Desktop icons - ensure touch targets are large enough */
-    .desktop-icon {
-        min-height: 70px;
-        padding: 5px;
-        box-sizing: border-box;
-    }
-    
-    /* Start button - ensure touch targets are large enough */
-    #startButton {
-        min-width: 60px;
-        min-height: 32px;
-    }
-    
-    /* Taskbar buttons - ensure touch targets are large enough */
-    #taskbar button {
-        min-height: 28px;
-        min-width: 40px;
-    }
-    
-    /* Start menu items - ensure touch targets are large enough */
-    #startMenu ul li {
-        min-height: 36px;
-        display: flex;
-        align-items: center;
     }
 }
 
