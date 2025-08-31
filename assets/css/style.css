@@ -454,11 +454,36 @@ img.bio-photo {
         /* Ensure touch targets are large enough */
         min-width: 60px;
         min-height: 32px;
+        /* Mobile-specific start button styling */
+        border: 2px solid #fff;
+        box-shadow: 2px 2px 0 #000;
+        background: linear-gradient(to bottom, #00a000, #007f00);
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        flex-shrink: 0;
+        margin-left: 0;
+        position: relative;
+        left: 0;
+    }
+    
+    #startButton:hover {
+        background: linear-gradient(to bottom, #00b000, #008f00);
+    }
+    
+    #startButton:active {
+        transform: translateY(1px);
+        box-shadow: 1px 1px 0 #000;
     }
     
     #startButton img {
         height: 16px;
         margin-right: 3px;
+        filter: brightness(1.2);
     }
     
     #taskbar button {
@@ -474,6 +499,29 @@ img.bio-photo {
     #startMenu {
         width: 180px;
         bottom: 40px;
+        left: 0;
+        background: #c0c0c0;
+        border: 2px solid #fff;
+        box-shadow: 4px 4px 0px #000;
+        z-index: 1000;
+        background: linear-gradient(to right, #0a4a8c, #0a64ad);
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        border-right: 2px solid #808080;
+        border-bottom: 2px solid #808080;
+        padding: 2px;
+    }
+    
+    #startMenu ul {
+        list-style: none;
+        padding: 2px;
+        margin: 0;
+        background: #c0c0c0;
+        height: 100%;
+        border-top: 2px solid #808080;
+        border-left: 2px solid #808080;
+        border-right: 2px solid #fff;
+        border-bottom: 2px solid #fff;
     }
     
     #startMenu ul li {
@@ -483,11 +531,25 @@ img.bio-photo {
         min-height: 36px;
         display: flex;
         align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: background 0.1s;
+        border-bottom: 1px solid #b0b0b0;
+    }
+    
+    #startMenu ul li:last-child {
+        border-bottom: none;
+    }
+    
+    #startMenu ul li:hover {
+        color: #fff;
+        background: #0a4a8c;
     }
     
     #startMenu ul li img {
         width: 20px;
         height: 20px;
+        filter: brightness(1.1);
     }
     
     /* PDF viewer adjustments */
@@ -580,6 +642,30 @@ img.bio-photo {
         /* Ensure touch targets are large enough */
         min-width: 70px;
         min-height: 35px;
+        /* Mobile-specific start button styling */
+        border: 2px solid #fff;
+        box-shadow: 2px 2px 0 #000;
+        background: linear-gradient(to bottom, #00a000, #007f00);
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        flex-shrink: 0;
+        margin-left: 0;
+        position: relative;
+        left: 0;
+    }
+    
+    #startButton:hover {
+        background: linear-gradient(to bottom, #00b000, #008f00);
+    }
+    
+    #startButton:active {
+        transform: translateY(1px);
+        box-shadow: 1px 1px 0 #000;
     }
     
     #startMenu {
