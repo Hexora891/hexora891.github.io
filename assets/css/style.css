@@ -355,3 +355,242 @@ img.bio-photo {
   background: #606060;
 }
 
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    /* Desktop icons - make them smaller and more compact */
+    #desktop {
+        top: 10px;
+        left: 10px;
+        gap: 10px;
+    }
+    
+    .desktop-icon {
+        width: 60px;
+        font-size: 10px;
+    }
+    
+    .desktop-icon img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .desktop-icon-large img {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .desktop-icon-large {
+        font-size: 11px;
+    }
+    
+    /* Windows - make them responsive */
+    .window {
+        width: 95vw !important;
+        height: 80vh !important;
+        max-width: 95vw;
+        max-height: 80vh;
+        left: 2.5vw !important;
+        top: 10vh !important;
+    }
+    
+    /* Window content adjustments */
+    .window-content {
+        padding: 8px;
+    }
+    
+    /* About window specific mobile styles */
+    .about-window-content {
+        padding: 8px;
+    }
+    
+    .about-text {
+        width: 95%;
+        max-width: none;
+    }
+    
+    .about-title {
+        font-size: 24px;
+    }
+    
+    .about-section {
+        font-size: 14px;
+    }
+    
+    img.bio-photo {
+        width: 90%;
+    }
+    
+    /* Resume buttons - stack vertically on mobile */
+    .resume-buttons {
+        flex-direction: column;
+        height: auto;
+        gap: 5px;
+    }
+    
+    .resume-buttons button {
+        width: 100%;
+        justify-content: center;
+        margin-right: 0;
+    }
+    
+    /* Taskbar adjustments */
+    #taskbar {
+        height: 40px;
+        padding: 0 5px;
+    }
+    
+    #startButton {
+        height: 32px;
+        padding: 0 8px;
+        font-size: 12px;
+    }
+    
+    #startButton img {
+        height: 16px;
+        margin-right: 3px;
+    }
+    
+    #taskbar button {
+        height: 28px;
+        font-size: 11px;
+        padding: 0 3px;
+    }
+    
+    /* Start menu adjustments */
+    #startMenu {
+        width: 180px;
+        bottom: 40px;
+    }
+    
+    #startMenu ul li {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    
+    #startMenu ul li img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* PDF viewer adjustments */
+    #resumeWindow iframe {
+        height: calc(80vh - 120px);
+    }
+    
+    #pdfViewer {
+        height: calc(80vh - 120px) !important;
+    }
+}
+
+/* Extra small devices (phones, 480px and down) */
+@media screen and (max-width: 480px) {
+    #desktop {
+        top: 5px;
+        left: 5px;
+        gap: 8px;
+    }
+    
+    .desktop-icon {
+        width: 50px;
+        font-size: 9px;
+    }
+    
+    .desktop-icon img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .desktop-icon-large img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .window {
+        width: 98vw !important;
+        height: 85vh !important;
+        left: 1vw !important;
+        top: 7vh !important;
+    }
+    
+    .about-title {
+        font-size: 20px;
+    }
+    
+    .about-section {
+        font-size: 13px;
+    }
+    
+    img.bio-photo {
+        width: 95%;
+    }
+    
+    #taskbar {
+        height: 45px;
+    }
+    
+    #startButton {
+        height: 35px;
+        font-size: 11px;
+    }
+    
+    #startMenu {
+        width: 160px;
+        bottom: 45px;
+    }
+    
+    #startMenu ul li {
+        padding: 4px 6px;
+        font-size: 11px;
+    }
+    
+    #startMenu ul li img {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .window {
+        height: 90vh !important;
+        top: 5vh !important;
+    }
+    
+    #desktop {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 80vw;
+    }
+    
+    .about-window-content {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    img.bio-photo {
+        width: 40%;
+        flex-shrink: 0;
+    }
+    
+    .about-text {
+        width: 55%;
+    }
+}
+
+/* Prevent horizontal scrolling on mobile */
+@media screen and (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    .window {
+        overflow: hidden;
+    }
+    
+    .window-content {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+

@@ -64,13 +64,13 @@ function openWindow(event, id) {
 
     const win = document.getElementById(id);
     win.style.display = "block";
-    positionWindowWithCascade(win);
+    positionWindowForMobile(win);
     bringToFront(win);
     removeTaskbarButton(id);
     
     // Load PDF if it's the Resume window
     if (id === 'resumeWindow') {
-        setTimeout(loadResumePDF, 500); // Increased delay to ensure DOM is ready
+        setTimeout(loadResumePDF, 500);
     }
 }
 
@@ -100,10 +100,19 @@ function maximizeWindow(id) {
 
     if (win.dataset.maximized === "true") {
         // Restore previous position & size
-        win.style.width = win.dataset.prevWidth;
-        win.style.height = win.dataset.prevHeight;
-        win.style.top = win.dataset.prevTop;
-        win.style.left = win.dataset.prevLeft;
+        if (window.innerWidth <= 768) {
+            // On mobile, restore to mobile-optimized size
+            win.style.width = '95vw';
+            win.style.height = '80vh';
+            win.style.left = '2.5vw';
+            win.style.top = '10vh';
+        } else {
+            // On desktop, restore to saved position
+            win.style.width = win.dataset.prevWidth;
+            win.style.height = win.dataset.prevHeight;
+            win.style.top = win.dataset.prevTop;
+            win.style.left = win.dataset.prevLeft;
+        }
         win.dataset.maximized = "false";
     } else {
         // Save current position & size
@@ -112,11 +121,20 @@ function maximizeWindow(id) {
         win.dataset.prevTop = win.style.top;
         win.dataset.prevLeft = win.style.left;
 
-        // Maximize (fill screen except taskbar)
-        win.style.top = "0";
-        win.style.left = "0";
-        win.style.width = "100%";
-        win.style.height = "calc(100% - 30px)";
+        // Maximize
+        if (window.innerWidth <= 768) {
+            // On mobile, maximize to full screen minus taskbar
+            win.style.top = "0";
+            win.style.left = "0";
+            win.style.width = "100%";
+            win.style.height = "calc(100% - 40px)"; // Account for mobile taskbar height
+        } else {
+            // On desktop, use existing logic
+            win.style.top = "0";
+            win.style.left = "0";
+            win.style.width = "100%";
+            win.style.height = "calc(100% - 30px)";
+        }
         win.dataset.maximized = "true";
     }
 }
@@ -125,8 +143,13 @@ function maximizeWindow(id) {
 
 // Draggable windows
 let dragged;
+// Mobile touch support for draggable windows
+let touchStartX, touchStartY, touchStartLeft, touchStartTop;
+
 document.querySelectorAll('.window-header').forEach(header => {
+    // Mouse events (existing)
     header.onmousedown = function(e) {
+        if (window.innerWidth <= 768) return; // Disable mouse dragging on mobile
         dragged = this.parentElement;
         bringToFront(dragged);
         let offsetX = e.clientX - dragged.offsetLeft;
@@ -141,6 +164,41 @@ document.querySelectorAll('.window-header').forEach(header => {
             document.onmouseup = null;
         };
     };
+    
+    // Touch events for mobile
+    header.addEventListener('touchstart', function(e) {
+        if (window.innerWidth > 768) return; // Only enable touch on mobile
+        e.preventDefault();
+        dragged = this.parentElement;
+        bringToFront(dragged);
+        
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        touchStartLeft = parseInt(dragged.style.left) || 0;
+        touchStartTop = parseInt(dragged.style.top) || 0;
+    });
+    
+    header.addEventListener('touchmove', function(e) {
+        if (window.innerWidth > 768) return;
+        e.preventDefault();
+        if (!dragged) return;
+        
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        
+        const newLeft = Math.min(window.innerWidth - dragged.offsetWidth, Math.max(0, touchStartLeft + deltaX));
+        const newTop = Math.min(window.innerHeight - dragged.offsetHeight - 30, Math.max(0, touchStartTop + deltaY));
+        
+        dragged.style.left = newLeft + 'px';
+        dragged.style.top = newTop + 'px';
+    });
+    
+    header.addEventListener('touchend', function(e) {
+        if (window.innerWidth > 768) return;
+        dragged = null;
+    });
 });
 
 // Taskbar buttons
@@ -250,3 +308,55 @@ function loadResumePDF() {
         `;
     }
 }
+
+// Mobile-specific window positioning
+function positionWindowForMobile(win) {
+    if (window.innerWidth <= 768) {
+        // Center the window on mobile
+        win.style.left = '2.5vw';
+        win.style.top = '10vh';
+        win.style.width = '95vw';
+        win.style.height = '80vh';
+    } else {
+        // Use cascade positioning for desktop
+        positionWindowWithCascade(win);
+    }
+}
+
+// Handle window resize for responsive behavior
+window.addEventListener('resize', function() {
+    // Reposition windows when screen size changes
+    document.querySelectorAll('.window').forEach(win => {
+        if (win.style.display !== 'none') {
+            positionWindowForMobile(win);
+        }
+    });
+});
+
+// Prevent zoom on double tap for mobile
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, false);
+
+// Close start menu when clicking outside (mobile-friendly)
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById("startMenu");
+    const button = document.getElementById("startButton");
+    if (!menu.contains(e.target) && !button.contains(e.target)) {
+        menu.style.display = 'none';
+    }
+});
+
+// Also close start menu on touch outside
+document.addEventListener('touchend', (e) => {
+    const menu = document.getElementById("startMenu");
+    const button = document.getElementById("startButton");
+    if (!menu.contains(e.target) && !button.contains(e.target)) {
+        menu.style.display = 'none';
+    }
+});
