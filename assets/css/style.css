@@ -127,9 +127,10 @@ body {
 
 .about-window-content {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
     padding: 10px;
+    gap: 32px;
 }
 
 .about-text {
@@ -330,9 +331,12 @@ body {
 
 /* Bio Photo */
 img.bio-photo {
-    width: 70%;
+    width: 340px;
+    min-width: 220px;
+    max-width: 400px;
     display: block;
-    height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
+    height: auto;
+    margin-right: 0;
 }
 
 /* PDF Viewer Styling */
@@ -429,10 +433,9 @@ img.bio-photo {
     }
     
     img.bio-photo {
-        width: 90%;
+        text-align: left;
+        /* ...existing code... */
     }
-    
-    /* Resume buttons - stack vertically on mobile */
     .resume-buttons {
         flex-direction: column;
         height: auto;
