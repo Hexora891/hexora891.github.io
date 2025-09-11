@@ -127,14 +127,10 @@ body {
 
 .about-window-content {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    background: #fff;
-    padding: 32px 24px;
-    border: 2px solid #222;
-    box-sizing: border-box;
-    width: 96%;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
 }
 }
 
@@ -336,12 +332,10 @@ body {
 
 /* Bio Photo */
 img.bio-photo {
-    width: 320px;
-    min-width: 180px;
-    max-width: 340px;
+    width: 70%;
     display: block;
-    height: auto;
-    margin-right: 32px;
+    height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
+}
 }
 }
 
@@ -439,11 +433,10 @@ img.bio-photo {
     }
     
     img.bio-photo {
-        flex: 1;
-        text-align: left;
+        width: 70%;
         max-width: 760px;
-        min-width: 220px;
-        margin-top: 0;
+        text-align: left;
+    }
     }
     }
     }
