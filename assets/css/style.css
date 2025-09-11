@@ -434,7 +434,7 @@ img.bio-photo {
     
     img.bio-photo {
         text-align: left;
-        /* ...existing code... */
+    }
     }
     .resume-buttons {
         flex-direction: column;
