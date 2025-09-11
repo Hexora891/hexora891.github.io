@@ -443,6 +443,7 @@ img.bio-photo {
         text-align: left;
         max-width: 760px;
         min-width: 220px;
+        margin-left: 320px; /* Align with bio.png width */
         margin-top: 0;
     }
     }
