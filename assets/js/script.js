@@ -374,8 +374,9 @@ function removeTaskbarButton(id) {
 // Resume function
 function downloadResume() {
   const link = document.createElement('a');
-  link.href = "https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/embed";
+  link.href = "https://drive.google.com/uc?export=download&id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_";
   link.download = "Ayush-Resume.pdf";
+  link.target = "_blank";
   link.click();
 }
 
@@ -399,6 +400,9 @@ function loadResumePDF() {
         return;
     }
     
+    // Clear any existing content
+    pdfViewer.innerHTML = '';
+    
     // Check if mobile device
     const isMobile = window.innerWidth <= 768;
     
@@ -411,6 +415,9 @@ function loadResumePDF() {
     // Try to load PDF using Google Drive embed
     const pdfUrl = 'https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/preview';
     
+    // Alternative: Try direct PDF link if embed fails
+    const directPdfUrl = 'https://drive.google.com/uc?export=view&id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_';
+    
     // Create iframe for PDF embedding
     const iframe = document.createElement('iframe');
     iframe.src = pdfUrl;
@@ -419,10 +426,16 @@ function loadResumePDF() {
     iframe.style.border = 'none';
     iframe.style.background = '#c0c0c0';
     iframe.title = 'Resume PDF Viewer';
+    iframe.allow = 'fullscreen';
     
     // Add load event to check if PDF loaded successfully
     iframe.onload = function() {
         console.log('PDF iframe loaded successfully');
+        // Hide any loading indicators
+        const loadingDiv = pdfViewer.querySelector('.loading');
+        if (loadingDiv) {
+            loadingDiv.remove();
+        }
     };
     
     // Add error handling
@@ -431,18 +444,21 @@ function loadResumePDF() {
         showFallbackMessage();
     };
     
+    // Show loading indicator
+    pdfViewer.innerHTML = '<div class="loading" style="text-align: center; padding: 40px; color: #333;">Loading PDF...</div>';
+    
     // Try to load the iframe
     try {
-        pdfViewer.innerHTML = '';
         pdfViewer.appendChild(iframe);
         
         // Set a timeout to show fallback if iframe doesn't load
         setTimeout(() => {
-            if (!iframe.contentDocument || iframe.contentDocument.readyState !== 'complete') {
+            const loadingDiv = pdfViewer.querySelector('.loading');
+            if (loadingDiv) {
                 console.log('PDF iframe taking too long to load, showing fallback');
                 showFallbackMessage();
             }
-        }, 5000);
+        }, 8000);
         
     } catch (error) {
         console.error('Error creating iframe:', error);
@@ -462,6 +478,11 @@ function loadResumePDF() {
                 </p>
                 <div style="background: #f0f0f0; border: 1px solid #ccc; padding: ${isMobile ? '10px' : '15px'}; border-radius: 5px; margin: 20px 0; font-size: ${isMobile ? '12px' : '14px'};">
                     <strong>💡 Tip:</strong> ${isMobile ? 'The "Download" button will save the PDF to your device, while "Open in New Tab" will display it in your browser.' : 'The "Download" button will save the PDF to your device,<br>while "Open in New Tab" will display it in your browser\'s PDF viewer.'}
+                </div>
+                <div style="margin-top: 20px;">
+                    <a href="https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/view" target="_blank" style="background: #4a9eff; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
+                        🔗 Open Resume in Google Drive
+                    </a>
                 </div>
             </div>
         `;

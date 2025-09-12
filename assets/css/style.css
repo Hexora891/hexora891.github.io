@@ -225,7 +225,7 @@ body {
 /* Start Button */
 #startButton {
     position: relative;
-    height: 28px;
+    height: 30px; /* Match taskbar height */
     background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
     color: white;
     font-weight: bold;
@@ -534,12 +534,12 @@ img.bio-photo {
     }
     
     #startButton {
-        height: 32px;
+        height: 40px; /* Match mobile taskbar height */
         padding: 0 10px;
         font-size: 11px;
         /* Ensure touch targets are large enough */
         min-width: 60px;
-        min-height: 32px;
+        min-height: 40px;
         /* Mobile-specific start button styling */
         border: 2px outset #00a000;
         box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
@@ -729,11 +729,11 @@ img.bio-photo {
     }
     
     #startButton {
-        height: 35px;
+        height: 45px; /* Match small screen mobile taskbar height */
         font-size: 11px;
         /* Ensure touch targets are large enough */
         min-width: 70px;
-        min-height: 35px;
+        min-height: 45px;
         /* Mobile-specific start button styling */
         border: 2px outset #00a000;
         box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
