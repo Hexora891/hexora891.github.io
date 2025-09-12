@@ -152,6 +152,16 @@ body {
     text-align: left;
 }
 
+/* When window is maximized, limit text width to bio image width */
+.window[data-maximized="true"] .about-text {
+    max-width: 70%;
+}
+
+.window[data-maximized="true"] .about-window-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .about-title {
     font-size: 28px;
     margin: 10px 0 4px 0;
@@ -224,7 +234,7 @@ body {
 /* Start Button */
 #startButton {
     position: relative;
-    height: 30px; /* Match taskbar height */
+    height: 30px; /* Match taskbar height exactly */
     background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
     color: white;
     font-weight: bold;
@@ -251,8 +261,8 @@ body {
 }
 
 #startButton:active {
-    background: linear-gradient(135deg, #005500 0%, #007f00 50%, #00a000 100%);
-    border: 2px inset #005500;
+    background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%); /* Light green when clicked */
+    border: 2px inset #00c000;
     box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
     transform: translateY(1px);
 }
@@ -267,7 +277,7 @@ body {
     position: fixed;
     bottom: 30px;
     left: 0;
-    width: 280px; /* Increased width for better retro look */
+    width: 220px; /* Slimmer width */
     background: #c0c0c0;
     border: 2px outset #c0c0c0; /* Classic Windows 3D border */
     box-shadow: 3px 3px 6px rgba(0,0,0,0.4), inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
@@ -535,7 +545,7 @@ img.bio-photo {
     }
     
     #startButton {
-        height: 40px; /* Match mobile taskbar height */
+        height: 40px; /* Match mobile taskbar height exactly */
         padding: 0 10px;
         font-size: 11px;
         /* Ensure touch targets are large enough */
@@ -567,8 +577,8 @@ img.bio-photo {
     }
     
     #startButton:active {
-        background: linear-gradient(135deg, #005500 0%, #007f00 50%, #00a000 100%);
-        border: 2px inset #005500;
+        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%); /* Light green when clicked */
+        border: 2px inset #00c000;
         box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
         transform: translateY(1px);
     }
@@ -590,7 +600,7 @@ img.bio-photo {
     
     /* Start menu adjustments */
     #startMenu {
-        width: 220px;
+        width: 180px;
         bottom: 40px;
         left: 0;
         background: #c0c0c0;
@@ -732,7 +742,7 @@ img.bio-photo {
     }
     
     #startButton {
-        height: 45px; /* Match small screen mobile taskbar height */
+        height: 45px; /* Match small screen mobile taskbar height exactly */
         font-size: 11px;
         /* Ensure touch targets are large enough */
         min-width: 70px;
@@ -763,14 +773,14 @@ img.bio-photo {
     }
     
     #startButton:active {
-        background: linear-gradient(135deg, #005500 0%, #007f00 50%, #00a000 100%);
-        border: 2px inset #005500;
+        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%); /* Light green when clicked */
+        border: 2px inset #00c000;
         box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
         transform: translateY(1px);
     }
     
     #startMenu {
-        width: 200px;
+        width: 180px;
         bottom: 45px;
     }
     
