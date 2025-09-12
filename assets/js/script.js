@@ -399,6 +399,15 @@ function loadResumePDF() {
         return;
     }
     
+    // Check if mobile device
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // On mobile, show fallback immediately to avoid flash
+        showFallbackMessage();
+        return;
+    }
+    
     // Try to load PDF using Google Drive embed
     const pdfUrl = 'https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/preview';
     
@@ -441,16 +450,18 @@ function loadResumePDF() {
     }
     
     function showFallbackMessage() {
+        const isMobile = window.innerWidth <= 768;
+        const padding = isMobile ? '20px 10px' : '40px 20px';
+        const fontSize = isMobile ? '14px' : '16px';
+        
         pdfViewer.innerHTML = `
-            <div style="text-align: center; padding: 40px 20px; color: #333;">
-                <h3 style="margin-bottom: 20px; color: #0a64ad;">📄 Resume PDF</h3>
+            <div style="text-align: center; padding: ${padding}; color: #333; font-size: ${fontSize};">
+                <h3 style="margin-bottom: 20px; color: #0a64ad; font-size: ${isMobile ? '18px' : '20px'};">📄 Resume PDF</h3>
                 <p style="margin-bottom: 25px; line-height: 1.5;">
-                    Due to browser security restrictions, the PDF cannot be displayed directly in this window.<br>
-                    Please use the buttons above to download or view your resume.
+                    ${isMobile ? 'Tap the buttons above to download or view your resume.' : 'Due to browser security restrictions, the PDF cannot be displayed directly in this window.<br>Please use the buttons above to download or view your resume.'}
                 </p>
-                <div style="background: #f0f0f0; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                    <strong>💡 Tip:</strong> The "Download" button will save the PDF to your device,<br>
-                    while "Open in New Tab" will display it in your browser's PDF viewer.
+                <div style="background: #f0f0f0; border: 1px solid #ccc; padding: ${isMobile ? '10px' : '15px'}; border-radius: 5px; margin: 20px 0; font-size: ${isMobile ? '12px' : '14px'};">
+                    <strong>💡 Tip:</strong> ${isMobile ? 'The "Download" button will save the PDF to your device, while "Open in New Tab" will display it in your browser.' : 'The "Download" button will save the PDF to your device,<br>while "Open in New Tab" will display it in your browser\'s PDF viewer.'}
                 </div>
             </div>
         `;
