@@ -317,9 +317,6 @@ img.bio-photo {
     width: 70%;
     display: block;
     height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
-}
-}
-}
 
 /* PDF Viewer Styling */
 #resumeWindow iframe {
@@ -403,10 +400,6 @@ img.bio-photo {
         width: 95%;
         max-width: none;
     }
-            width: 95%;
-            max-width: none;
-        }
-    }
     
     img.bio-photo {
         width: 70%;
@@ -414,10 +407,6 @@ img.bio-photo {
         display: block;
         height: auto;
         margin: 0 auto;
-    .resume-buttons {
-        flex-direction: column;
-        height: auto;
-        gap: 5px;
 }
     
     .resume-buttons button {
