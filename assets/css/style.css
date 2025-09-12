@@ -234,31 +234,41 @@ body {
 #startButton {
     position: relative;
     height: 28px;
-    background: linear-gradient(to bottom, #00a000, #007f00);
+    background: linear-gradient(135deg, #4a9eff 0%, #0066cc 50%, #004499 100%);
     color: white;
     font-weight: bold;
-    border: 2px solid #fff;
-    box-shadow: 2px 2px 0 #000;
+    font-size: 11px;
+    border: 2px outset #4a9eff;
+    box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 1000;
-    padding: 0 10px;
+    padding: 0 12px;
     flex-shrink: 0;
     margin-left: 0;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    font-family: 'Tahoma', sans-serif;
 }
 
 #startButton:hover,
 #startButton:focus {
-    background: linear-gradient(to bottom, #00b000, #008f00);
-    outline: 2px solid #fff;
-    outline-offset: 1px;
+    background: linear-gradient(135deg, #5aa5ff 0%, #0077dd 50%, #0055aa 100%);
+    border: 2px outset #5aa5ff;
+    box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.4), inset -1px -1px 0 rgba(0,0,0,0.2);
+}
+
+#startButton:active {
+    background: linear-gradient(135deg, #004499 0%, #0066cc 50%, #4a9eff 100%);
+    border: 2px inset #004499;
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
+    transform: translateY(1px);
 }
 
 #startButton:focus {
-    outline: 2px solid #fff;
-    outline-offset: 1px;
+    outline: 1px dotted #fff;
+    outline-offset: 2px;
 }
 
 /* Start Menu */
@@ -266,25 +276,52 @@ body {
     position: fixed;
     bottom: 30px;
     left: 0;
-    width: 200px; /* decreased width */
+    width: 240px; /* Increased width for better retro look */
     background: #c0c0c0;
-    border: 2px solid #fff;
-    box-shadow: 4px 4px 0px #000;
+    border: 2px outset #c0c0c0; /* Classic Windows 3D border */
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.3), inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
     display: none;
     z-index: 1000;
-    background: linear-gradient(to right, #0a4a8c, #0a64ad); /* Windows-like gradient */
-    border-top: 2px solid #fff; /* Top border for recessed look */
+    border-radius: 0; /* Sharp corners for authentic look */
+    padding: 2px;
+    background: linear-gradient(135deg, #e6e6e6 0%, #c0c0c0 50%, #a0a0a0 100%);
+    animation: slideUp 0.15s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#startMenu ul {
+    list-style: none;
+    padding: 4px;
+    margin: 0;
+    background: #c0c0c0;
+    border: 1px inset #c0c0c0;
+    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
 }
 
 #startMenu ul li {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 5px 8px; /* Increased padding to match mobile */
+    padding: 6px 10px;
     cursor: pointer;
-    transition: background 0.1s;
-    border-bottom: 1px solid #b0b0b0;
-    min-height: 36px; /* Added minimum height to match mobile */
+    transition: none; /* Remove smooth transitions for authentic feel */
+    border: 1px solid transparent;
+    min-height: 32px;
+    font-size: 11px;
+    font-weight: normal;
+    color: #000;
+    background: transparent;
+    position: relative;
 }
 
 #startMenu ul li:last-child {
@@ -293,19 +330,32 @@ body {
 
 #startMenu ul li:hover,
 #startMenu ul li:focus {
-    color: #fff;
-    background: #0a4a8c; /* Windows-like hover color */
-    outline: 1px solid #fff;
+    color: #000;
+    background: linear-gradient(135deg, #316ac5 0%, #1e3a8a 100%);
+    border: 1px outset #316ac5;
+    box-shadow: inset 1px 1px 0 #5a8fd8, inset -1px -1px 0 #1e3a8a;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+}
+
+#startMenu ul li:active {
+    background: linear-gradient(135deg, #1e3a8a 0%, #316ac5 100%);
+    border: 1px inset #1e3a8a;
+    box-shadow: inset 1px 1px 0 #1e3a8a, inset -1px -1px 0 #5a8fd8;
+    transform: translateY(1px);
 }
 
 #startMenu ul li:focus {
-    outline: 1px solid #fff;
+    outline: 1px dotted #000;
+    outline-offset: -1px;
 }
 
 #startMenu ul li img {
-    width: 26px;
-    height: 26px;
-    filter: brightness(1.1);
+    width: 16px;
+    height: 16px;
+    filter: none; /* Remove brightness filter for authentic look */
+    image-rendering: pixelated; /* Pixelated look for retro feel */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 /* Taskbar */
@@ -315,12 +365,13 @@ body {
     left: 0px;
     right: 0;
     height: 30px;
-    background: linear-gradient(to top, #0a64ad, #0a4a8c);
+    background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 50%, #808080 100%);
+    border-top: 2px outset #c0c0c0;
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 0 0 0 0;
-    box-shadow: inset 0 1px 0 #fff;
+    gap: 2px;
+    padding: 2px 0 0 0;
+    box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #808080;
     z-index: 999;
 }
 
@@ -342,15 +393,33 @@ body {
 
 #taskbar button {
     height: 24px;
-    padding: 0 5px;
-    background: #e0e0e0;
-    border: 1px solid #fff;
-    box-shadow: 1px 1px 0 #000 inset;
+    padding: 0 8px;
+    background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
+    border: 1px outset #c0c0c0;
+    box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
     cursor: pointer;
+    font-size: 10px;
+    font-family: 'Tahoma', sans-serif;
+    color: #000;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
+
+#taskbar button:hover {
+    background: linear-gradient(135deg, #f0f0f0 0%, #d0d0d0 100%);
+    border: 1px outset #d0d0d0;
+}
+
+#taskbar button:active {
+    background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
+    border: 1px inset #a0a0a0;
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
+    transform: translateY(1px);
 }
 
 #taskbar button.active {
-    background: #c0c0c0;
+    background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
+    border: 1px inset #a0a0a0;
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
 }
 
 /* Bio Photo */
@@ -474,15 +543,15 @@ img.bio-photo {
     
     #startButton {
         height: 32px;
-        padding: 0 8px;
-        font-size: 12px;
+        padding: 0 10px;
+        font-size: 11px;
         /* Ensure touch targets are large enough */
         min-width: 60px;
         min-height: 32px;
         /* Mobile-specific start button styling */
-        border: 2px solid #fff;
-        box-shadow: 2px 2px 0 #000;
-        background: linear-gradient(to bottom, #00a000, #007f00);
+        border: 2px outset #4a9eff;
+        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, #4a9eff 0%, #0066cc 50%, #004499 100%);
         color: white;
         font-weight: bold;
         display: flex;
@@ -494,21 +563,27 @@ img.bio-photo {
         margin-left: 0;
         position: relative;
         left: 0;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        font-family: 'Tahoma', sans-serif;
     }
     
     #startButton:hover {
-        background: linear-gradient(to bottom, #00b000, #008f00);
+        background: linear-gradient(135deg, #5aa5ff 0%, #0077dd 50%, #0055aa 100%);
+        border: 2px outset #5aa5ff;
+        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.4), inset -1px -1px 0 rgba(0,0,0,0.2);
     }
     
     #startButton:active {
+        background: linear-gradient(135deg, #004499 0%, #0066cc 50%, #4a9eff 100%);
+        border: 2px inset #004499;
+        box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
         transform: translateY(1px);
-        box-shadow: 1px 1px 0 #000;
     }
     
     #startButton img {
         height: 16px;
         margin-right: 3px;
-        filter: brightness(1.2);
+        filter: none;
     }
     
     #taskbar button {
@@ -522,31 +597,25 @@ img.bio-photo {
     
     /* Start menu adjustments */
     #startMenu {
-        width: 180px;
+        width: 200px;
         bottom: 40px;
         left: 0;
         background: #c0c0c0;
-        border: 2px solid #fff;
-        box-shadow: 4px 4px 0px #000;
+        border: 2px outset #c0c0c0;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.3), inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
         z-index: 1000;
-        background: linear-gradient(to right, #0a4a8c, #0a64ad);
-        border-top: 2px solid #fff;
-        border-left: 2px solid #fff;
-        border-right: 2px solid #808080;
-        border-bottom: 2px solid #808080;
+        background: linear-gradient(135deg, #e6e6e6 0%, #c0c0c0 50%, #a0a0a0 100%);
         padding: 2px;
     }
     
     #startMenu ul {
         list-style: none;
-        padding: 2px;
+        padding: 4px;
         margin: 0;
         background: #c0c0c0;
         height: 100%;
-        border-top: 2px solid #808080;
-        border-left: 2px solid #808080;
-        border-right: 2px solid #fff;
-        border-bottom: 2px solid #fff;
+        border: 1px inset #c0c0c0;
+        box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
     }
     
     #startMenu ul li {
@@ -567,14 +636,20 @@ img.bio-photo {
     }
     
     #startMenu ul li:hover {
-        color: #fff;
-        background: #0a4a8c;
+        color: #000;
+        background: linear-gradient(135deg, #316ac5 0%, #1e3a8a 100%);
+        border: 1px outset #316ac5;
+        box-shadow: inset 1px 1px 0 #5a8fd8, inset -1px -1px 0 #1e3a8a;
+        text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
     }
     
     #startMenu ul li img {
-        width: 20px;
-        height: 20px;
-        filter: brightness(1.1);
+        width: 16px;
+        height: 16px;
+        filter: none;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
     }
     
     /* PDF viewer adjustments */
@@ -668,9 +743,9 @@ img.bio-photo {
         min-width: 70px;
         min-height: 35px;
         /* Mobile-specific start button styling */
-        border: 2px solid #fff;
-        box-shadow: 2px 2px 0 #000;
-        background: linear-gradient(to bottom, #00a000, #007f00);
+        border: 2px outset #4a9eff;
+        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, #4a9eff 0%, #0066cc 50%, #004499 100%);
         color: white;
         font-weight: bold;
         display: flex;
@@ -682,19 +757,25 @@ img.bio-photo {
         margin-left: 0;
         position: relative;
         left: 0;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        font-family: 'Tahoma', sans-serif;
     }
     
     #startButton:hover {
-        background: linear-gradient(to bottom, #00b000, #008f00);
+        background: linear-gradient(135deg, #5aa5ff 0%, #0077dd 50%, #0055aa 100%);
+        border: 2px outset #5aa5ff;
+        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.4), inset -1px -1px 0 rgba(0,0,0,0.2);
     }
     
     #startButton:active {
+        background: linear-gradient(135deg, #004499 0%, #0066cc 50%, #4a9eff 100%);
+        border: 2px inset #004499;
+        box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
         transform: translateY(1px);
-        box-shadow: 1px 1px 0 #000;
     }
     
     #startMenu {
-        width: 160px;
+        width: 180px;
         bottom: 45px;
     }
     
