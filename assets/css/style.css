@@ -429,7 +429,7 @@ body {
 #taskbar #startButton,
 #taskbar #startButton:hover,
 #taskbar #startButton:focus {
-    height: 30px;
+    height: 35px;
     box-sizing: border-box;
     background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
     border: 2px outset #00a000;
