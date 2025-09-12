@@ -38,7 +38,12 @@ function positionWindowWithCascade(win) {
 // Start menu toggle
 function toggleStartMenu() {
     const menu = document.getElementById("startMenu");
-    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    const button = document.getElementById("startButton");
+    const isVisible = menu.style.display === "block";
+    
+    menu.style.display = isVisible ? "none" : "block";
+    menu.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
+    button.setAttribute('aria-expanded', isVisible ? 'false' : 'true');
 }
 
 // Close start menu when clicking outside
@@ -64,6 +69,7 @@ function openWindow(event, id) {
 
     const win = document.getElementById(id);
     win.style.display = "block";
+    win.setAttribute('aria-hidden', 'false');
     positionWindowForMobile(win);
     bringToFront(win);
     removeTaskbarButton(id);
@@ -78,6 +84,7 @@ function openWindow(event, id) {
 function closeWindow(id) {
     const win = document.getElementById(id);
     win.style.display = "none";
+    win.setAttribute('aria-hidden', 'true');
     removeTaskbarButton(id);
 }
 
@@ -91,6 +98,7 @@ function bringToFront(win) {
 function minimizeWindow(id) {
     const win = document.getElementById(id);
     win.style.display = "none";
+    win.setAttribute('aria-hidden', 'true');
     addTaskbarButton(id);
 }
 
@@ -376,7 +384,9 @@ function openResumeNewTab() {
 }
 
 // PDF.js setup
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
 
 // Load PDF when Resume window opens
 function loadResumePDF() {
@@ -399,22 +409,31 @@ function loadResumePDF() {
     iframe.height = '100%';
     iframe.style.border = 'none';
     iframe.style.background = '#c0c0c0';
+    iframe.title = 'Resume PDF Viewer';
     
     // Add load event to check if PDF loaded successfully
     iframe.onload = function() {
         console.log('PDF iframe loaded successfully');
     };
     
-    // Only show fallback if there's a real error
-    // Let the iframe handle its own loading
+    // Add error handling
+    iframe.onerror = function() {
+        console.error('Error loading PDF iframe');
+        showFallbackMessage();
+    };
     
     // Try to load the iframe
     try {
         pdfViewer.innerHTML = '';
         pdfViewer.appendChild(iframe);
         
-        // Don't use aggressive timeout - let the iframe load naturally
-        // The iframe will either load successfully or fail gracefully
+        // Set a timeout to show fallback if iframe doesn't load
+        setTimeout(() => {
+            if (!iframe.contentDocument || iframe.contentDocument.readyState !== 'complete') {
+                console.log('PDF iframe taking too long to load, showing fallback');
+                showFallbackMessage();
+            }
+        }, 5000);
         
     } catch (error) {
         console.error('Error creating iframe:', error);
@@ -493,7 +512,60 @@ document.addEventListener('touchend', (e) => {
 // Initialize touch support when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     addTouchSupportToButtons();
+    addKeyboardSupport();
 });
+
+// Add keyboard navigation support
+function addKeyboardSupport() {
+    // Handle Enter key on desktop icons
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+        icon.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Handle Escape key to close windows
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            // Close any open windows
+            document.querySelectorAll('.window[style*="block"]').forEach(win => {
+                const winId = win.id;
+                closeWindow(winId);
+            });
+            
+            // Close start menu
+            const menu = document.getElementById("startMenu");
+            if (menu.style.display === "block") {
+                toggleStartMenu();
+            }
+        }
+    });
+    
+    // Handle arrow keys in start menu
+    document.querySelectorAll('#startMenu [role="menuitem"]').forEach((item, index, items) => {
+        item.addEventListener('keydown', function(e) {
+            let newIndex = index;
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                newIndex = (index + 1) % items.length;
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                newIndex = (index - 1 + items.length) % items.length;
+            } else if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+            
+            if (newIndex !== index) {
+                items[newIndex].focus();
+            }
+        });
+    });
+}
 
 // Also add touch support after any dynamic content is added
 function addTouchSupportToButtons() {

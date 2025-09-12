@@ -2,39 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>XP Desktop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Ayush's personal portfolio website with Windows XP desktop theme">
+  <meta name="keywords" content="portfolio, cybersecurity, hacker, red team, security enthusiast">
+  <meta name="author" content="Ayush (Hexora)">
+  <title>XP Desktop - Ayush's Portfolio</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
   <!-- Desktop -->
-  <div id="desktop">
-    <div class="desktop-icon" onclick="openWindow(event, 'aboutWindow')">
-      <img src="assets/images/about.png" alt="About Me">
+  <div id="desktop" role="main" aria-label="Desktop shortcuts">
+    <button class="desktop-icon" onclick="openWindow(event, 'aboutWindow')" aria-label="Open About Me window">
+      <img src="assets/images/about.png" alt="About Me icon">
       <span>About Me</span>
-    </div>
-    <div class="desktop-icon" onclick="openWindow(event, 'resumeWindow')">
-      <img src="assets/images/resume.png" alt="Resume">
+    </button>
+    <button class="desktop-icon" onclick="openWindow(event, 'resumeWindow')" aria-label="Open Resume window">
+      <img src="assets/images/resume.png" alt="Resume icon">
       <span>Resume</span>
-    </div>
-    <div class="desktop-icon" onclick="window.open('https://app.gitbook.com/o/M2JQIKEeJKaubIcDDy5s/s/gfDcs4CeADtEtSw6dTBi/~/preview/~/changes/1/','_blank')">
-      <img src="assets/images/notes.png" alt="Notes">
+    </button>
+    <button class="desktop-icon" onclick="window.open('https://app.gitbook.com/o/M2JQIKEeJKaubIcDDy5s/s/gfDcs4CeADtEtSw6dTBi/~/preview/~/changes/1/','_blank')" aria-label="Open Notes in new tab">
+      <img src="assets/images/notes.png" alt="Notes icon">
       <span>Notes</span>
-    </div>
-    <div class="desktop-icon" onclick="window.open('https://hexora891.github.io/Writeups/','_blank')">
-      <img src="assets/images/writeups.png" alt="Writeups">
+    </button>
+    <button class="desktop-icon" onclick="window.open('https://hexora891.github.io/Writeups/','_blank')" aria-label="Open Writeups in new tab">
+      <img src="assets/images/writeups.png" alt="Writeups icon">
       <span>Writeups</span>
-    </div>
+    </button>
   </div>
 
   <!-- Windows -->
-  <div id="aboutWindow" class="window">
-    <div class="window-header">
-      <span>About Me</span>
-      <div class="window-controls">
-        <button onclick="minimizeWindow('aboutWindow')">_</button>
-        <button onclick="maximizeWindow('aboutWindow')">▢</button>
-        <button onclick="closeWindow('aboutWindow')">X</button>
+  <div id="aboutWindow" class="window" role="dialog" aria-labelledby="aboutWindow-title" aria-hidden="true">
+    <div class="window-header" role="banner">
+      <span id="aboutWindow-title">About Me</span>
+      <div class="window-controls" role="toolbar">
+        <button onclick="minimizeWindow('aboutWindow')" aria-label="Minimize window">_</button>
+        <button onclick="maximizeWindow('aboutWindow')" aria-label="Maximize window">▢</button>
+        <button onclick="closeWindow('aboutWindow')" aria-label="Close window">X</button>
       </div>
     </div>
     <div class="window-content about-window-content">
@@ -53,13 +57,13 @@
       </div>
     </div>
   </div>
-  <div id="resumeWindow" class="window">
-  <div class="window-header">
-    <span>Resume</span>
-    <div class="window-controls">
-      <button onclick="minimizeWindow('resumeWindow')">_</button>
-      <button onclick="maximizeWindow('resumeWindow')">▢</button>
-      <button onclick="closeWindow('resumeWindow')">X</button>
+  <div id="resumeWindow" class="window" role="dialog" aria-labelledby="resumeWindow-title" aria-hidden="true">
+  <div class="window-header" role="banner">
+    <span id="resumeWindow-title">Resume</span>
+    <div class="window-controls" role="toolbar">
+      <button onclick="minimizeWindow('resumeWindow')" aria-label="Minimize window">_</button>
+      <button onclick="maximizeWindow('resumeWindow')" aria-label="Maximize window">▢</button>
+      <button onclick="closeWindow('resumeWindow')" aria-label="Close window">X</button>
     </div>
   </div>
   <div class="window-content">
@@ -78,30 +82,30 @@
 </div>
 
  <!-- Taskbar -->
-<div id="taskbar">
-  <div id="startButton" onclick="toggleStartMenu()">
+<nav id="taskbar" role="navigation" aria-label="Taskbar">
+  <button id="startButton" onclick="toggleStartMenu()" aria-label="Open start menu" aria-expanded="false" aria-haspopup="menu">
     <img src="assets/images/xp-logo.png" alt="Start" style="height:20px;margin-right:5px;"> Start
-  </div>
-  <div id="taskbar-windows"></div>
-</div>
+  </button>
+  <div id="taskbar-windows" role="group" aria-label="Open windows"></div>
+</nav>
 
   <!-- Start Menu -->
-  <div id="startMenu">
-    <ul>
-      <li onclick="window.open('https://github.com/Hexora891','_blank')">
-        <img src="assets/images/github.png" alt="GitHub"> GitHub
+  <div id="startMenu" role="menu" aria-labelledby="startButton" aria-hidden="true">
+    <ul role="none">
+      <li role="menuitem" onclick="window.open('https://github.com/Hexora891','_blank')" tabindex="0">
+        <img src="assets/images/github.png" alt="GitHub icon"> GitHub
       </li>
-      <li onclick="window.open('https://youtube.com','_blank')">
-        <img src="assets/images/youtube.png" alt="YouTube"> YouTube
+      <li role="menuitem" onclick="window.open('https://youtube.com','_blank')" tabindex="0">
+        <img src="assets/images/youtube.png" alt="YouTube icon"> YouTube
       </li>
-      <li onclick="window.open('https://x.com/Hexora89','_blank')">
-        <img src="assets/images/x.png" alt="X"> X
+      <li role="menuitem" onclick="window.open('https://x.com/Hexora89','_blank')" tabindex="0">
+        <img src="assets/images/x.png" alt="X icon"> X
       </li>
-      <li onclick="window.open('https://app.hackthebox.com/profile/overview','_blank')">
-        <img src="assets/images/hackthebox.png" alt="HackTheBox"> HackTheBox
+      <li role="menuitem" onclick="window.open('https://app.hackthebox.com/profile/overview','_blank')" tabindex="0">
+        <img src="assets/images/hackthebox.png" alt="HackTheBox icon"> HackTheBox
       </li>
-      <li onclick="window.open('https://www.linkedin.com/in/ayush-singh-158631382/','_blank')">
-        <img src="assets/images/linkedin.png" alt="LinkedIn"> LinkedIn
+      <li role="menuitem" onclick="window.open('https://www.linkedin.com/in/ayush-singh-158631382/','_blank')" tabindex="0">
+        <img src="assets/images/linkedin.png" alt="LinkedIn icon"> LinkedIn
       </li>
     </ul>
   </div>
