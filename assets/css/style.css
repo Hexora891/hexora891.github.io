@@ -131,8 +131,6 @@ body {
     align-items: center;
     padding: 10px;
 }
-}
-}
 
 .about-text {
     width: 70%;
@@ -241,18 +239,6 @@ body {
     z-index: 1000;
     background: linear-gradient(to right, #0a4a8c, #0a64ad); /* Windows-like gradient */
     border-top: 2px solid #fff; /* Top border for recessed look */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-    }
-    margin: 0;
-    background: #c0c0c0;
-    height: 100%;
-    border-top: 2px solid #808080;
-    border-left: 2px solid #808080;
-    border-right: 2px solid #fff;
-    border-bottom: 2px solid #fff;
 }
 
 #startMenu ul li {
@@ -376,12 +362,12 @@ img.bio-photo {
         width: 60px;
         font-size: 10px;
         /* Ensure touch targets are large enough */
-            width: 70%;
-            display: block;
-            height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
-        }
+    }
+    .desktop-icon img {
         width: 40px;
         height: 40px;
+        display: block;
+        margin: 0 auto;
     }
     
     .desktop-icon-large img {
@@ -417,27 +403,22 @@ img.bio-photo {
         width: 95%;
         max-width: none;
     }
-            width: 70%;
-            max-width: 760px;
-            text-align: center;
+            width: 95%;
+            max-width: none;
         }
-    .about-section {
-        font-size: 14px;
     }
     
     img.bio-photo {
         width: 70%;
         max-width: 760px;
-        text-align: left;
-    }
-    }
-    }
-    }
+        display: block;
+        height: auto;
+        margin: 0 auto;
     .resume-buttons {
         flex-direction: column;
         height: auto;
         gap: 5px;
-    }
+}
     
     .resume-buttons button {
         width: 100%;
