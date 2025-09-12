@@ -425,6 +425,21 @@ body {
     box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
 }
 
+/* Force Start button to stay green and match taskbar height */
+#taskbar #startButton,
+#taskbar #startButton:hover,
+#taskbar #startButton:focus {
+    height: 30px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
+    border: 2px outset #00a000;
+    color: #fff;
+}
+#taskbar #startButton:active {
+    background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%);
+    border: 2px inset #00c000;
+}
+
 /* Bio Photo */
 img.bio-photo {
     width: 70%;
@@ -857,6 +872,42 @@ img.bio-photo {
     .window-content {
         overflow-y: auto;
         overflow-x: hidden;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Force Start button to stay green and match taskbar height on tablets */
+    #taskbar { height: 40px; }
+    #startButton,
+    #startButton:hover,
+    #startButton:focus {
+        height: 40px;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
+        border: 2px outset #00a000;
+        color: #fff;
+    }
+    #startButton:active {
+        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%);
+        border: 2px inset #00c000;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Force Start button to stay green and match taskbar height on small phones */
+    #taskbar { height: 45px; }
+    #startButton,
+    #startButton:hover,
+    #startButton:focus {
+        height: 45px;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
+        border: 2px outset #00a000;
+        color: #fff;
+    }
+    #startButton:active {
+        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%);
+        border: 2px inset #00c000;
     }
 }
 
