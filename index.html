@@ -84,33 +84,40 @@
  <!-- Taskbar -->
 <nav id="taskbar" role="navigation" aria-label="Taskbar">
   <button id="startButton" onclick="toggleStartMenu()" aria-label="Open start menu" aria-expanded="false" aria-haspopup="menu">
-    <img src="assets/images/xp-logo.png" alt="Start" style="height:20px;margin-right:5px;"> Start
+    <img src="assets/images/xp-logo.png" alt="Start" style="height:25px;margin-right:10px;"> Start
   </button>
   <div id="taskbar-windows" role="group" aria-label="Open windows"></div>
 </nav>
 
-  <!-- Start Menu -->
-  <div id="startMenu" role="menu" aria-labelledby="startButton" aria-hidden="true">
-    <ul role="none">
-      <li role="menuitem" onclick="window.open('https://github.com/Hexora891','_blank')" tabindex="0">
-        <img src="assets/images/github.png" alt="GitHub icon"> GitHub
-      </li>
-      <li role="menuitem" onclick="window.open('https://youtube.com','_blank')" tabindex="0">
-        <img src="assets/images/youtube.png" alt="YouTube icon"> YouTube
-      </li>
-      <li role="menuitem" onclick="window.open('https://x.com/Hexora89','_blank')" tabindex="0">
-        <img src="assets/images/x.png" alt="X icon"> X
-      </li>
-      <li role="menuitem" onclick="window.open('https://app.hackthebox.com/profile/overview','_blank')" tabindex="0">
-        <img src="assets/images/hackthebox.png" alt="HackTheBox icon"> HackTheBox
-      </li>
-      <li role="menuitem" onclick="window.open('https://www.linkedin.com/in/ayush-singh-158631382/','_blank')" tabindex="0">
-        <img src="assets/images/linkedin.png" alt="LinkedIn icon"> LinkedIn
-      </li>
-    </ul>
+<!-- Start Menu -->
+<div id="startMenu" role="menu" aria-labelledby="startButton" aria-hidden="true">
+  <!-- Top banner -->
+  <div class="banner">
+    <img src="assets/images/user.png" alt="User Logo">
+    <span>My Username</span>
   </div>
 
-  <script src="assets/js/script.js"></script>
+  <ul role="none">
+    <li role="menuitem" onclick="window.open('https://github.com/Hexora891','_blank')" tabindex="0">
+      <img src="assets/images/github.png" alt="GitHub icon"> GitHub
+    </li>
+    <li role="menuitem" onclick="window.open('https://youtube.com','_blank')" tabindex="0">
+      <img src="assets/images/youtube.png" alt="YouTube icon"> YouTube
+    </li>
+    <li role="menuitem" onclick="window.open('https://x.com/Hexora89','_blank')" tabindex="0">
+      <img src="assets/images/x.png" alt="X icon"> X
+    </li>
+    <li role="menuitem" onclick="window.open('https://app.hackthebox.com/profile/overview','_blank')" tabindex="0">
+      <img src="assets/images/hackthebox.png" alt="HackTheBox icon"> HackTheBox
+    </li>
+    <li role="menuitem" onclick="window.open('https://www.linkedin.com/in/ayush-singh-158631382/','_blank')" tabindex="0">
+      <img src="assets/images/linkedin.png" alt="LinkedIn icon"> LinkedIn
+    </li>
+  </ul>
+</div>
+
+<script src="assets/js/script.js"></script>
 </body>
 </html>
+
 

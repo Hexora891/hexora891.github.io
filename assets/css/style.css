@@ -46,12 +46,12 @@ body {
 }
 
 .desktop-icon-large img {
-    width: 60px; /* Slightly larger width */
-    height: 60px; /* Slightly larger height */
+    width: 60px;
+    height: 60px;
 }
 
 .desktop-icon-large {
-    font-size: 14px; /* Slightly larger font size */
+    font-size: 14px;
 }
 
 .desktop-icon:focus {
@@ -60,8 +60,8 @@ body {
 
 /* Windows */
 .window {
-    width: 900px; /* Increased from 500px */
-    height: 700px; /* Increased from 300px */
+    width: 900px;
+    height: 700px;
     background: #c0c0c0;
     border: 2px solid #fff;
     box-shadow: 4px 4px 0px #000;
@@ -100,11 +100,6 @@ body {
     outline: 1px solid #000;
 }
 
-.window-controls button:focus {
-    outline: 1px solid #000;
-}
-
-/* Scroll behavior for all window contents */
 .window-content {
     padding: 10px;
     overflow: auto;
@@ -118,254 +113,245 @@ body {
     flex-direction: column;
 }
 
-/* Themed scrollbars for window contents */
+/* Scrollbars */
 .window-content::-webkit-scrollbar {
     width: 14px;
     height: 14px;
 }
-
 .window-content::-webkit-scrollbar-track {
     background: #c0c0c0;
     border: 1px solid #808080;
 }
-
 .window-content::-webkit-scrollbar-thumb {
     background: #808080;
     border: 1px solid #fff;
     box-shadow: inset 1px 1px 0 #000;
 }
-
 .window-content::-webkit-scrollbar-thumb:hover {
     background: #606060;
 }
 
+/* About window */
 .about-window-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
 }
-
 .about-text {
     width: 70%;
     max-width: 760px;
     text-align: left;
 }
-
-/* When window is maximized, limit text width to bio image width */
 .window[data-maximized="true"] .about-text {
     max-width: 70%;
 }
-
 .window[data-maximized="true"] .about-window-content {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .about-title {
     font-size: 28px;
     margin: 10px 0 4px 0;
     color: #111;
 }
-
 .about-subtitle {
     font-size: 12px;
     color: #444;
     margin-bottom: 6px;
 }
-
 .about-tagline {
     font-size: 12px;
     color: #000000;
     margin-bottom: 16px;
 }
-
 .about-section {
     font-size: 16px;
     margin: 18px 0 8px 0;
     color: #000000;
 }
-
 .about-window-content a {
     color: #c0392b;
     text-decoration: none;
 }
-
 .about-window-content a:hover {
     text-decoration: underline;
 }
 
 /* Resume buttons */
 .resume-buttons {
-  margin-bottom: 10px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-}
-
-#resumeWindow .resume-buttons {
-    flex-shrink: 0;
     margin-bottom: 10px;
     height: 40px;
     display: flex;
     align-items: center;
 }
-
 .resume-buttons button {
-  background: #e0e0e0;
-  border: 1px solid #aaa;
-  padding: 5px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
+    background: #e0e0e0;
+    border: 1px solid #aaa;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
 }
-
 .resume-buttons button:hover {
-  background: #cfcfcf;
+    background: #cfcfcf;
 }
-
 .resume-buttons .icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
 }
 
 /* Start Button */
 #startButton {
-    position: relative;
-    height: 30px; /* Match taskbar height exactly */
-    background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
-    color: white;
-    font-weight: bold;
-    font-size: 11px;
-    border: 2px outset #00a000;
-    box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    padding: 0 12px;
-    flex-shrink: 0;
-    margin-left: 0;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
-    font-family: 'Tahoma', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* fixed size */
+  height: 40px !important;
+  width: 100px !important;
+  flex: 0 0 auto !important; /* prevents flexbox from resizing */
+  padding: 0 12px;
+  border-radius: 10px;
+
+  /* text */
+  font-size: 16px !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.9) !important;
+  font-family: 'Tahoma', sans-serif !important;
+  line-height: 40px; /* text stays vertically centered */
+
+  /* default green */
+  background: linear-gradient(135deg, #33c533 0%, #29a329 50%, #1f7a1f 100%) !important;
+  border: 2px outset #007f00 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),
+              0 2px 4px rgba(0,0,0,0.4);
+
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-#startButton:hover,
-#startButton:focus {
-    background: linear-gradient(135deg, #00b000 0%, #008f00 50%, #006600 100%);
-    border: 2px outset #00b000;
-    box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.4), inset -1px -1px 0 rgba(0,0,0,0.2);
-}
-
+/* Active (clicked: brighter green + pressed look) */
 #startButton:active {
-    background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%); /* Light green when clicked */
-    border: 2px inset #00c000;
-    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
-    transform: translateY(1px);
+  background: linear-gradient(135deg, #00cc00 0%, #00aa00 50%, #008800 100%) !important;
+  border: 2px inset #009900 !important;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4),
+              0 0 6px rgba(0,255,0,0.4);
+  transform: translateY(1px);
 }
 
-#startButton:focus {
-    outline: 1px dotted #00a000;
-    outline-offset: 2px;
-}
 
 /* Start Menu */
 #startMenu {
     position: fixed;
-    bottom: 30px;
+    bottom: 40px; /* match button height */
     left: 0;
-    width: 220px; /* Slimmer width */
-    background: #c0c0c0;
-    border: 2px outset #c0c0c0; /* Classic Windows 3D border */
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.4), inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+    width: 240px; /* slightly wider */
+    background: linear-gradient(135deg, #ececec 0%, #c8c8c8 40%, #a8a8a8 100%);
+    border: 2px outset #c0c0c0;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.5),
+                inset 1px 1px 0 #fff,
+                inset -1px -1px 0 #808080;
     display: none;
     z-index: 1000;
-    border-radius: 0; /* Sharp corners for authentic look */
-    padding: 3px;
-    background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 30%, #a8a8a8 70%, #909090 100%);
+    padding: 0; /* reset so banner fits flush */
     animation: slideUp 0.2s ease-out;
+    font-family: 'Tahoma', sans-serif;
+    border-radius: 3px; /* subtle round corners */
+    overflow: hidden;
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
+/* --- Top Banner --- */
+#startMenu .banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: linear-gradient(135deg, #4a82d6 0%, #2f5daa 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    border-bottom: 2px solid #1e3a8a;
+}
+
+/* Banner image (logo or user pic) */
+#startMenu .banner img {
+    width: 34px;
+    height: 34px;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    background: #ccc;
+    object-fit: cover;
+}
+
+/* Inner menu list */
 #startMenu ul {
     list-style: none;
     padding: 6px;
     margin: 0;
-    background: #c0c0c0;
+    background: linear-gradient(135deg, #dcdcdc 0%, #c0c0c0 50%, #b0b0b0 100%);
     border: 1px inset #c0c0c0;
-    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
-    background: linear-gradient(135deg, #d0d0d0 0%, #c0c0c0 50%, #b0b0b0 100%);
+    box-shadow: inset 1px 1px 0 #808080,
+                inset -1px -1px 0 #fff;
 }
 
+/* Menu items */
 #startMenu ul li {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
     cursor: pointer;
-    transition: none; /* Remove smooth transitions for authentic feel */
     border: 1px solid transparent;
-    min-height: 36px;
-    font-size: 12px;
-    font-weight: normal;
+    min-height: 34px;
+    font-size: 13px;
     color: #000;
     background: transparent;
-    position: relative;
-    margin: 1px 0;
+    margin: 2px 0;
+    border-radius: 3px;
+    transition: background 0.15s ease, transform 0.1s ease;
 }
 
-#startMenu ul li:last-child {
-    border-bottom: none;
-}
-
-#startMenu ul li:hover,
-#startMenu ul li:focus {
+/* Hover effect (blue highlight like XP) */
+#startMenu ul li:hover {
     color: #fff;
-    background: linear-gradient(135deg, #316ac5 0%, #1e3a8a 100%);
-    border: 1px outset #316ac5;
-    box-shadow: inset 1px 1px 0 #5a8fd8, inset -1px -1px 0 #1e3a8a;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, #4a82d6 0%, #2f5daa 100%);
+    border: 1px solid #2f5daa;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
 }
 
+/* Active click effect */
 #startMenu ul li:active {
-    background: linear-gradient(135deg, #1e3a8a 0%, #316ac5 100%);
+    background: linear-gradient(135deg, #2f5daa 0%, #4a82d6 100%);
     border: 1px inset #1e3a8a;
-    box-shadow: inset 1px 1px 0 #1e3a8a, inset -1px -1px 0 #5a8fd8;
     transform: translateY(1px);
 }
 
-#startMenu ul li:focus {
-    outline: 1px dotted #fff;
-    outline-offset: -1px;
-}
-
+/* Icons inside menu items */
 #startMenu ul li img {
-    width: 18px;
-    height: 18px;
-    filter: none; /* Remove brightness filter for authentic look */
-    image-rendering: pixelated; /* Pixelated look for retro feel */
-    image-rendering: -moz-crisp-edges;
+    width: 20px;
+    height: 20px;
+    image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
+
+
 
 /* Taskbar */
 #taskbar {
     position: fixed;
     bottom: 0;
-    left: 0px;
+    left: 0;
     right: 0;
     height: 30px;
     background: linear-gradient(135deg, #4a9eff 0%, #0066cc 50%, #004499 100%);
@@ -374,10 +360,10 @@ body {
     align-items: center;
     gap: 2px;
     padding: 2px 0 0 0;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3),
+                inset 0 -1px 0 rgba(0,0,0,0.3);
     z-index: 999;
 }
-
 #taskbar-windows {
     display: flex;
     align-items: center;
@@ -386,528 +372,58 @@ body {
     flex: 1;
     margin-left: 5px;
 }
-
-#taskbar-windows button {
-    white-space: nowrap;
-    max-width: 200px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
 #taskbar button {
     height: 24px;
     padding: 0 8px;
     background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
     border: 1px outset #c0c0c0;
-    box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
-    cursor: pointer;
     font-size: 10px;
     font-family: 'Tahoma', sans-serif;
     color: #000;
-    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+    cursor: pointer;
 }
-
 #taskbar button:hover {
     background: linear-gradient(135deg, #f0f0f0 0%, #d0d0d0 100%);
-    border: 1px outset #d0d0d0;
 }
-
 #taskbar button:active {
     background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
     border: 1px inset #a0a0a0;
-    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
     transform: translateY(1px);
 }
-
 #taskbar button.active {
     background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%);
     border: 1px inset #a0a0a0;
-    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
-}
-
-/* Force Start button to stay green and match taskbar height */
-#taskbar #startButton,
-#taskbar #startButton:hover,
-#taskbar #startButton:focus {
-    height: 35px;
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
-    border: 2px outset #00a000;
-    color: #fff;
-}
-#taskbar #startButton:active {
-    background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%);
-    border: 2px inset #00c000;
 }
 
 /* Bio Photo */
 img.bio-photo {
     width: 70%;
     display: block;
-    height: auto; /* Ensure dynamic resizing while maintaining aspect ratio */
+    height: auto;
 }
 
-/* PDF Viewer Styling */
+/* PDF Viewer */
 #resumeWindow iframe {
     flex: 1;
     min-height: 0;
     background: #c0c0c0;
     border: 1px solid #808080;
-    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
 }
 
-#resumeWindow iframe::-webkit-scrollbar {
-  width: 16px;
-}
-
-#resumeWindow iframe::-webkit-scrollbar-track {
-  background: #c0c0c0;
-  border: 1px solid #808080;
-}
-
-#resumeWindow iframe::-webkit-scrollbar-thumb {
-  background: #808080;
-  border: 1px solid #fff;
-  box-shadow: inset 1px 1px 0 #000;
-}
-
-#resumeWindow iframe::-webkit-scrollbar-thumb:hover {
-  background: #606060;
-}
-
-/* Mobile Responsive Styles */
+/* Mobile Responsive Fixes (kept minimal) */
 @media screen and (max-width: 768px) {
-    /* Prevent zoom on double tap */
-    * {
-        touch-action: manipulation;
-    }
-    
-    /* Desktop icons - make them smaller and more compact */
-    #desktop {
-        top: 10px;
-        left: 10px;
-        gap: 10px;
-    }
-    
-    .desktop-icon {
-        width: 60px;
-        font-size: 10px;
-        /* Ensure touch targets are large enough */
-    }
-    .desktop-icon img {
-        width: 40px;
-        height: 40px;
-        display: block;
-        margin: 0 auto;
-    }
-    
-    .desktop-icon-large img {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .desktop-icon-large {
-        font-size: 11px;
-    }
-    
-    /* Windows - make them responsive */
-    .window {
-        width: 95vw !important;
-        height: 80vh !important;
-        max-width: 95vw;
-        max-height: 80vh;
-        left: 2.5vw !important;
-        top: 10vh !important;
-    }
-    
-    /* Window content adjustments */
-    .window-content {
-        padding: 8px;
-    }
-    
-    /* About window specific mobile styles */
-    .about-window-content {
-        padding: 8px;
-    }
-    
-    .about-text {
-        width: 95%;
-        max-width: none;
-    }
-    
-    img.bio-photo {
-        width: 70%;
-        max-width: 760px;
-        display: block;
-        height: auto;
-        margin: 0 auto;
-}
-    
-    .resume-buttons button {
-        width: 100%;
-        justify-content: center;
-        margin-right: 0;
-        /* Ensure touch targets are large enough */
-        min-height: 44px;
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    
-    /* Taskbar adjustments */
-    #taskbar {
-        height: 40px;
-        padding: 0 5px;
-    }
-    
-    #startButton {
-        height: 40px; /* Match mobile taskbar height exactly */
-        padding: 0 10px;
-        font-size: 11px;
-        /* Ensure touch targets are large enough */
-        min-width: 60px;
-        min-height: 40px;
-        /* Mobile-specific start button styling */
-        border: 2px outset #00a000;
-        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
-        background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
-        color: white;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-        flex-shrink: 0;
-        margin-left: 0;
-        position: relative;
-        left: 0;
-        text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
-        font-family: 'Tahoma', sans-serif;
-    }
-    
-    #startButton:hover {
-        background: linear-gradient(135deg, #00b000 0%, #008f00 50%, #006600 100%);
-        border: 2px outset #00b000;
-        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.4), inset -1px -1px 0 rgba(0,0,0,0.2);
-    }
-    
-    #startButton:active {
-        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%); /* Light green when clicked */
-        border: 2px inset #00c000;
-        box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
-        transform: translateY(1px);
-    }
-    
-    #startButton img {
-        height: 16px;
-        margin-right: 3px;
-        filter: none;
-    }
-    
-    #taskbar button {
-        height: 28px;
-        font-size: 11px;
-        padding: 0 3px;
-        /* Ensure touch targets are large enough */
-        min-height: 28px;
-        min-width: 40px;
-    }
-    
-    /* Start menu adjustments */
-    #startMenu {
-        width: 180px;
-        bottom: 40px;
-        left: 0;
-        background: #c0c0c0;
-        border: 2px outset #c0c0c0;
-        box-shadow: 3px 3px 6px rgba(0,0,0,0.4), inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
-        z-index: 1000;
-        background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 30%, #a8a8a8 70%, #909090 100%);
-        padding: 3px;
-    }
-    
-    #startMenu ul {
-        list-style: none;
-        padding: 6px;
-        margin: 0;
-        background: #c0c0c0;
-        height: 100%;
-        border: 1px inset #c0c0c0;
-        box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
-        background: linear-gradient(135deg, #d0d0d0 0%, #c0c0c0 50%, #b0b0b0 100%);
-    }
-    
-    #startMenu ul li {
-        padding: 8px 10px;
-        font-size: 12px;
-        /* Ensure touch targets are large enough */
-        min-height: 36px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        transition: none;
-        border: 1px solid transparent;
-        margin: 1px 0;
-    }
-    
-    #startMenu ul li:last-child {
-        border-bottom: none;
-    }
-    
-    #startMenu ul li:hover {
-        color: #fff;
-        background: linear-gradient(135deg, #316ac5 0%, #1e3a8a 100%);
-        border: 1px outset #316ac5;
-        box-shadow: inset 1px 1px 0 #5a8fd8, inset -1px -1px 0 #1e3a8a;
-        text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
-    }
-    
-    #startMenu ul li img {
-        width: 18px;
-        height: 18px;
-        filter: none;
-        image-rendering: pixelated;
-        image-rendering: -moz-crisp-edges;
-        image-rendering: crisp-edges;
-    }
-    
-    /* PDF viewer adjustments */
-    #resumeWindow iframe {
-        height: calc(80vh - 120px);
-    }
-    
-    #pdfViewer {
-        height: calc(80vh - 120px) !important;
-    }
-    
-    /* Window control buttons - ensure they're touchable */
-    .window-controls button {
-        min-width: 24px;
-        min-height: 24px;
-        font-size: 12px;
-        padding: 2px;
-        margin: 0 1px;
-    }
-    
-    /* Ensure all clickable elements have proper touch targets */
-    button, .desktop-icon, #startMenu ul li {
-        cursor: pointer;
-        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
-        touch-action: manipulation;
-    }
-    
-    /* Prevent text selection on touch */
-    .desktop-icon, button, #startMenu ul li {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-}
-
-/* Extra small devices (phones, 480px and down) */
-@media screen and (max-width: 480px) {
-    #desktop {
-        top: 5px;
-        left: 5px;
-        gap: 8px;
-    }
-    
-    .desktop-icon {
-        width: 50px;
-        font-size: 9px;
-        /* Ensure touch targets are large enough */
-        min-height: 60px;
-        padding: 4px;
-        box-sizing: border-box;
-    }
-    
-    .desktop-icon img {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .desktop-icon-large img {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .window {
-        width: 98vw !important;
-        height: 85vh !important;
-        left: 1vw !important;
-        top: 7vh !important;
-    }
-    
-    .about-title {
-        font-size: 20px;
-    }
-    
-    .about-section {
-        font-size: 13px;
-    }
-    
-    img.bio-photo {
-        width: 95%;
-    }
-    
-    #taskbar {
-        height: 45px;
-    }
-    
-    #startButton {
-        height: 45px; /* Match small screen mobile taskbar height exactly */
-        font-size: 11px;
-        /* Ensure touch targets are large enough */
-        min-width: 70px;
-        min-height: 45px;
-        /* Mobile-specific start button styling */
-        border: 2px outset #00a000;
-        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
-        background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
-        color: white;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-        flex-shrink: 0;
-        margin-left: 0;
-        position: relative;
-        left: 0;
-        text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
-        font-family: 'Tahoma', sans-serif;
-    }
-    
-    #startButton:hover {
-        background: linear-gradient(135deg, #00b000 0%, #008f00 50%, #006600 100%);
-        border: 2px outset #00b000;
-        box-shadow: 1px 1px 0 #fff, inset 1px 1px 0 rgba(255,255,255,0.4), inset -1px -1px 0 rgba(0,0,0,0.2);
-    }
-    
-    #startButton:active {
-        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%); /* Light green when clicked */
-        border: 2px inset #00c000;
-        box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px -1px 0 rgba(255,255,255,0.3);
-        transform: translateY(1px);
-    }
-    
-    #startMenu {
-        width: 180px;
-        bottom: 45px;
-    }
-    
-    #startMenu ul li {
-        padding: 4px 6px;
-        font-size: 11px;
-        /* Ensure touch targets are large enough */
-        min-height: 32px;
-        display: flex;
-        align-items: center;
-    }
-    
-    #startMenu ul li img {
-        width: 18px;
-        height: 18px;
-    }
-    
-    /* Resume buttons - even larger touch targets on small phones */
-    .resume-buttons button {
-        min-height: 48px;
-        padding: 10px 12px;
-        font-size: 15px;
-    }
-    
-    /* Window control buttons - ensure they're touchable */
-    .window-controls button {
-        min-width: 28px;
-        min-height: 28px;
-        font-size: 13px;
-        padding: 3px;
-        margin: 0 2px;
-    }
-}
-
-/* Landscape orientation adjustments for mobile */
-@media screen and (max-width: 768px) and (orientation: landscape) {
-    .window {
-        height: 90vh !important;
-        top: 5vh !important;
-    }
-    
-    #desktop {
-        flex-direction: row;
-        flex-wrap: wrap;
-        max-width: 80vw;
-    }
-    
-    .about-window-content {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    img.bio-photo {
-        width: 40%;
-        flex-shrink: 0;
-    }
-    
-    .about-text {
-        width: 55%;
-    }
-}
-
-/* Prevent horizontal scrolling on mobile */
-@media screen and (max-width: 768px) {
-    body {
-        overflow-x: hidden;
-    }
-    
-    .window {
-        overflow: hidden;
-    }
-    
-    .window-content {
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    /* Force Start button to stay green and match taskbar height on tablets */
     #taskbar { height: 40px; }
-    #startButton,
-    #startButton:hover,
-    #startButton:focus {
+    #startButton {
         height: 40px;
-        box-sizing: border-box;
-        background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
-        border: 2px outset #00a000;
-        color: #fff;
-    }
-    #startButton:active {
-        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%);
-        border: 2px inset #00c000;
+        font-size: 14px;
+        min-width: 60px;
     }
 }
-
 @media screen and (max-width: 480px) {
-    /* Force Start button to stay green and match taskbar height on small phones */
     #taskbar { height: 45px; }
-    #startButton,
-    #startButton:hover,
-    #startButton:focus {
+    #startButton {
         height: 45px;
-        box-sizing: border-box;
-        background: linear-gradient(135deg, #00a000 0%, #007f00 50%, #005500 100%);
-        border: 2px outset #00a000;
-        color: #fff;
-    }
-    #startButton:active {
-        background: linear-gradient(135deg, #00c000 0%, #00a000 50%, #008000 100%);
-        border: 2px inset #00c000;
+        font-size: 12px;
+        min-width: 70px;
     }
 }
-
