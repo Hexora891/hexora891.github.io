@@ -29,6 +29,10 @@
       <img src="assets/images/writeups.png" alt="Writeups icon">
       <span>Writeups</span>
     </button>
+      <button class="desktop-icon" onclick="openWindow(event, 'musicWindow')" aria-label="Open Music window">
+        <img src="assets/images/music.png" alt="Music icon">
+        <span>Music</span>
+      </button>
   </div>
 
   <!-- Windows -->
@@ -116,8 +120,41 @@
   </ul>
 </div>
 
-<script src="assets/js/script.js"></script>
+<!-- Music Player Window -->
+<div id="musicWindow" class="window music-window" role="dialog" aria-labelledby="musicWindow-title" aria-hidden="true">
+  
+  <div class="window-header" role="banner">
+    <span id="musicWindow-title">🎵 Music</span>
+    <div class="window-controls" role="toolbar">
+      <button onclick="minimizeWindow('musicWindow')" aria-label="Minimize window">_</button>
+      <button >□</button>
+      <button onclick="closeWindow('musicWindow')" aria-label="Close window">X</button>
+    </div>
+  </div>
+  
+  <div class="window-content music-content">
+    <div class="music-xp-main">
+      <div class="music-xp-album-frame">
+        <img id="albumArt" src="" alt="Album Art" class="music-xp-album-art">
+      </div>
+
+      <div class="music-xp-controls">
+        <div class="music-xp-row">
+          <button class="xp-play-btn" id="playPauseBtn" title="Play/Pause">▶</button>
+          <span class="xp-time" id="currentTime">0:00</span>
+          <input type="range" id="xpProgressBar" min="0" max="100" value="0">
+          <span class="xp-time" id="totalTime">1:31</span>
+        </div>
+        <div class="music-xp-row">
+          <button class="xp-wide-btn" id="prevBtn">Previous</button>
+          <button class="xp-wide-btn" id="nextBtn">Next</button>
+        </div>
+      </div>
+    
+  
+  <audio id="audioPlayer" preload="metadata"></audio>
+</div>
+
+  <script src="assets/js/script.js?ver=2025-09-15-1" defer></script>
 </body>
 </html>
-
-

@@ -1,3 +1,14 @@
+// Defensive stubs: attach no-op globals early so inline onclicks or inline calls won't throw
+// These will be overwritten by real implementations later in the file.
+if (typeof window !== 'undefined') {
+    window.initializeMusicPlayer = window.initializeMusicPlayer || function() { console.warn('initializeMusicPlayer called before script loaded'); };
+    window.togglePlayPause = window.togglePlayPause || function() { console.warn('togglePlayPause called before script loaded'); };
+    window.nextTrack = window.nextTrack || function() { console.warn('nextTrack called before script loaded'); };
+    window.previousTrack = window.previousTrack || function() { console.warn('previousTrack called before script loaded'); };
+    window.selectTrack = window.selectTrack || function() { console.warn('selectTrack called before script loaded'); };
+}
+
+
 let zIndexCounter = 10;
 let nextCascadeLeft = null;
 let nextCascadeTop = null;
@@ -78,6 +89,17 @@ function openWindow(event, id) {
     if (id === 'resumeWindow') {
         setTimeout(loadResumePDF, 500);
     }
+    // If opening the music window, attempt autoplay if allowed
+    if (id === 'musicWindow') {
+        try {
+            // small timeout to allow music UI to render
+            setTimeout(() => {
+                attemptAutoPlay();
+            }, 50);
+        } catch (e) {
+            console.warn('Autoplay attempt failed to start', e);
+        }
+    }
 }
 
 // Close window
@@ -86,6 +108,39 @@ function closeWindow(id) {
     win.style.display = "none";
     win.setAttribute('aria-hidden', 'true');
     removeTaskbarButton(id);
+    if (id === 'musicWindow') {
+        stopAllMusic();
+    }
+}
+
+// Stop any music playback (pauses audio, stops demo progress, resets UI)
+function stopAllMusic() {
+    try {
+        // Stop musicPlayer current audio if present
+        if (window.musicPlayer) {
+            if (musicPlayer.currentAudio && typeof musicPlayer.currentAudio.pause === 'function') {
+                try { musicPlayer.currentAudio.pause(); } catch (e) {}
+            }
+            musicPlayer.isPlaying = false;
+        }
+
+        // Stop demo progress if running
+        try { stopDemoProgress(); } catch (e) {}
+
+        // Pause any <audio id="audioPlayer"> element
+        const audioEl = document.getElementById('audioPlayer');
+        if (audioEl && typeof audioEl.pause === 'function') {
+            try { audioEl.pause(); audioEl.currentTime = 0; } catch (e) {}
+        }
+
+        // Update play button UI
+        const playBtn = document.getElementById('playPauseBtn');
+        if (playBtn) playBtn.textContent = '▶';
+        const albumArt = document.getElementById('albumArt');
+        if (albumArt) albumArt.classList.remove('spinning');
+    } catch (e) {
+        console.warn('Error stopping music', e);
+    }
 }
 
 // Bring window to front
@@ -742,3 +797,143 @@ function addTouchSupportToButtons() {
         item.addEventListener('touchend', item._touchEndHandler);
     });
 }
+
+// ===== Simple music player (safe wiring after DOM ready) =====
+document.addEventListener('DOMContentLoaded', () => {
+    const tracks = [
+        { title: 'Track 1', artist: 'Artist 1', src: 'assets/music/song1.mp3', albumArt: 'assets/images/song1.png' },
+        { title: 'Track 2', artist: 'Artist 2', src: 'assets/music/song2.mp3', albumArt: 'assets/images/song2.gif' }
+    ];
+
+    const audioEl = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playPauseBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentTimeEl = document.getElementById('currentTime');
+    const totalTimeEl = document.getElementById('totalTime');
+    const progressBar = document.getElementById('xpProgressBar');
+    const albumArtEl = document.getElementById('albumArt');
+
+    if (!audioEl) {
+        console.warn('audioPlayer element not found');
+        return;
+    }
+
+    let current = 0;
+    let playing = false;
+
+    function formatTimeLocal(seconds) {
+        const m = Math.floor(seconds / 60) || 0;
+        const s = Math.floor(seconds % 60) || 0;
+        return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function loadTrackLocal(idx) {
+        if (idx < 0) idx = tracks.length - 1;
+        if (idx >= tracks.length) idx = 0;
+        current = idx;
+        const t = tracks[current];
+        audioEl.src = t.src;
+        if (albumArtEl) albumArtEl.src = t.albumArt || '';
+        if (progressBar) { progressBar.value = 0; progressBar.max = 0; }
+        if (currentTimeEl) currentTimeEl.textContent = '0:00';
+        if (totalTimeEl) totalTimeEl.textContent = '0:00';
+        // update metadata once loaded
+        audioEl.addEventListener('loadedmetadata', function onMeta() {
+            if (totalTimeEl) totalTimeEl.textContent = formatTimeLocal(audioEl.duration);
+            if (progressBar) progressBar.max = Math.floor(audioEl.duration || 0);
+            audioEl.removeEventListener('loadedmetadata', onMeta);
+        });
+    }
+
+    function playPauseLocal() {
+        if (!audioEl.src) loadTrackLocal(current);
+        const p = audioEl.paused ? audioEl.play() : audioEl.pause();
+        if (p && p.then) {
+            p.then(() => {
+                playing = !audioEl.paused;
+                if (playBtn) playBtn.textContent = playing ? '▌▌' : '▶';
+            }).catch(err => {
+                console.warn('play() rejected', err);
+            });
+        } else {
+            playing = !audioEl.paused;
+            if (playBtn) playBtn.textContent = playing ? '▌▌' : '▶';
+        }
+        if (albumArtEl) albumArtEl.classList.toggle('spinning', !audioEl.paused);
+    }
+
+    function startPlaybackAfterLoad() {
+        // Attempt to play and update UI/state
+        try {
+            const p = audioEl.play();
+            if (p && p.then) {
+                p.then(() => {
+                    playing = true;
+                    if (playBtn) playBtn.textContent = '▌▌';
+                    if (albumArtEl) albumArtEl.classList.add('spinning');
+                }).catch(err => {
+                    // Autoplay blocked or other error
+                    playing = false;
+                    if (playBtn) playBtn.textContent = '▶';
+                    if (albumArtEl) albumArtEl.classList.remove('spinning');
+                    console.warn('play() rejected after track change', err);
+                });
+            } else {
+                playing = !audioEl.paused;
+                if (playBtn) playBtn.textContent = playing ? '▌▌' : '▶';
+                if (albumArtEl) albumArtEl.classList.toggle('spinning', playing);
+            }
+        } catch (e) {
+            console.warn('Error attempting play after load', e);
+        }
+    }
+
+    function nextLocal() { loadTrackLocal(current + 1); startPlaybackAfterLoad(); }
+    function prevLocal() { loadTrackLocal(current - 1); startPlaybackAfterLoad(); }
+
+    // Expose to window so other UI can call
+    try { window.nextTrack = nextLocal; window.previousTrack = prevLocal; window.togglePlayPause = playPauseLocal; window.selectTrack = loadTrackLocal; } catch (e) {}
+
+    // Attach listeners
+    if (playBtn) playBtn.addEventListener('click', playPauseLocal);
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextLocal(); reportPlayerStatus('user-click-next'); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevLocal(); reportPlayerStatus('user-click-prev'); });
+    if (progressBar) progressBar.addEventListener('input', () => { audioEl.currentTime = Number(progressBar.value); if (currentTimeEl) currentTimeEl.textContent = formatTimeLocal(audioEl.currentTime); });
+    audioEl.addEventListener('timeupdate', () => { if (currentTimeEl) currentTimeEl.textContent = formatTimeLocal(audioEl.currentTime); if (progressBar) progressBar.value = Math.floor(audioEl.currentTime); });
+    audioEl.addEventListener('ended', nextLocal);
+
+    // Start with first track selected (do not auto-play)
+    loadTrackLocal(0);
+    reportPlayerStatus('simple-player-initialized');
+});
+
+    // Autoplay support: try to start playback when the music window opens
+    const MUSIC_AUTOPLAY = true;
+
+    function attemptAutoPlay() {
+        if (!MUSIC_AUTOPLAY) return;
+        const audioEl = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playPauseBtn');
+        if (!audioEl) return;
+
+        // If audio already has source and is paused, try to play
+        if (audioEl.src) {
+            const p = audioEl.play();
+            if (p && p.then) {
+                p.then(() => {
+                    if (playBtn) playBtn.textContent = '▌▌';
+                    reportPlayerStatus('autoplay-success');
+                }).catch(err => {
+                        console.warn('Autoplay blocked', err);
+                        reportPlayerStatus('autoplay-blocked', { error: err && err.message });
+                });
+            }
+        } else {
+            // if no source yet, select first track and try (no UI overlay)
+            const select = window.selectTrack || function(){};
+            try { select(0); } catch (e) {}
+            setTimeout(() => attemptAutoPlay(), 200);
+        }
+    }
+
