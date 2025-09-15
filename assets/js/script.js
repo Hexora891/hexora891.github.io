@@ -136,8 +136,7 @@ function stopAllMusic() {
         // Update play button UI
         const playBtn = document.getElementById('playPauseBtn');
         if (playBtn) playBtn.textContent = '▶';
-        const albumArt = document.getElementById('albumArt');
-        if (albumArt) albumArt.classList.remove('spinning');
+    // album art spin feature removed
     } catch (e) {
         console.warn('Error stopping music', e);
     }
@@ -801,8 +800,9 @@ function addTouchSupportToButtons() {
 // ===== Simple music player (safe wiring after DOM ready) =====
 document.addEventListener('DOMContentLoaded', () => {
     const tracks = [
-        { title: 'Track 1', artist: 'Artist 1', src: 'assets/music/song1.mp3', albumArt: 'assets/images/song1.png' },
-        { title: 'Track 2', artist: 'Artist 2', src: 'assets/music/song2.mp3', albumArt: 'assets/images/song2.gif' }
+        { title: 'Rick Roll', artist: 'Rick', src: 'assets/music/song1.mp3', albumArt: 'assets/images/song1.gif' },
+        { title: 'Song for Denise', artist: 'Artist 1', src: 'assets/music/song2.mp3', albumArt: 'assets/images/song2.png' },
+        
     ];
 
     const audioEl = document.getElementById('audioPlayer');
@@ -860,7 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
             playing = !audioEl.paused;
             if (playBtn) playBtn.textContent = playing ? '▌▌' : '▶';
         }
-        if (albumArtEl) albumArtEl.classList.toggle('spinning', !audioEl.paused);
+    // album art spin feature removed
     }
 
     function startPlaybackAfterLoad() {
@@ -871,18 +871,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.then(() => {
                     playing = true;
                     if (playBtn) playBtn.textContent = '▌▌';
-                    if (albumArtEl) albumArtEl.classList.add('spinning');
                 }).catch(err => {
                     // Autoplay blocked or other error
                     playing = false;
                     if (playBtn) playBtn.textContent = '▶';
-                    if (albumArtEl) albumArtEl.classList.remove('spinning');
                     console.warn('play() rejected after track change', err);
                 });
             } else {
                 playing = !audioEl.paused;
                 if (playBtn) playBtn.textContent = playing ? '▌▌' : '▶';
-                if (albumArtEl) albumArtEl.classList.toggle('spinning', playing);
             }
         } catch (e) {
             console.warn('Error attempting play after load', e);

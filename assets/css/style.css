@@ -750,3 +750,71 @@ img.bio-photo {
         max-height: 120px;
     }
 }
+
+/* Make music window behave like about window on small/mobile screens */
+@media screen and (max-width: 480px) {
+    .music-window {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        z-index: 2000 !important;
+        box-shadow: none !important;
+    }
+    .music-window .window-header {
+        height: 46px;
+        display: flex;
+        align-items: center;
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    .music-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+        height: calc(100% - 56px);
+        overflow: auto;
+        box-sizing: border-box;
+    }
+    .music-xp-main {
+        width: 100%;
+        margin-top: 6px;
+        align-items: center;
+    }
+    .music-xp-album-frame {
+        width: 85%;
+        height: auto;
+        padding-top: 85%; /* square aspect ratio */
+        position: relative;
+        background: #e5e5e5;
+    }
+    .music-xp-album-frame img.music-xp-album-art {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 84%;
+        height: auto;
+        max-height: 60vh;
+    }
+    .music-xp-controls {
+        width: 100%;
+        padding: 6px 10px;
+        gap: 12px;
+    }
+    .xp-play-btn, .xp-wide-btn {
+        min-height: 44px;
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+    #xpProgressBar {
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 8px;
+    }
+}
