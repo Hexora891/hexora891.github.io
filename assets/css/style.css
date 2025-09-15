@@ -455,7 +455,7 @@ body {
 /* Time Labels */
 .xp-time {
     font-family: 'Courier New', monospace;
-    font-size: 11px;
+    font-size: 16px;
     color: #000;
     min-width: 32px;
     text-align: center;
@@ -504,12 +504,12 @@ body {
 
 /* Play Button (square retro style) */
 .xp-play-btn {
-    min-width: 40px;
-    height: 36px;
+    min-width: 44px;
+    height: 40px;
     background: #c0c0c0;
     border: 2px solid;
     border-color: #fff #000 #000 #fff; /* light top/left, dark bottom/right */
-    font-size: 14px;
+    font-size: 20px;
     cursor: pointer;
     box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
     display: flex;
@@ -530,12 +530,12 @@ body {
 
 /* Wide Buttons (Previous / Next) */
 .xp-wide-btn {
-    min-width: 100px;
-    height: 36px;
+    min-width: 180px;
+    height: 56px;
     background: #c0c0c0;
     border: 2px solid;
     border-color: #fff #000 #000 #fff;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
