@@ -43,7 +43,7 @@
     </button>
   </div>
 
-  <!-- About Window -->
+  <!-- Windows -->
   <div id="aboutWindow" class="window" role="dialog" aria-labelledby="aboutWindow-title" aria-hidden="true">
     <div class="window-header" role="banner">
       <span id="aboutWindow-title">About Me</span>
@@ -71,7 +71,6 @@
     </div>
   </div>
 
-  <!-- Resume Window -->
   <div id="resumeWindow" class="window" role="dialog" aria-labelledby="resumeWindow-title" aria-hidden="true">
     <div class="window-header" role="banner">
       <span id="resumeWindow-title">Resume</span>
@@ -92,7 +91,8 @@
         </button>
       </div>
 
-      <div id="pdfViewer" class="pdf-viewer"></div>
+      <!-- PDF viewer: multi-page, scrollable. canvases appended here -->
+      <div id="pdfViewer" class="pdf-viewer" aria-label="PDF viewer (scrollable)"></div>
     </div>
   </div>
 
@@ -107,35 +107,34 @@
   <!-- Start Menu -->
   <div id="startMenu" role="menu" aria-labelledby="startButton" aria-hidden="true">
     <div class="banner">
-      <!-- replaced missing user.png with an existing image -->
-      <img src="assets/images/github.png" alt="User Logo">
+      <img src="assets/images/user.png" alt="User Logo">
       <span>Hexora89</span>
     </div>
 
     <ul role="none">
       <li role="menuitem" onclick="window.open('https://github.com/Hexora891','_blank')" tabindex="0">
-        <img src="assets/images/github.png" alt="GitHub icon"> GitHub
+        <img src="/assets/images/github.png" alt="GitHub icon"> GitHub
       </li>
       <li role="menuitem" onclick="window.open('https://youtube.com','_blank')" tabindex="0">
-        <img src="assets/images/youtube.png" alt="YouTube icon"> YouTube
+        <img src="/assets/images/youtube.png" alt="YouTube icon"> YouTube
       </li>
       <li role="menuitem" onclick="window.open('https://x.com/Hexora89','_blank')" tabindex="0">
-        <img src="assets/images/x.png" alt="X icon"> X
+        <img src="/assets/images/x.png" alt="X icon"> X
       </li>
       <li role="menuitem" onclick="window.open('https://app.hackthebox.com/profile/2397481','_blank')" tabindex="0">
-        <img src="assets/images/hackthebox.png" alt="HackTheBox icon"> HackTheBox
+        <img src="/assets/images/hackthebox.png" alt="HackTheBox icon"> HackTheBox
       </li>
       <li role="menuitem" onclick="window.open('https://www.linkedin.com/in/ayush-singh-381792390/','_blank')" tabindex="0">
-        <img src="assets/images/linkedin.png" alt="LinkedIn icon"> LinkedIn
+        <img src="/assets/images/linkedin.png" alt="LinkedIn icon"> LinkedIn
       </li>
     </ul>
   </div>
 
   <!-- Music Player Window -->
   <div id="musicWindow" class="window music-window" role="dialog" aria-labelledby="musicWindow-title" aria-hidden="true">
-    <div class="window-header">
+    <div class="window-header" role="banner">
       <span id="musicWindow-title">🎵 Music</span>
-      <div class="window-controls">
+      <div class="window-controls" role="toolbar">
         <button onclick="minimizeWindow('musicWindow')" aria-label="Minimize window">_</button>
         <button onclick="maximizeWindow('musicWindow')" aria-label="Maximize window">□</button>
         <button onclick="closeWindow('musicWindow')" aria-label="Close window">X</button>
@@ -145,12 +144,12 @@
     <div class="window-content music-content">
       <div class="music-xp-main">
         <div class="music-xp-album-frame">
-          <img id="albumArt" src="assets/images/song1.gif" alt="Album Art" class="music-xp-album-art">
+          <img id="albumArt" src="/assets/image/song1.gif" alt="Album Art" class="music-xp-album-art">
         </div>
 
         <div class="music-xp-controls">
           <div class="music-xp-row">
-            <button class="xp-play-btn" id="playPauseBtn">▶</button>
+            <button class="xp-play-btn" id="playPauseBtn" title="Play/Pause">▶</button>
             <span class="xp-time" id="currentTime">0:00</span>
             <input type="range" id="xpProgressBar" min="0" max="100" value="0">
             <span class="xp-time" id="totalTime">0:00</span>
