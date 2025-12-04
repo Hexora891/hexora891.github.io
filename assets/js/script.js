@@ -65,8 +65,10 @@ function toggleStartMenu() {
 document.addEventListener('click', (e) => {
     const menu = document.getElementById("startMenu");
     const button = document.getElementById("startButton");
-    if (!menu.contains(e.target) && !button.contains(e.target)) {
+    if (menu && button && !menu.contains(e.target) && !button.contains(e.target)) {
         menu.style.display = 'none';
+        menu.setAttribute('aria-hidden', 'true');
+        button.setAttribute('aria-expanded', 'false');
     }
 });
 
@@ -232,8 +234,11 @@ function loadResumePDF() {
 
     viewer.innerHTML = '<div style="color:#fff;padding:20px;text-align:center;">Loading PDF...</div>';
 
-    fetch('/assets/files/Ayush-Resume.pdf')
-        .then(r => r.arrayBuffer())
+    fetch('assets/files/Ayush-Resume.pdf')
+        .then(r => {
+            if (!r.ok) throw new Error('Network response was not ok: ' + r.status);
+            return r.arrayBuffer();
+        })
         .then(buf => pdfjsLib.getDocument({ data: buf }).promise)
         .then(pdf => {
             PDF_DOC = pdf;
@@ -270,6 +275,7 @@ function loadResumePDF() {
             })();
         })
         .catch(err => {
+            console.error('Failed to load PDF', err);
             viewer.innerHTML = `
                 <div style="color:#fff;padding:20px;text-align:center;">
                     Could not load PDF.<br>
@@ -292,13 +298,15 @@ window.addEventListener("resize", () => {
 ====================================================== */
 function downloadResume() {
     const a = document.createElement('a');
-    a.href = '/assets/files/Ayush-Resume.pdf';
+    a.href = 'assets/files/Ayush-Resume.pdf';
     a.download = 'Ayush-Resume.pdf';
+    document.body.appendChild(a);
     a.click();
+    a.remove();
 }
 
 function openResumeNewTab() {
-    window.open('/assets/files/Ayush-Resume.pdf', '_blank');
+    window.open('assets/files/Ayush-Resume.pdf', '_blank');
 }
 
 /* ======================================================
@@ -319,13 +327,13 @@ function openResumeNewTab() {
     const totalTimeLabel   = document.getElementById("totalTime");
 
     /* Your real artwork paths */
-    const ART1 = "/assets/images/song1.gif";
-    const ART2 = "/assets/images/song2.png";
+    const ART1 = "assets/images/song1.gif";
+    const ART2 = "assets/images/song2.png";
 
     /* Your real tracks — update MP3 names here */
     const tracks = [
-        { src: "/assets/music/song1.mp3", art: ART1 },
-        { src: "/assets/music/song2.mp3", art: ART2 }
+        { src: "assets/music/song1.mp3", art: ART1 },
+        { src: "assets/music/song2.mp3", art: ART2 }
     ];
 
     let currentTrackIndex = 0;
@@ -416,25 +424,29 @@ function openResumeNewTab() {
     /* ------------------------------------------
        Album art click = cycle images
     ------------------------------------------- */
-    albumArt.onclick = () => {
-        currentArt = currentArt === 1 ? 2 : 1;
-        albumArt.src = currentArt === 1 ? ART1 : ART2;
-    };
+    if (albumArt) {
+        albumArt.onclick = () => {
+            currentArt = currentArt === 1 ? 2 : 1;
+            albumArt.src = currentArt === 1 ? ART1 : ART2;
+        };
+    }
 
     /* ------------------------------------------
        Button bindings
     ------------------------------------------- */
-    playBtn.onclick = togglePlayPause;
-    prevBtn.onclick = previousTrack;
-    nextBtn.onclick = nextTrack;
+    if (playBtn) playBtn.onclick = togglePlayPause;
+    if (prevBtn) prevBtn.onclick = previousTrack;
+    if (nextBtn) nextBtn.onclick = nextTrack;
 
     /* ------------------------------------------
        Stop music (when closing window)
     ------------------------------------------- */
     window.stopAllMusic = function () {
-        audio.pause();
-        audio.currentTime = 0;
-        playBtn.textContent = "▶";
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+        if (playBtn) playBtn.textContent = "▶";
     };
 
     /* ------------------------------------------
@@ -444,15 +456,15 @@ function openResumeNewTab() {
     window.initializeMusicPlayer = function () {
         selectTrack(0);
         audio.play().then(() => {
-            playBtn.textContent = "▌▌";
+            if (playBtn) playBtn.textContent = "▌▌";
         }).catch(err => {
             console.warn("Autoplay blocked, user must interact.", err);
         });
-        albumArt.src = ART1;
+        if (albumArt) albumArt.src = ART1;
     };
 
     /* Initialize immediately */
-    initializeMusicPlayer();
+    try { initializeMusicPlayer(); } catch (e) { /* ignore */ }
 
 })();
 
