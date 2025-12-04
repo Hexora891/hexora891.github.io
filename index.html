@@ -7,278 +7,8 @@
   <meta name="author" content="Ayush (Hexora)" />
   <title>Hexora89</title>
 
-  <!-- Inlined critical CSS (from assets/css/style.css) to ensure styling even if external CSS fails to load on Pages -->
-  <style>
-/* ---------- BEGIN inlined style.css (critical part) ---------- */
-/* Base */
-body {
-    margin: 0;
-    font-family: 'Tahoma', sans-serif;
-    background: url('assets/images/retro.jpg') no-repeat center center fixed;
-    background-size: cover;
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Desktop Icons */
-#desktop {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 0;
-}
-
-.desktop-icon {
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-    color: white;
-    font-size: 12px;
-    text-shadow: 1px 1px #000;
-    background: none;
-    border: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-.desktop-icon img {
-    width: 50px;
-    height: 50px;
-}
-.desktop-icon-large img {
-    width: 60px;
-    height: 60px;
-}
-.desktop-icon-large {
-    font-size: 14px;
-}
-.desktop-icon:focus {
-    outline: none;
-}
-
-/* Windows */
-.window {
-    width: 900px;
-    height: 700px;
-    background: #c0c0c0;
-    border: 2px solid #fff;
-    box-shadow: 4px 4px 0px #000;
-    position: absolute;
-    display: none;
-    z-index: 10;
-}
-.window-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, #0a64ad, #0a4a8c);
-    color: white;
-    padding: 3px 5px;
-    cursor: move;
-    font-weight: bold;
-}
-.window-controls button {
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
-    padding: 0;
-    cursor: pointer;
-    border: 1px solid #fff;
-    background: #e0e0e0;
-    box-shadow: 1px 1px 0 #000 inset;
-}
-.window-controls button:hover,
-.window-controls button:focus {
-    background: #c0c0c0;
-    outline: 1px solid #000;
-}
-.window-content {
-    padding: 10px;
-    overflow: auto;
-    height: calc(100% - 30px);
-    box-sizing: border-box;
-}
-#resumeWindow .window-content {
-    height: calc(100% - 30px);
-    display: flex;
-    flex-direction: column;
-}
-
-/* PDF viewer (multi-page scrollable) */
-.pdf-viewer{
-  width:100%;
-  height:calc(100% - 44px);
-  background:#222;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  overflow:auto;
-  padding:12px;
-  border:1px solid #808080;
-  box-shadow:inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
-}
-.pdf-viewer canvas{background:#fff;margin:10px 0;max-width:100%;height:auto;box-shadow:0 2px 8px rgba(0,0,0,.35)}
-
-/* Scrollbars */
-.window-content::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
-}
-.window-content::-webkit-scrollbar-track {
-    background: #c0c0c0;
-    border: 1px solid #808080;
-}
-.window-content::-webkit-scrollbar-thumb {
-    background: #808080;
-    border: 1px solid #fff;
-    box-shadow: inset 1px 1px 0 #000;
-}
-.window-content::-webkit-scrollbar-thumb:hover {
-    background: #606060;
-}
-
-/* Resume Buttons */
-.resume-buttons {
-    margin-bottom: 10px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-}
-.resume-buttons button {
-    background: #e0e0e0;
-    border: 1px solid #aaa;
-    padding: 5px 10px;
-    margin-right: 5px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-}
-.resume-buttons button:hover {
-    background: #cfcfcf;
-}
-.resume-buttons .icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-}
-
-/* Start Button */
-#startButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px !important;
-  width: 100px !important;
-  padding: 0 12px;
-  border-radius: 10px;
-  font-size: 16px !important;
-  color: #ffffff !important;
-  font-weight: bold !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.9) !important;
-  font-family: 'Tahoma', sans-serif !important;
-  line-height: 40px;
-  background: linear-gradient(135deg, #33c533 0%, #29a329 50%, #1f7a1f 100%) !important;
-  border: 2px outset #007f00 !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.4);
-  cursor: pointer;
-}
-
-/* Taskbar */
-#taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(135deg, #4a9eff 0%, #0066cc 50%, #004499 100%);
-    border-top: 2px outset #4a9eff;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    padding: 2px 0 0 0;
-    z-index: 999;
-}
-#taskbar-windows {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    flex: 1;
-    margin-left: 5px;
-    overflow-x: auto;
-}
-
-/* Music window styles */
-.music-window {
-    width: 400px !important;
-    height: 650px !important;
-    background: #c0c0c0;
-    border: 2px solid #808080;
-    box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080;
-}
-.music-xp-album-frame {
-    width: 350px;
-    height: 350px;
-    background: #000;
-    border: 2px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-    overflow: hidden;
-}
-.music-xp-album-art {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.music-xp-controls { width: 100%; display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:8px; }
-.xp-play-btn { min-width:44px; height:40px; background:#c0c0c0; border:2px solid; font-size:20px; cursor:pointer; }
-.xp-wide-btn { min-width:180px; height:56px; background:#c0c0c0; border:2px solid; cursor:pointer; }
-.xp-time { font-family: 'Courier New', monospace; font-size:16px; color:#000; min-width:32px; text-align:center; }
-
-/* small helpers */
-button,img { -webkit-tap-highlight-color: transparent; }
-
-/* === Safety overrides to prevent huge images and layout blowouts === */
-html, body { box-sizing: border-box; }
-*, *::before, *::after { box-sizing: inherit; }
-
-.desktop-icon img,
-#startMenu img,
-#taskbar img,
-.resume-buttons .icon,
-.window img { max-width: 48px; max-height: 48px; object-fit: contain; display:inline-block; vertical-align: middle; }
-
-.desktop-icon img { width:50px; height:50px; max-width:60px; max-height:60px; }
-.desktop-icon-large img { width:60px; height:60px; }
-
-#startMenu img { width:20px; height:20px; margin-right:8px; }
-#startButton img { width:22px; height:22px; margin-right:8px; }
-.resume-buttons .icon { width:16px; height:16px; }
-
-.music-xp-album-frame { width:350px; height:350px; max-width: calc(100% - 40px); max-height: 60vh; box-sizing:border-box; }
-.music-xp-album-art { width:100%; height:100%; object-fit:cover; display:block; }
-
-#startMenu { position: fixed; left: 10px; bottom: 40px; width: 260px; z-index:2000; display:none; background: linear-gradient(180deg,#fff,#e9eef8); border:1px solid #888; box-shadow:0 6px 18px rgba(0,0,0,0.45); padding:8px; overflow:auto; }
-#startMenu .banner { display:flex; align-items:center; gap:10px; padding:8px 4px; }
-#startMenu ul { margin:8px 0 0 0; padding:0; list-style:none; }
-#startMenu li { display:flex; align-items:center; gap:10px; padding:6px 8px; cursor:pointer; }
-#startMenu[aria-hidden="true"] { display:none !important; }
-
-.window { box-sizing:border-box; max-width:98vw; max-height: calc(100vh - 40px); overflow:hidden; }
-.window .window-content { overflow:auto; }
-img { max-width:100%; height:auto; }
-
-/* ---------- END inlined style.css ---------- */
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 
   <!-- PDF.js (bundle + worker) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -313,7 +43,7 @@ img { max-width:100%; height:auto; }
     </button>
   </div>
 
-  <!-- Windows -->
+  <!-- About Window -->
   <div id="aboutWindow" class="window" role="dialog" aria-labelledby="aboutWindow-title" aria-hidden="true">
     <div class="window-header" role="banner">
       <span id="aboutWindow-title">About Me</span>
@@ -341,6 +71,7 @@ img { max-width:100%; height:auto; }
     </div>
   </div>
 
+  <!-- Resume Window -->
   <div id="resumeWindow" class="window" role="dialog" aria-labelledby="resumeWindow-title" aria-hidden="true">
     <div class="window-header" role="banner">
       <span id="resumeWindow-title">Resume</span>
@@ -361,8 +92,7 @@ img { max-width:100%; height:auto; }
         </button>
       </div>
 
-      <!-- PDF viewer: multi-page, scrollable. canvases appended here -->
-      <div id="pdfViewer" class="pdf-viewer" aria-label="PDF viewer (scrollable)"></div>
+      <div id="pdfViewer" class="pdf-viewer"></div>
     </div>
   </div>
 
@@ -402,9 +132,9 @@ img { max-width:100%; height:auto; }
 
   <!-- Music Player Window -->
   <div id="musicWindow" class="window music-window" role="dialog" aria-labelledby="musicWindow-title" aria-hidden="true">
-    <div class="window-header" role="banner">
+    <div class="window-header">
       <span id="musicWindow-title">🎵 Music</span>
-      <div class="window-controls" role="toolbar">
+      <div class="window-controls">
         <button onclick="minimizeWindow('musicWindow')" aria-label="Minimize window">_</button>
         <button onclick="maximizeWindow('musicWindow')" aria-label="Maximize window">□</button>
         <button onclick="closeWindow('musicWindow')" aria-label="Close window">X</button>
@@ -419,7 +149,7 @@ img { max-width:100%; height:auto; }
 
         <div class="music-xp-controls">
           <div class="music-xp-row">
-            <button class="xp-play-btn" id="playPauseBtn" title="Play/Pause">▶</button>
+            <button class="xp-play-btn" id="playPauseBtn">▶</button>
             <span class="xp-time" id="currentTime">0:00</span>
             <input type="range" id="xpProgressBar" min="0" max="100" value="0">
             <span class="xp-time" id="totalTime">0:00</span>
