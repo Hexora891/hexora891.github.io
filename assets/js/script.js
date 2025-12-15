@@ -1,5 +1,7 @@
-// Defensive stubs: attach no-op globals early so inline onclicks or inline calls won't throw
-// These will be overwritten by real implementations later in the file.
+/* ======================================================
+   0) Defensive stubs (no-op globals for inline calls)
+   Keeps inline onclicks safe before full init.
+====================================================== */
 if (typeof window !== 'undefined') {
     window.initializeMusicPlayer = window.initializeMusicPlayer || function() { console.warn('initializeMusicPlayer called before script loaded'); };
     window.togglePlayPause = window.togglePlayPause || function() { console.warn('togglePlayPause called before script loaded'); };
@@ -8,21 +10,23 @@ if (typeof window !== 'undefined') {
     window.selectTrack = window.selectTrack || function() { console.warn('selectTrack called before script loaded'); };
 }
 
-
+/* ======================================================
+   1) GLOBALS
+====================================================== */
 let zIndexCounter = 10;
 let nextCascadeLeft = null;
 let nextCascadeTop = null;
 const CASCADE_STEP_PX = 24;
 
+/* ======================================================
+   2) WINDOW POSITIONING (desktop-only cascade)
+====================================================== */
 function positionWindowWithCascade(win) {
     const taskbarHeight = 30;
     const wasHidden = win.style.display === "none" || getComputedStyle(win).display === "none";
-    // Ensure it's measurable
-    if (wasHidden) {
-        win.style.display = "block";
-    }
-    const width = win.offsetWidth || 700;
-    const height = win.offsetHeight || 500;
+    if (wasHidden) win.style.display = "block"; // measureable
+    const width = win.offsetWidth || 900;
+    const height = win.offsetHeight || 700;
 
     if (nextCascadeLeft === null || nextCascadeTop === null) {
         const centeredLeft = Math.max(0, Math.floor((window.innerWidth - width) / 2) - 60);
@@ -34,7 +38,6 @@ function positionWindowWithCascade(win) {
         nextCascadeTop += CASCADE_STEP_PX;
     }
 
-    // Wrap to visible area if overflowing
     if (nextCascadeLeft + width > window.innerWidth - 10) {
         nextCascadeLeft = Math.max(0, Math.floor((window.innerWidth - width) / 2) - 60);
     }
@@ -46,18 +49,19 @@ function positionWindowWithCascade(win) {
     win.style.top = nextCascadeTop + 'px';
 }
 
-// Start menu toggle
+/* ======================================================
+   3) START MENU
+====================================================== */
 function toggleStartMenu() {
     const menu = document.getElementById("startMenu");
     const button = document.getElementById("startButton");
     const isVisible = menu.style.display === "block";
-    
     menu.style.display = isVisible ? "none" : "block";
     menu.setAttribute('aria-hidden', isVisible ? 'true' : 'false');
     button.setAttribute('aria-expanded', isVisible ? 'false' : 'true');
 }
 
-// Close start menu when clicking outside
+// Close start menu when clicking outside (desktop)
 document.addEventListener('click', (e) => {
     const menu = document.getElementById("startMenu");
     const button = document.getElementById("startButton");
@@ -66,743 +70,281 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Open window
+/* ======================================================
+   4) WINDOW CONTROLS (open / close / minimize / maximize)
+====================================================== */
 function openWindow(event, id) {
-    // Remove 'desktop-icon-large' from all icons
-    document.querySelectorAll('.desktop-icon').forEach(icon => {
-        icon.classList.remove('desktop-icon-large');
-    });
-
-    // Add 'desktop-icon-large' to the clicked icon
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('desktop-icon-large');
-    }
+    // desktop-icon visual
+    document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('desktop-icon-large'));
+    if (event && event.currentTarget) event.currentTarget.classList.add('desktop-icon-large');
 
     const win = document.getElementById(id);
+    if (!win) return;
+
     win.style.display = "block";
     win.setAttribute('aria-hidden', 'false');
-    positionWindowForMobile(win);
+
+    positionWindowWithCascade(win);
     bringToFront(win);
+
+    // Remove existing taskbar button (we don't persist duplicates)
     removeTaskbarButton(id);
-    
-    // Load PDF if it's the Resume window
+
+    // If opening resume, load PDF
     if (id === 'resumeWindow') {
-        setTimeout(loadResumePDF, 500);
+        setTimeout(loadResumePDF, 200);
     }
-    // If opening the music window, attempt autoplay if allowed
+
+    // If opening music window, ensure player initialized
     if (id === 'musicWindow') {
-        try {
-            // small timeout to allow music UI to render
-            setTimeout(() => {
-                attemptAutoPlay();
-            }, 50);
-        } catch (e) {
-            console.warn('Autoplay attempt failed to start', e);
-        }
+        try { initializeMusicPlayer(); } catch (e) { /* ignore */ }
     }
 }
 
-// Close window
 function closeWindow(id) {
     const win = document.getElementById(id);
+    if (!win) return;
     win.style.display = "none";
     win.setAttribute('aria-hidden', 'true');
     removeTaskbarButton(id);
+
     if (id === 'musicWindow') {
         stopAllMusic();
     }
 }
 
-// Stop any music playback (pauses audio, stops demo progress, resets UI)
-function stopAllMusic() {
-    try {
-        // Stop musicPlayer current audio if present
-        if (window.musicPlayer) {
-            if (musicPlayer.currentAudio && typeof musicPlayer.currentAudio.pause === 'function') {
-                try { musicPlayer.currentAudio.pause(); } catch (e) {}
-            }
-            musicPlayer.isPlaying = false;
-        }
-
-        // Stop demo progress if running
-        try { stopDemoProgress(); } catch (e) {}
-
-        // Pause any <audio id="audioPlayer"> element
-        const audioEl = document.getElementById('audioPlayer');
-        if (audioEl && typeof audioEl.pause === 'function') {
-            try { audioEl.pause(); audioEl.currentTime = 0; } catch (e) {}
-        }
-
-        // Update play button UI
-        const playBtn = document.getElementById('playPauseBtn');
-        if (playBtn) playBtn.textContent = '▶';
-    // album art spin feature removed
-    } catch (e) {
-        console.warn('Error stopping music', e);
-    }
-}
-
-// Bring window to front
-function bringToFront(win) {
-    zIndexCounter++;
-    win.style.zIndex = zIndexCounter;
-}
-
-// Minimize window
 function minimizeWindow(id) {
     const win = document.getElementById(id);
+    if (!win) return;
     win.style.display = "none";
     win.setAttribute('aria-hidden', 'true');
     addTaskbarButton(id);
 }
 
-// Maximize / Restore window
 function maximizeWindow(id) {
     const win = document.getElementById(id);
+    if (!win) return;
 
     if (win.dataset.maximized === "true") {
-        // Restore previous position & size
-        if (window.innerWidth <= 768) {
-            // On mobile, restore to mobile-optimized size
-            win.style.width = '95vw';
-            win.style.height = '80vh';
-            win.style.left = '2.5vw';
-            win.style.top = '10vh';
-        } else {
-            // On desktop, restore to saved position
-            win.style.width = win.dataset.prevWidth;
-            win.style.height = win.dataset.prevHeight;
-            win.style.top = win.dataset.prevTop;
-            win.style.left = win.dataset.prevLeft;
-        }
+        // restore
+        win.style.width = win.dataset.prevWidth || "900px";
+        win.style.height = win.dataset.prevHeight || "700px";
+        win.style.top = win.dataset.prevTop || "40px";
+        win.style.left = win.dataset.prevLeft || "40px";
         win.dataset.maximized = "false";
     } else {
-        // Save current position & size
-        win.dataset.prevWidth = win.style.width;
-        win.dataset.prevHeight = win.style.height;
-        win.dataset.prevTop = win.style.top;
-        win.dataset.prevLeft = win.style.left;
+        // save
+        win.dataset.prevWidth = win.style.width || "900px";
+        win.dataset.prevHeight = win.style.height || "700px";
+        win.dataset.prevTop = win.style.top || "40px";
+        win.dataset.prevLeft = win.style.left || "40px";
 
-        // Maximize
-        if (window.innerWidth <= 768) {
-            // On mobile, maximize to full screen minus taskbar
-            win.style.top = "0";
-            win.style.left = "0";
-            win.style.width = "100%";
-            win.style.height = "calc(100% - 40px)"; // Account for mobile taskbar height
-        } else {
-            // On desktop, use existing logic
-            win.style.top = "0";
-            win.style.left = "0";
-            win.style.width = "100%";
-            win.style.height = "calc(100% - 30px)";
-        }
+        // maximize
+        win.style.left = "0";
+        win.style.top = "0";
+        win.style.width = "100%";
+        win.style.height = "calc(100% - 30px)";
         win.dataset.maximized = "true";
     }
-}
 
-// (Removed custom resume controls)
-
-// Draggable windows
-let dragged;
-// Mobile touch support for draggable windows
-let touchStartX, touchStartY, touchStartLeft, touchStartTop;
-
-document.querySelectorAll('.window-header').forEach(header => {
-    // Mouse events (existing)
-    header.onmousedown = function(e) {
-        if (window.innerWidth <= 768) return; // Disable mouse dragging on mobile
-        dragged = this.parentElement;
-        bringToFront(dragged);
-        let offsetX = e.clientX - dragged.offsetLeft;
-        let offsetY = e.clientY - dragged.offsetTop;
-        function moveHandler(e) {
-            dragged.style.left = Math.min(window.innerWidth - dragged.offsetWidth, Math.max(0, e.clientX - offsetX)) + 'px';
-            dragged.style.top = Math.min(window.innerHeight - dragged.offsetHeight - 30, Math.max(0, e.clientY - offsetY)) + 'px';
-        }
-        document.addEventListener('mousemove', moveHandler);
-        document.onmouseup = () => {
-            document.removeEventListener('mousemove', moveHandler);
-            document.onmouseup = null;
-        };
-    };
-    
-    // Touch events for mobile - only for dragging, not for buttons
-    header.addEventListener('touchstart', function(e) {
-        if (window.innerWidth > 768) return; // Only enable touch on mobile
-        
-        // Don't prevent default here to allow button clicks
-        dragged = this.parentElement;
-        bringToFront(dragged);
-        
-        const touch = e.touches[0];
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-        touchStartLeft = parseInt(dragged.style.left) || 0;
-        touchStartTop = parseInt(dragged.style.top) || 0;
-    });
-    
-    header.addEventListener('touchmove', function(e) {
-        if (window.innerWidth > 768) return;
-        if (!dragged) return;
-        
-        // Only prevent default if we're actually dragging
-        const touch = e.touches[0];
-        const deltaX = Math.abs(touch.clientX - touchStartX);
-        const deltaY = Math.abs(touch.clientY - touchStartY);
-        
-        // Only start dragging if movement is significant (not a tap)
-        if (deltaX > 5 || deltaY > 5) {
-            e.preventDefault();
-            
-            const newLeft = Math.min(window.innerWidth - dragged.offsetWidth, Math.max(0, touchStartLeft + (touch.clientX - touchStartX)));
-            const newTop = Math.min(window.innerHeight - dragged.offsetHeight - 30, Math.max(0, touchStartTop + (touch.clientY - touchStartY)));
-            
-            dragged.style.left = newLeft + 'px';
-            dragged.style.top = newTop + 'px';
-        }
-    });
-    
-    header.addEventListener('touchend', function(e) {
-        if (window.innerWidth > 768) return;
-        dragged = null;
-    });
-});
-
-// Add touch support for all buttons
-function addTouchSupportToButtons() {
-    // Desktop icons
-    document.querySelectorAll('.desktop-icon').forEach(icon => {
-        icon.addEventListener('touchstart', function(e) {
-            // Prevent default to avoid double-tap zoom
-            e.preventDefault();
-        });
-        
-        icon.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the function call from onclick
-                const match = onclick.match(/openWindow\(event,\s*'([^']+)'\)/);
-                if (match) {
-                    openWindow(e, match[1]);
-                }
-            }
-        });
-    });
-    
-    // Window control buttons
-    document.querySelectorAll('.window-controls button').forEach(button => {
-        button.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
-        
-        button.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the function call from onclick
-                const match = onclick.match(/(\w+)Window\('([^']+)'\)/);
-                if (match) {
-                    const funcName = match[1];
-                    const windowId = match[2];
-                    if (funcName === 'minimize') {
-                        minimizeWindow(windowId);
-                    } else if (funcName === 'maximize') {
-                        maximizeWindow(windowId);
-                    } else if (funcName === 'close') {
-                        closeWindow(windowId);
-                    }
-                }
-            }
-        });
-    });
-    
-    // Resume buttons
-    document.querySelectorAll('.resume-buttons button').forEach(button => {
-        button.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
-        
-        button.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the function call from onclick
-                const match = onclick.match(/(\w+)\(\)/);
-                if (match) {
-                    const funcName = match[1];
-                    if (funcName === 'downloadResume') {
-                        downloadResume();
-                    } else if (funcName === 'openResumeNewTab') {
-                        openResumeNewTab();
-                    }
-                }
-            }
-        });
-    });
-    
-    // Start button
-    const startButton = document.getElementById('startButton');
-    if (startButton) {
-        startButton.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
-        
-        startButton.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            toggleStartMenu();
-        });
+    if (id === 'resumeWindow') {
+        setTimeout(loadResumePDF, 120);
     }
-    
-    // Start menu items
-    document.querySelectorAll('#startMenu ul li').forEach(item => {
-        item.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
-        
-        item.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the URL from onclick
-                const match = onclick.match(/window\.open\('([^']+)'/);
-                if (match) {
-                    window.open(match[1], '_blank');
-                }
-            }
-        });
-    });
 }
 
-// Taskbar buttons
+/* Bring window to front */
+function bringToFront(win) {
+    zIndexCounter++;
+    win.style.zIndex = zIndexCounter;
+}
+
+/* ======================================================
+   5) TASKBAR MANAGEMENT
+====================================================== */
 function addTaskbarButton(id) {
     const taskbarWindows = document.getElementById("taskbar-windows");
+    if (!taskbarWindows) return;
     if (document.getElementById("task-" + id)) return;
+
     const btn = document.createElement("button");
     btn.id = "task-" + id;
     const headerTitle = document.querySelector(`#${id} .window-header span`);
-    btn.innerText = headerTitle ? headerTitle.innerText : id.replace("Window","");
-    
-    // Add both click and touch support
+    btn.innerText = headerTitle ? headerTitle.innerText : id.replace("Window", "");
+
     btn.onclick = () => {
         const win = document.getElementById(id);
-        if (win.style.display === "none") {
+        if (!win) return;
+        if (win.style.display === "none" || win.style.display === "") {
             win.style.display = "block";
             bringToFront(win);
-            // Remove the taskbar button on restore
             removeTaskbarButton(id);
+            if (id === 'resumeWindow') setTimeout(loadResumePDF, 120);
         } else {
             minimizeWindow(id);
         }
     };
-    
-    // Add touch support for taskbar buttons
-    btn.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-    });
-    
-    btn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        btn.onclick();
-    });
-    
+
     taskbarWindows.appendChild(btn);
 }
 
 function removeTaskbarButton(id) {
     const btn = document.getElementById("task-" + id);
-    if(btn) btn.remove();
-    
-    // Remove desktop-icon-large class when window is closed
+    if (btn) btn.remove();
+
+    // remove desktop-icon-large
     const desktopIcon = document.querySelector(`.desktop-icon[onclick*='${id}']`);
-    if (desktopIcon) {
-        desktopIcon.classList.remove('desktop-icon-large');
-    }
+    if (desktopIcon) desktopIcon.classList.remove('desktop-icon-large');
 }
 
-// Resume function
+/* ======================================================
+   6) DRAGGING (desktop mouse-only)
+   - no touch handlers, desktop only
+====================================================== */
+document.querySelectorAll('.window-header').forEach(header => {
+    let dragged = null;
+    header.addEventListener('mousedown', (e) => {
+        // ignore if maximize or close clicked
+        if (e.target.tagName === 'BUTTON') return;
+        dragged = header.parentElement;
+        bringToFront(dragged);
+        const offsetX = e.clientX - dragged.offsetLeft;
+        const offsetY = e.clientY - dragged.offsetTop;
+
+        function moveHandler(e) {
+            const newLeft = Math.min(window.innerWidth - dragged.offsetWidth, Math.max(0, e.clientX - offsetX));
+            const newTop = Math.min(window.innerHeight - dragged.offsetHeight - 30, Math.max(0, e.clientY - offsetY));
+            dragged.style.left = newLeft + 'px';
+            dragged.style.top = newTop + 'px';
+        }
+
+        function upHandler() {
+            document.removeEventListener('mousemove', moveHandler);
+            document.removeEventListener('mouseup', upHandler);
+            dragged = null;
+        }
+
+        document.addEventListener('mousemove', moveHandler);
+        document.addEventListener('mouseup', upHandler);
+    });
+});
+
+/* ======================================================
+   7) PDF VIEWER (MULTI-PAGE, NO CONTROLS)
+   - Desktop-only viewer: fetch arrayBuffer -> render all pages
+   - Uses path: /assets/files/Ayush-Resume.pdf (as provided)
+====================================================== */
+
+/* Ensure pdf.worker is set if pdfjsLib is present */
+if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
+
+let PDF_DOC = null;
+
+function loadResumePDF() {
+    const pdfViewer = document.getElementById('pdfViewer');
+    if (!pdfViewer) return;
+
+    const url = '/assets/files/Ayush-Resume.pdf';
+
+    // Clear any previous content
+    pdfViewer.innerHTML = '<div style="color:#fff;padding:20px;text-align:center;">Loading PDF...</div>';
+
+    // Fetch as arrayBuffer to avoid browser embedding
+    fetch(url, { cache: 'no-cache' })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok: ' + response.status);
+            return response.arrayBuffer();
+        })
+        .then(arrayBuffer => pdfjsLib.getDocument({ data: arrayBuffer }).promise)
+        .then(pdf => {
+            PDF_DOC = pdf;
+            // clear loading
+            pdfViewer.innerHTML = '';
+
+            // render pages sequentially
+            const renderAll = async () => {
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 1 });
+
+                    // determine scale to fit viewer width (leave some padding)
+                    const maxWidth = Math.max(600, pdfViewer.clientWidth - 20);
+                    const scale = maxWidth / viewport.width;
+                    const scaledViewport = page.getViewport({ scale });
+
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    const outputScale = window.devicePixelRatio || 1;
+                    canvas.width = Math.floor(scaledViewport.width * outputScale);
+                    canvas.height = Math.floor(scaledViewport.height * outputScale);
+                    canvas.style.width = Math.floor(scaledViewport.width) + 'px';
+                    canvas.style.height = Math.floor(scaledViewport.height) + 'px';
+                    canvas.style.display = 'block';
+                    canvas.style.margin = '10px auto';
+                    canvas.style.background = '#fff';
+                    canvas.style.boxShadow = '0 2px 8px rgba(0,0,0,.35)';
+
+                    // high DPI
+                    ctx.setTransform(outputScale, 0, 0, outputScale, 0, 0);
+
+                    pdfViewer.appendChild(canvas);
+
+                    await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
+                }
+            };
+
+            renderAll();
+        })
+        .catch(err => {
+            console.error('PDF load error:', err);
+            pdfViewer.innerHTML = `<div style="color:#fff;padding:20px;text-align:center;">
+                Could not load PDF. <br>
+                <button onclick="openResumeNewTab()" style="margin-top:10px;padding:6px 12px;cursor:pointer;">Open in New Tab</button>
+            </div>`;
+        });
+}
+
+/* Re-render PDF on window resize with debounce */
+let _pdfResizeTimer = null;
+window.addEventListener('resize', () => {
+    const resumeWin = document.getElementById('resumeWindow');
+    if (resumeWin && resumeWin.style.display !== 'none' && PDF_DOC) {
+        clearTimeout(_pdfResizeTimer);
+        _pdfResizeTimer = setTimeout(loadResumePDF, 220);
+    }
+});
+
+/* ======================================================
+   8) RESUME ACTIONS (download / open)
+====================================================== */
 function downloadResume() {
-  const link = document.createElement('a');
-  link.href = "https://drive.google.com/uc?export=download&id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_";
-  link.download = "Ayush-Resume.pdf";
-  link.target = "_blank";
-  link.click();
+    const url = '/assets/files/Ayush-Resume.pdf';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Ayush-Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 }
 
 function openResumeNewTab() {
-  window.open("https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/view", "_blank");
-}
-
-// PDF.js setup
-if (typeof pdfjsLib !== 'undefined') {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
-
-// Load PDF when Resume window opens
-function loadResumePDF() {
-    console.log('Loading PDF...');
-    
-    const pdfViewer = document.getElementById('pdfViewer');
-    
-    if (!pdfViewer) {
-        console.error('PDF viewer not found');
-        return;
-    }
-    
-    // Clear any existing content
-    pdfViewer.innerHTML = '';
-    
-    // Check if mobile device
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // On mobile, show fallback immediately to avoid flash
-        showFallbackMessage();
-        return;
-    }
-    
-    // Try to load PDF using Google Drive embed
-    const pdfUrl = 'https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/preview';
-    
-    // Alternative: Try direct PDF link if embed fails
-    const directPdfUrl = 'https://drive.google.com/uc?export=view&id=1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_';
-    
-    // Create iframe for PDF embedding
-    const iframe = document.createElement('iframe');
-    iframe.src = pdfUrl;
-    iframe.width = '100%';
-    iframe.height = '100%';
-    iframe.style.border = 'none';
-    iframe.style.background = '#c0c0c0';
-    iframe.title = 'Resume PDF Viewer';
-    iframe.allow = 'fullscreen';
-    
-    // Add load event to check if PDF loaded successfully
-    iframe.onload = function() {
-        console.log('PDF iframe loaded successfully');
-        // Hide any loading indicators
-        const loadingDiv = pdfViewer.querySelector('.loading');
-        if (loadingDiv) {
-            loadingDiv.remove();
-        }
-    };
-    
-    // Add error handling
-    iframe.onerror = function() {
-        console.error('Error loading PDF iframe');
-        showFallbackMessage();
-    };
-    
-    // Show loading indicator
-    pdfViewer.innerHTML = '<div class="loading" style="text-align: center; padding: 40px; color: #333;">Loading PDF...</div>';
-    
-    // Try to load the iframe
-    try {
-        pdfViewer.appendChild(iframe);
-        
-        // Set a timeout to show fallback if iframe doesn't load
-        setTimeout(() => {
-            const loadingDiv = pdfViewer.querySelector('.loading');
-            if (loadingDiv) {
-                console.log('PDF iframe taking too long to load, showing fallback');
-                showFallbackMessage();
-            }
-        }, 8000);
-        
-    } catch (error) {
-        console.error('Error creating iframe:', error);
-        showFallbackMessage();
-    }
-    
-    function showFallbackMessage() {
-        const isMobile = window.innerWidth <= 768;
-        const padding = isMobile ? '20px 10px' : '40px 20px';
-        const fontSize = isMobile ? '14px' : '16px';
-        
-        pdfViewer.innerHTML = `
-            <div style="text-align: center; padding: ${padding}; color: #333; font-size: ${fontSize};">
-                <h3 style="margin-bottom: 20px; color: #0a64ad; font-size: ${isMobile ? '18px' : '20px'};">📄 Resume PDF</h3>
-                <p style="margin-bottom: 25px; line-height: 1.5;">
-                    ${isMobile ? 'Tap the buttons above to download or view your resume.' : 'Due to browser security restrictions, the PDF cannot be displayed directly in this window.<br>Please use the buttons above to download or view your resume.'}
-                </p>
-                <div style="background: #f0f0f0; border: 1px solid #ccc; padding: ${isMobile ? '10px' : '15px'}; border-radius: 5px; margin: 20px 0; font-size: ${isMobile ? '12px' : '14px'};">
-                    <strong>💡 Tip:</strong> ${isMobile ? 'The "Download" button will save the PDF to your device, while "Open in New Tab" will display it in your browser.' : 'The "Download" button will save the PDF to your device,<br>while "Open in New Tab" will display it in your browser\'s PDF viewer.'}
-                </div>
-                <div style="margin-top: 20px;">
-                    <a href="https://drive.google.com/file/d/1qKZmJfNHu_RzCEbR8kFtqQeBEAW6iJC_/view" target="_blank" style="background: #4a9eff; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
-                        🔗 Open Resume in Google Drive
-                    </a>
-                </div>
-            </div>
-        `;
-    }
-}
-
-// Mobile-specific window positioning
-function positionWindowForMobile(win) {
-    if (window.innerWidth <= 768) {
-        // Center the window on mobile
-        win.style.left = '2.5vw';
-        win.style.top = '10vh';
-        win.style.width = '95vw';
-        win.style.height = '80vh';
-    } else {
-        // Use cascade positioning for desktop
-        positionWindowWithCascade(win);
-    }
-}
-
-// Handle window resize for responsive behavior
-window.addEventListener('resize', function() {
-    // Reposition windows when screen size changes
-    document.querySelectorAll('.window').forEach(win => {
-        if (win.style.display !== 'none') {
-            positionWindowForMobile(win);
-        }
-    });
-});
-
-// Prevent zoom on double tap for mobile
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
-
-// Close start menu when clicking outside (mobile-friendly)
-document.addEventListener('click', (e) => {
-    const menu = document.getElementById("startMenu");
-    const button = document.getElementById("startButton");
-    if (!menu.contains(e.target) && !button.contains(e.target)) {
-        menu.style.display = 'none';
-    }
-});
-
-// Also close start menu on touch outside
-document.addEventListener('touchend', (e) => {
-    const menu = document.getElementById("startMenu");
-    const button = document.getElementById("startButton");
-    if (!menu.contains(e.target) && !button.contains(e.target)) {
-        menu.style.display = 'none';
-    }
-});
-
-// Initialize touch support when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    addTouchSupportToButtons();
-    addKeyboardSupport();
-});
-
-// Add keyboard navigation support
-function addKeyboardSupport() {
-    // Handle Enter key on desktop icons
-    document.querySelectorAll('.desktop-icon').forEach(icon => {
-        icon.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-        });
-    });
-    
-    // Handle Escape key to close windows
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            // Close any open windows
-            document.querySelectorAll('.window[style*="block"]').forEach(win => {
-                const winId = win.id;
-                closeWindow(winId);
-            });
-            
-            // Close start menu
-            const menu = document.getElementById("startMenu");
-            if (menu.style.display === "block") {
-                toggleStartMenu();
-            }
-        }
-    });
-    
-    // Handle arrow keys in start menu
-    document.querySelectorAll('#startMenu [role="menuitem"]').forEach((item, index, items) => {
-        item.addEventListener('keydown', function(e) {
-            let newIndex = index;
-            
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                newIndex = (index + 1) % items.length;
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                newIndex = (index - 1 + items.length) % items.length;
-            } else if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-            
-            if (newIndex !== index) {
-                items[newIndex].focus();
-            }
-        });
-    });
-}
-
-// Also add touch support after any dynamic content is added
-function addTouchSupportToButtons() {
-    // Desktop icons
-    document.querySelectorAll('.desktop-icon').forEach(icon => {
-        // Remove existing listeners to avoid duplicates
-        icon.removeEventListener('touchstart', icon._touchStartHandler);
-        icon.removeEventListener('touchend', icon._touchEndHandler);
-        
-        icon._touchStartHandler = function(e) {
-            e.preventDefault();
-        };
-        
-        icon._touchEndHandler = function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the function call from onclick
-                const match = onclick.match(/openWindow\(event,\s*'([^']+)'\)/);
-                if (match) {
-                    openWindow(e, match[1]);
-                }
-            }
-        };
-        
-        icon.addEventListener('touchstart', icon._touchStartHandler);
-        icon.addEventListener('touchend', icon._touchEndHandler);
-    });
-    
-    // Window control buttons
-    document.querySelectorAll('.window-controls button').forEach(button => {
-        // Remove existing listeners to avoid duplicates
-        button.removeEventListener('touchstart', button._touchStartHandler);
-        button.removeEventListener('touchend', button._touchEndHandler);
-        
-        button._touchStartHandler = function(e) {
-            e.preventDefault();
-        };
-        
-        button._touchEndHandler = function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the function call from onclick
-                const match = onclick.match(/(\w+)Window\('([^']+)'\)/);
-                if (match) {
-                    const funcName = match[1];
-                    const windowId = match[2];
-                    if (funcName === 'minimize') {
-                        minimizeWindow(windowId);
-                    } else if (funcName === 'maximize') {
-                        maximizeWindow(windowId);
-                    } else if (funcName === 'close') {
-                        closeWindow(windowId);
-                    }
-                }
-            }
-        };
-        
-        button.addEventListener('touchstart', button._touchStartHandler);
-        button.addEventListener('touchend', button._touchEndHandler);
-    });
-    
-    // Resume buttons
-    document.querySelectorAll('.resume-buttons button').forEach(button => {
-        // Remove existing listeners to avoid duplicates
-        button.removeEventListener('touchstart', button._touchStartHandler);
-        button.removeEventListener('touchend', button._touchEndHandler);
-        
-        button._touchStartHandler = function(e) {
-            e.preventDefault();
-        };
-        
-        button._touchEndHandler = function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the function call from onclick
-                const match = onclick.match(/(\w+)\(\)/);
-                if (match) {
-                    const funcName = match[1];
-                    if (funcName === 'downloadResume') {
-                        downloadResume();
-                    } else if (funcName === 'openResumeNewTab') {
-                        openResumeNewTab();
-                    }
-                }
-            }
-        };
-        
-        button.addEventListener('touchstart', button._touchStartHandler);
-        button.addEventListener('touchend', button._touchEndHandler);
-    });
-    
-    // Start button
-    const startButton = document.getElementById('startButton');
-    if (startButton) {
-        // Remove existing listeners to avoid duplicates
-        startButton.removeEventListener('touchstart', startButton._touchStartHandler);
-        startButton.removeEventListener('touchend', startButton._touchEndHandler);
-        
-        startButton._touchStartHandler = function(e) {
-            e.preventDefault();
-        };
-        
-        startButton._touchEndHandler = function(e) {
-            e.preventDefault();
-            toggleStartMenu();
-        };
-        
-        startButton.addEventListener('touchstart', startButton._touchStartHandler);
-        startButton.addEventListener('touchend', startButton._touchEndHandler);
-    }
-    
-    // Start menu items
-    document.querySelectorAll('#startMenu ul li').forEach(item => {
-        // Remove existing listeners to avoid duplicates
-        item.removeEventListener('touchstart', item._touchStartHandler);
-        item.removeEventListener('touchend', item._touchEndHandler);
-        
-        item._touchStartHandler = function(e) {
-            e.preventDefault();
-        };
-        
-        item._touchEndHandler = function(e) {
-            e.preventDefault();
-            // Trigger the onclick event
-            const onclick = this.getAttribute('onclick');
-            if (onclick) {
-                // Extract the URL from onclick
-                const match = onclick.match(/window\.open\('([^']+)'/);
-                if (match) {
-                    window.open(match[1], '_blank');
-                }
-            }
-        };
-        
-        item.addEventListener('touchstart', item._touchStartHandler);
-        item.addEventListener('touchend', item._touchEndHandler);
-    });
+    window.open('/assets/files/Ayush-Resume.pdf', '_blank');
 }
 
 // ===== Simple music player (safe wiring after DOM ready) =====
+
+if (typeof reportPlayerStatus === 'undefined') {
+    window.reportPlayerStatus = function(status, data) {
+        console.log('Music Player Status:', status, data || '');
+    };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const tracks = [
         { title: 'Rick Roll', artist: 'Rick', src: 'assets/music/song1.mp3', albumArt: 'assets/images/song1.gif' },
         { title: 'Song for Denise', artist: 'Artist 1', src: 'assets/music/song2.mp3', albumArt: 'assets/images/song2.png' },
-        
     ];
 
     const audioEl = document.getElementById('audioPlayer');
@@ -860,7 +402,6 @@ document.addEventListener('DOMContentLoaded', () => {
             playing = !audioEl.paused;
             if (playBtn) playBtn.textContent = playing ? '▌▌' : '▶';
         }
-    // album art spin feature removed
     }
 
     function startPlaybackAfterLoad() {
@@ -890,47 +431,125 @@ document.addEventListener('DOMContentLoaded', () => {
     function prevLocal() { loadTrackLocal(current - 1); startPlaybackAfterLoad(); }
 
     // Expose to window so other UI can call
-    try { window.nextTrack = nextLocal; window.previousTrack = prevLocal; window.togglePlayPause = playPauseLocal; window.selectTrack = loadTrackLocal; } catch (e) {}
+    try { 
+        window.nextTrack = nextLocal; 
+        window.previousTrack = prevLocal; 
+        window.togglePlayPause = playPauseLocal; 
+        window.selectTrack = loadTrackLocal; 
+    } catch (e) {}
 
     // Attach listeners
     if (playBtn) playBtn.addEventListener('click', playPauseLocal);
     if (nextBtn) nextBtn.addEventListener('click', () => { nextLocal(); reportPlayerStatus('user-click-next'); });
     if (prevBtn) prevBtn.addEventListener('click', () => { prevLocal(); reportPlayerStatus('user-click-prev'); });
-    if (progressBar) progressBar.addEventListener('input', () => { audioEl.currentTime = Number(progressBar.value); if (currentTimeEl) currentTimeEl.textContent = formatTimeLocal(audioEl.currentTime); });
-    audioEl.addEventListener('timeupdate', () => { if (currentTimeEl) currentTimeEl.textContent = formatTimeLocal(audioEl.currentTime); if (progressBar) progressBar.value = Math.floor(audioEl.currentTime); });
+    if (progressBar) progressBar.addEventListener('input', () => { 
+        audioEl.currentTime = Number(progressBar.value); 
+        if (currentTimeEl) currentTimeEl.textContent = formatTimeLocal(audioEl.currentTime); 
+    });
+    audioEl.addEventListener('timeupdate', () => { 
+        if (currentTimeEl) currentTimeEl.textContent = formatTimeLocal(audioEl.currentTime); 
+        if (progressBar) progressBar.value = Math.floor(audioEl.currentTime); 
+    });
     audioEl.addEventListener('ended', nextLocal);
-
-    // Start with first track selected (do not auto-play)
+    
+    // Start with first track selected
     loadTrackLocal(0);
     reportPlayerStatus('simple-player-initialized');
+    
+    // Attempt autoplay after a short delay to ensure track is loaded
+    setTimeout(attemptAutoPlay, 100);
 });
+    
+// Autoplay support: try to start playback when the music window opens
+const MUSIC_AUTOPLAY = true;
 
-    // Autoplay support: try to start playback when the music window opens
-    const MUSIC_AUTOPLAY = true;
+function attemptAutoPlay() {
+    if (!MUSIC_AUTOPLAY) return;
+    const audioEl = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playPauseBtn');
+    if (!audioEl) return;
 
-    function attemptAutoPlay() {
-        if (!MUSIC_AUTOPLAY) return;
-        const audioEl = document.getElementById('audioPlayer');
-        const playBtn = document.getElementById('playPauseBtn');
-        if (!audioEl) return;
-
-        // If audio already has source and is paused, try to play
-        if (audioEl.src) {
-            const p = audioEl.play();
-            if (p && p.then) {
-                p.then(() => {
-                    if (playBtn) playBtn.textContent = '▌▌';
-                    reportPlayerStatus('autoplay-success');
-                }).catch(err => {
-                        console.warn('Autoplay blocked', err);
-                        reportPlayerStatus('autoplay-blocked', { error: err && err.message });
-                });
-            }
-        } else {
-            // if no source yet, select first track and try (no UI overlay)
-            const select = window.selectTrack || function(){};
-            try { select(0); } catch (e) {}
-            setTimeout(() => attemptAutoPlay(), 200);
+    // If audio already has source and is paused, try to play
+    if (audioEl.src) {
+        const p = audioEl.play();
+        if (p && p.then) {
+            p.then(() => {
+                if (playBtn) playBtn.textContent = '▌▌';
+                reportPlayerStatus('autoplay-success');
+            }).catch(err => {
+                console.warn('Autoplay blocked', err);
+                reportPlayerStatus('autoplay-blocked', { error: err && err.message });
+            });
         }
+    } else {
+        // if no source yet, select first track and try (no UI overlay)
+        const select = window.selectTrack || function(){};
+        try { select(0); } catch (e) {}
+        setTimeout(() => attemptAutoPlay(), 200);
     }
+}
 
+// Initialize music player (called when music window opens)
+function initializeMusicPlayer() {
+    // Trigger autoplay when window is opened
+    setTimeout(attemptAutoPlay, 150);
+}
+
+// Stop any music playback (pauses audio, stops demo progress, resets UI)
+function stopAllMusic() {
+    try {
+        // Stop musicPlayer current audio if present
+        if (window.musicPlayer) {
+            if (musicPlayer.currentAudio && typeof musicPlayer.currentAudio.pause === 'function') {
+                try { musicPlayer.currentAudio.pause(); } catch (e) {}
+            }
+            musicPlayer.isPlaying = false;
+        }
+
+        // Stop demo progress if running
+        try { stopDemoProgress(); } catch (e) {}
+
+        // Pause any <audio id="audioPlayer"> element
+        const audioEl = document.getElementById('audioPlayer');
+        if (audioEl && typeof audioEl.pause === 'function') {
+            try { audioEl.pause(); audioEl.currentTime = 0; } catch (e) {}
+        }
+
+        // Update play button UI
+        const playBtn = document.getElementById('playPauseBtn');
+        if (playBtn) playBtn.textContent = '▶';
+    } catch (e) {
+        console.warn('Error stopping music', e);
+    }
+}
+
+/* ======================================================
+   10) KEYBOARD SUPPORT (desktop)
+====================================================== */
+function addKeyboardSupport() {
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+        icon.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            // close open windows
+            document.querySelectorAll('.window').forEach(win => {
+                if (win.style.display === 'block') closeWindow(win.id);
+            });
+            // close start menu
+            const menu = document.getElementById('startMenu');
+            if (menu) menu.style.display = 'none';
+        }
+    });
+}
+
+/* Initialize once DOM loaded */
+window.addEventListener('DOMContentLoaded', () => {
+    addKeyboardSupport();
+});

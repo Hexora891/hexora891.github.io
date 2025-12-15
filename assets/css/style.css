@@ -94,10 +94,100 @@ body {
     height: calc(100% - 30px);
     box-sizing: border-box;
 }
+
 #resumeWindow .window-content {
     height: calc(100% - 30px);
     display: flex;
     flex-direction: column;
+}
+
+/* ============================================================
+   📌 FIXED + UPDATED ABOUT WINDOW LAYOUT  
+   ============================================================ */
+
+.about-window-content {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.about-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.about-photo {
+    width: 70%;
+    max-width: 760px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.about-text {
+    width: 70%;
+    max-width: 760px;
+    text-align: left;
+}
+
+.window[data-maximized="true"] .about-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-title {
+    font-size: 28px;
+    margin: 10px 0 4px 0;
+    color: #111;
+}
+
+.about-subtitle {
+    font-size: 12px;
+    color: #444;
+}
+
+.about-tagline {
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+.about-section {
+    font-size: 16px;
+    margin: 18px 0 8px 0;
+}
+
+.about-window-content a {
+    color: #c0392b;
+    text-decoration: none;
+}
+.about-window-content a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   PDF Viewer
+   ============================================================ */
+.pdf-viewer {
+  width: 100%;
+  height: calc(100% - 44px);
+  background: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
+  box-sizing: border-box;
+}
+
+.pdf-viewer canvas {
+  background: #fff;
+  margin: 10px auto;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
 }
 
 /* Scrollbars */
@@ -116,50 +206,6 @@ body {
 }
 .window-content::-webkit-scrollbar-thumb:hover {
     background: #606060;
-}
-
-/* About Window */
-.about-window-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-}
-.about-text {
-    width: 70%;
-    max-width: 760px;
-    text-align: left;
-}
-.window[data-maximized="true"] .about-text {
-    max-width: 70%;
-}
-.window[data-maximized="true"] .about-window-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.about-title {
-    font-size: 28px;
-    margin: 10px 0 4px 0;
-    color: #111;
-}
-.about-subtitle {
-    font-size: 12px;
-    color: #444;
-}
-.about-tagline {
-    font-size: 12px;
-    margin-bottom: 16px;
-}
-.about-section {
-    font-size: 16px;
-    margin: 18px 0 8px 0;
-}
-.about-window-content a {
-    color: #c0392b;
-    text-decoration: none;
-}
-.about-window-content a:hover {
-    text-decoration: underline;
 }
 
 /* Resume Buttons */
@@ -192,49 +238,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* fixed size */
   height: 40px !important;
   width: 100px !important;
-  flex: 0 0 auto !important; /* prevents flexbox from resizing */
   padding: 0 12px;
   border-radius: 10px;
-
-  /* text */
   font-size: 16px !important;
   color: #ffffff !important;
   font-weight: bold !important;
   text-shadow: 0 1px 2px rgba(0,0,0,0.9) !important;
   font-family: 'Tahoma', sans-serif !important;
-  line-height: 40px; /* text stays vertically centered */
-
-  /* default green */
+  line-height: 40px;
   background: linear-gradient(135deg, #33c533 0%, #29a329 50%, #1f7a1f 100%) !important;
   border: 2px outset #007f00 !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),
-              0 2px 4px rgba(0,0,0,0.4);
-
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.4);
   cursor: pointer;
-  user-select: none;
-  transition: background 0.15s ease, transform 0.1s ease;
 }
-
-/* Active (clicked: brighter green + pressed look) */
-#startButton:active {
-  background: linear-gradient(135deg, #00cc00 0%, #00aa00 50%, #008800 100%) !important;
-  border: 2px inset #009900 !important;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4),
-              0 0 6px rgba(0,255,0,0.4);
-  transform: translateY(1px);
-}
-
 
 /* Start Menu */
 #startMenu {
     position: fixed;
-    bottom: 40px; /* match button height */
+    bottom: 40px;
     left: 0;
-    width: 240px; /* slightly wider */
+    width: 240px;
     background: linear-gradient(135deg, #ececec 0%, #c8c8c8 40%, #a8a8a8 100%);
     border: 2px outset #c0c0c0;
     box-shadow: 4px 4px 8px rgba(0,0,0,0.5),
@@ -242,10 +267,10 @@ body {
                 inset -1px -1px 0 #808080;
     display: none;
     z-index: 1000;
-    padding: 0; /* reset so banner fits flush */
+    padding: 0;
     animation: slideUp 0.2s ease-out;
     font-family: 'Tahoma', sans-serif;
-    border-radius: 3px; /* subtle round corners */
+    border-radius: 3px;
     overflow: hidden;
 }
 
@@ -254,7 +279,6 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Top Banner --- */
 #startMenu .banner {
     display: flex;
     align-items: center;
@@ -268,7 +292,6 @@ body {
     border-bottom: 2px solid #1e3a8a;
 }
 
-/* Banner image (logo or user pic) */
 #startMenu .banner img {
     width: 34px;
     height: 34px;
@@ -278,7 +301,6 @@ body {
     object-fit: cover;
 }
 
-/* Inner menu list */
 #startMenu ul {
     list-style: none;
     padding: 6px;
@@ -289,7 +311,6 @@ body {
                 inset -1px -1px 0 #fff;
 }
 
-/* Menu items */
 #startMenu ul li {
     display: flex;
     align-items: center;
@@ -306,7 +327,6 @@ body {
     transition: background 0.15s ease, transform 0.1s ease;
 }
 
-/* Hover effect (blue highlight like XP) */
 #startMenu ul li:hover {
     color: #fff;
     background: linear-gradient(135deg, #4a82d6 0%, #2f5daa 100%);
@@ -314,22 +334,18 @@ body {
     text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
 }
 
-/* Active click effect */
 #startMenu ul li:active {
     background: linear-gradient(135deg, #2f5daa 0%, #4a82d6 100%);
     border: 1px inset #1e3a8a;
     transform: translateY(1px);
 }
 
-/* Icons inside menu items */
 #startMenu ul li img {
     width: 20px;
     height: 20px;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
-
-
 
 /* Taskbar */
 #taskbar {
@@ -344,8 +360,6 @@ body {
     align-items: center;
     gap: 2px;
     padding: 2px 0 0 0;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3),
-                inset 0 -1px 0 rgba(0,0,0,0.3);
     z-index: 999;
 }
 #taskbar-windows {
@@ -356,24 +370,8 @@ body {
     margin-left: 5px;
     overflow-x: auto;
 }
-#taskbar button {
-    height: 24px;
-    padding: 0 8px;
-    background: linear-gradient(135deg, #e0e0e0, #c0c0c0);
-    border: 1px outset #c0c0c0;
-    font-size: 10px;
-    cursor: pointer;
-}
-#taskbar button:hover {
-    background: linear-gradient(135deg, #f0f0f0, #d0d0d0);
-}
-#taskbar button:active,
-#taskbar button.active {
-    background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
-    border: 1px inset #a0a0a0;
-}
 
-/* === Classic Music Player (Windows XP Style) === */
+/* === Music Player (XP Style) === */
 .music-window {
     width: 400px !important;
     height: 650px !important;
@@ -384,7 +382,6 @@ body {
     box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080;
 }
 
-/* XP-style music window layout */
 .music-xp-main {
     display: flex;
     flex-direction: column;
@@ -394,7 +391,6 @@ body {
     margin-top: 12px;
 }
 
-/* === Album Art Frame === */
 .music-xp-album-frame {
     width: 350px;
     height: 350px;
@@ -413,28 +409,6 @@ body {
     object-fit: cover;
 }
 
-/* === Track Info === */
-.music-xp-track-info {
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-.music-xp-title {
-    font-size: 12px;
-    font-family: 'Tahoma', sans-serif;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 2px;
-}
-
-.music-xp-artist {
-    font-size: 11px;
-    font-family: 'Tahoma', sans-serif;
-    color: #000;
-    opacity: 0.85;
-}
-
-/* Music Controls Layout */
 .music-xp-controls {
     width: 100%;
     display: flex;
@@ -452,7 +426,6 @@ body {
     gap: 10px;
 }
 
-/* Time Labels */
 .xp-time {
     font-family: 'Courier New', monospace;
     font-size: 16px;
@@ -461,7 +434,6 @@ body {
     text-align: center;
 }
 
-/* Progress Bar (retro style) */
 #xpProgressBar {
     flex: 1;
     height: 6px;
@@ -496,39 +468,35 @@ body {
 
 #xpProgressBar::-moz-range-thumb {
     width: 8px;
-    height: 16px;
+    height:16px;
     background: #e0e0e0;
     border: 2px outset #fff;
     cursor: pointer;
 }
 
-/* Play Button (square retro style) */
 .xp-play-btn {
     min-width: 44px;
     height: 40px;
     background: #c0c0c0;
     border: 2px solid;
-    border-color: #fff #000 #000 #fff; /* light top/left, dark bottom/right */
+    border-color: #fff #000 #000 #fff;
     font-size: 20px;
     cursor: pointer;
     box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+    font-family: 'MS Sans Serif','Tahoma',sans-serif;
 }
 
-.xp-play-btn:hover {
-    background: #dcdcdc;
-}
+.xp-play-btn:hover { background: #dcdcdc; }
 
 .xp-play-btn:active {
-    border-color: #000 #fff #fff #000; /* invert for pressed */
+    border-color: #000 #fff #fff #000;
     background: #b0b0b0;
     box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
 }
 
-/* Wide Buttons (Previous / Next) */
 .xp-wide-btn {
     min-width: 180px;
     height: 56px;
@@ -539,12 +507,10 @@ body {
     font-weight: bold;
     cursor: pointer;
     box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
-    font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+    font-family: 'MS Sans Serif','Tahoma',sans-serif;
 }
 
-.xp-wide-btn:hover {
-    background: #dcdcdc;
-}
+.xp-wide-btn:hover { background: #dcdcdc; }
 
 .xp-wide-btn:active {
     border-color: #000 #fff #fff #000;

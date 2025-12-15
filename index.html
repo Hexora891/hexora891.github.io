@@ -1,41 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="description" content="Ayush's personal portfolio website with Windows XP desktop theme">
-  <meta name="keywords" content="portfolio, cybersecurity, hacker, red team, security enthusiast">
-  <meta name="author" content="Ayush (Hexora)">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ayush's personal portfolio website with Windows XP desktop theme" />
+  <meta name="author" content="Ayush (Hexora)" />
   <title>Hexora89</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- PDF.js (bundle + worker) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
 </head>
 <body>
   <!-- Desktop -->
   <div id="desktop" role="main" aria-label="Desktop shortcuts">
-    <button class="desktop-icon" onclick="openWindow(event, 'aboutWindow')" aria-label="Open About Me window">
+    <button class="desktop-icon" onclick="openWindow(event,'aboutWindow')" aria-label="Open About Me window">
       <img src="assets/images/about.png" alt="About Me icon">
       <span>About Me</span>
     </button>
-    <button class="desktop-icon" onclick="openWindow(event, 'resumeWindow')" aria-label="Open Resume window">
+
+    <button class="desktop-icon" onclick="openWindow(event,'resumeWindow')" aria-label="Open Resume window">
       <img src="assets/images/resume.png" alt="Resume icon">
       <span>Resume</span>
     </button>
-    <button class="desktop-icon" onclick="window.open('https://hexora89.gitbook.io/notes/','_blank')" aria-label="Open Notes in new tab">
+
+    <button class="desktop-icon" onclick="window.open('https://notes.hexora89.xyz/notes','_blank')" aria-label="Open Notes in new tab">
       <img src="assets/images/notes.png" alt="Notes icon">
       <span>Notes</span>
     </button>
-    <button class="desktop-icon" onclick="window.open('https://hexora891.github.io/Writeups/','_blank')" aria-label="Open Writeups in new tab">
+
+    <button class="desktop-icon" onclick="window.open('https://notes.hexora89.xyz/writeups','_blank')" aria-label="Open Writeups in new tab">
       <img src="assets/images/writeups.png" alt="Writeups icon">
       <span>Writeups</span>
     </button>
-      <button class="desktop-icon" onclick="openWindow(event, 'musicWindow')" aria-label="Open Music window">
-        <img src="assets/images/music.png" alt="Music icon">
-        <span>Music</span>
-      </button>
+
+    <button class="desktop-icon" onclick="openWindow(event,'musicWindow')" aria-label="Open Music window">
+      <img src="assets/images/music.png" alt="Music icon">
+      <span>Music</span>
+    </button>
   </div>
 
-  <!-- Windows -->
+  <!-- About Window -->
   <div id="aboutWindow" class="window" role="dialog" aria-labelledby="aboutWindow-title" aria-hidden="true">
     <div class="window-header" role="banner">
       <span id="aboutWindow-title">About Me</span>
@@ -45,116 +53,129 @@
         <button onclick="closeWindow('aboutWindow')" aria-label="Close window">X</button>
       </div>
     </div>
+
     <div class="window-content about-window-content">
-      <img src="assets/images/bio.png" alt="Bio Photo" class="bio-photo">
-      <div class="about-text">
-        <h1 class="about-title">Ayush</h1>
-        <div class="about-subtitle">security enthusiast / hacker / red team</div>
-        <div class="about-tagline">★ hack the planet ★</div>
 
-        <h2 class="about-section">About Me</h2>
-        <p>Hey, I'm Hexora. Every day I dive deeper into the world of hacking and computing. Most of my time goes into learning, building, and sharpening my skills across different areas of security. I focus a lot on OffSec, and I try to keep the true spirit of hacking alive so I never lose sight of why I started.</p>
-        <p>I’m also my own toughest critic. When I hit burnout, I usually just hack even more—it’s what keeps me going. I enjoy it so much that I can’t stop. Choosing this path has been the best decision of my life, and I’m fully committed to it, all from the comfort of my little workspace.</p>
+      <!-- ⭐ FIXED LAYOUT -->
+      <div class="about-layout">
 
-        <h2 class="about-section">Resume</h2>
-        <p><a href="#" onclick="openResumeNewTab(); return false;">Check out my resume here.</a></p>
+        <img src="assets/images/bio.png" alt="Bio Photo" class="about-photo">
+
+        <div class="about-text">
+          <h1 class="about-title">Ayush</h1>
+          <div class="about-subtitle">security enthusiast / hacker / red team</div>
+          <div class="about-tagline">★ hack the planet ★</div>
+
+          <h2 class="about-section">About Me</h2>
+          <p>Hey, I'm Hexora. Every day I dive deeper into the world of hacking and computing. Most of my time goes into learning, building, and sharpening my skills across different areas of security. I focus a lot on OffSec, and I try to keep the true spirit of hacking alive so I never lose sight of why I started.</p>
+
+          <p>I’m also my own toughest critic. When I hit burnout, I usually just hack even more—it’s what keeps me going. I enjoy it so much that I can’t stop. Choosing this path has been the best decision of my life, and I’m fully committed to it, all from the comfort of my little workspace.</p>
+
+          <h2 class="about-section">Resume</h2>
+          <p><a href="#" onclick="openResumeNewTab(); return false;">Check out my resume here.</a></p>
+        </div>
+
       </div>
+      <!-- END FIX -->
+
     </div>
   </div>
+
+  <!-- Resume Window -->
   <div id="resumeWindow" class="window" role="dialog" aria-labelledby="resumeWindow-title" aria-hidden="true">
-  <div class="window-header" role="banner">
-    <span id="resumeWindow-title">Resume</span>
-    <div class="window-controls" role="toolbar">
-      <button onclick="minimizeWindow('resumeWindow')" aria-label="Minimize window">_</button>
-      <button onclick="maximizeWindow('resumeWindow')" aria-label="Maximize window">▢</button>
-      <button onclick="closeWindow('resumeWindow')" aria-label="Close window">X</button>
+    <div class="window-header" role="banner">
+      <span id="resumeWindow-title">Resume</span>
+      <div class="window-controls" role="toolbar">
+        <button onclick="minimizeWindow('resumeWindow')" aria-label="Minimize window">_</button>
+        <button onclick="maximizeWindow('resumeWindow')" aria-label="Maximize window">▢</button>
+        <button onclick="closeWindow('resumeWindow')" aria-label="Close window">X</button>
+      </div>
     </div>
-  </div>
-  <div class="window-content">
-    <div class="resume-buttons">
-      <button onclick="downloadResume()">
-        <img src="assets/images/download.png" alt="Download" class="icon"> Download
-      </button>
-      <button onclick="openResumeNewTab()">
-        <img src="assets/images/open.png" alt="Open" class="icon"> Open in New Tab
-      </button>
-    </div>
-    <div id="pdfViewer" style="width: 100%; height: 600px; background: #c0c0c0; border: 1px solid #808080; box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;">
-      <canvas id="pdfCanvas" style="display: block; margin: 0 auto;"></canvas>
-    </div>
-  </div>
-</div>
 
- <!-- Taskbar -->
-<nav id="taskbar" role="navigation" aria-label="Taskbar">
-  <button id="startButton" onclick="toggleStartMenu()" aria-label="Open start menu" aria-expanded="false" aria-haspopup="menu">
-    <img src="assets/images/xp-logo.png" alt="Start" style="height:25px;margin-right:10px;"> Start
-  </button>
-  <div id="taskbar-windows" role="group" aria-label="Open windows"></div>
-</nav>
-
-<!-- Start Menu -->
-<div id="startMenu" role="menu" aria-labelledby="startButton" aria-hidden="true">
-  <!-- Top banner -->
-  <div class="banner">
-    <img src="assets/images/user.png" alt="User Logo">
-    <span>Hexora89</span>
-  </div>
-
-  <ul role="none">
-    <li role="menuitem" onclick="window.open('https://github.com/Hexora891','_blank')" tabindex="0">
-      <img src="assets/images/github.png" alt="GitHub icon"> GitHub
-    </li>
-    <li role="menuitem" onclick="window.open('https://youtube.com','_blank')" tabindex="0">
-      <img src="assets/images/youtube.png" alt="YouTube icon"> YouTube
-    </li>
-    <li role="menuitem" onclick="window.open('https://x.com/Hexora89','_blank')" tabindex="0">
-      <img src="assets/images/x.png" alt="X icon"> X
-    </li>
-    <li role="menuitem" onclick="window.open('https://app.hackthebox.com/profile/2397481','_blank')" tabindex="0">
-      <img src="assets/images/hackthebox.png" alt="HackTheBox icon"> HackTheBox
-    </li>
-    <li role="menuitem" onclick="window.open('https://www.linkedin.com/in/ayush-singh-158631382/','_blank')" tabindex="0">
-      <img src="assets/images/linkedin.png" alt="LinkedIn icon"> LinkedIn
-    </li>
-  </ul>
-</div>
-
-<!-- Music Player Window -->
-<div id="musicWindow" class="window music-window" role="dialog" aria-labelledby="musicWindow-title" aria-hidden="true">
-  
-  <div class="window-header" role="banner">
-    <span id="musicWindow-title">🎵 Music</span>
-    <div class="window-controls" role="toolbar">
-      <button onclick="minimizeWindow('musicWindow')" aria-label="Minimize window">_</button>
-      <button >□</button>
-      <button onclick="closeWindow('musicWindow')" aria-label="Close window">X</button>
-    </div>
-  </div>
-  
-  <div class="window-content music-content">
-    <div class="music-xp-main">
-      <div class="music-xp-album-frame">
-        <img id="albumArt" src="" alt="Album Art" class="music-xp-album-art">
+    <div class="window-content">
+      <div class="resume-buttons">
+        <button onclick="downloadResume()">
+          <img src="assets/images/download.png" alt="Download" class="icon"> Download
+        </button>
+        <button onclick="openResumeNewTab()">
+          <img src="assets/images/open.png" alt="Open" class="icon"> Open in New Tab
+        </button>
       </div>
 
-      <div class="music-xp-controls">
-        <div class="music-xp-row">
-          <button class="xp-play-btn" id="playPauseBtn" title="Play/Pause">▶</button>
-          <span class="xp-time" id="currentTime">0:00</span>
-          <input type="range" id="xpProgressBar" min="0" max="100" value="0">
-          <span class="xp-time" id="totalTime">1:31</span>
-        </div>
-        <div class="music-xp-row">
-          <button class="xp-wide-btn" id="prevBtn">Previous</button>
-          <button class="xp-wide-btn" id="nextBtn">Next</button>
-        </div>
-      </div>
-    
-  
-  <audio id="audioPlayer" preload="metadata"></audio>
-</div>
+      <!-- PDF viewer -->
+      <div id="pdfViewer" class="pdf-viewer"></div>
+    </div>
+  </div>
 
-  <script src="assets/js/script.js?ver=2025-09-15-1" defer></script>
+  <!-- Taskbar -->
+  <nav id="taskbar">
+    <button id="startButton" onclick="toggleStartMenu()">
+      <img src="assets/images/xp-logo.png" alt="Start" style="height:25px;margin-right:10px;"> Start
+    </button>
+    <div id="taskbar-windows"></div>
+  </nav>
+
+  <!-- Start Menu -->
+  <div id="startMenu">
+    <div class="banner">
+      <img src="assets/images/user.png" alt="User Logo">
+      <span>Hexora89</span>
+    </div>
+
+    <ul>
+      <li onclick="window.open('https://github.com/Hexora891','_blank')">
+        <img src="assets/images/github.png" alt=""> GitHub
+      </li>
+      <li onclick="window.open('https://youtube.com','_blank')">
+        <img src="assets/images/youtube.png" alt=""> YouTube
+      </li>
+      <li onclick="window.open('https://x.com/Hexora89','_blank')">
+        <img src="assets/images/x.png" alt=""> X
+      </li>
+      <li onclick="window.open('https://app.hackthebox.com/profile/2397481','_blank')">
+        <img src="assets/images/hackthebox.png" alt=""> HackTheBox
+      </li>
+      <li onclick="window.open('https://www.linkedin.com/in/ayush-singh-381792390/','_blank')">
+        <img src="assets/images/linkedin.png" alt=""> LinkedIn
+      </li>
+    </ul>
+  </div>
+
+  <!-- Music Player Window -->
+  <div id="musicWindow" class="window music-window">
+    <div class="window-header">
+      <span id="musicWindow-title">🎵 Music</span>
+      <div class="window-controls">
+        <button onclick="minimizeWindow('musicWindow')">_</button>
+        <button onclick="maximizeWindow('musicWindow')">□</button>
+        <button onclick="closeWindow('musicWindow')">X</button>
+      </div>
+    </div>
+
+    <div class="window-content music-content">
+      <div class="music-xp-main">
+        <div class="music-xp-album-frame">
+          <img id="albumArt" src="/assets/image/song1.gif" class="music-xp-album-art">
+        </div>
+
+        <div class="music-xp-controls">
+          <div class="music-xp-row">
+            <button class="xp-play-btn" id="playPauseBtn">▶</button>
+            <span class="xp-time" id="currentTime">0:00</span>
+            <input type="range" id="xpProgressBar" min="0" max="100" value="0">
+            <span class="xp-time" id="totalTime">0:00</span>
+          </div>
+          <div class="music-xp-row">
+            <button class="xp-wide-btn" id="prevBtn">Previous</button>
+            <button class="xp-wide-btn" id="nextBtn">Next</button>
+          </div>
+        </div>
+
+        <audio id="audioPlayer" preload="metadata"></audio>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/script.js" defer></script>
 </body>
 </html>
